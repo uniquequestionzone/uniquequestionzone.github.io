@@ -1,0 +1,14 @@
+{
+  "format": "sql-assessment-set",
+  "version": 3,
+  "setId": "SET-MWKBTQ56",
+  "title": "SQL Assessment",
+  "name": "16_Nov",
+  "timerMinutes": 60,
+  "totalQuestions": 37,
+  "packageSecurity": {
+    "protected": false,
+    "deleteQuestionsAllowed": true
+  },
+  "exportedAt": "2026-11-17T11:16:45.752Z"
+}

@@ -1,0 +1,663 @@
+/* ================= QUESTION 1: Question 1 ================= */
+function initApp() {
+    var dayInput = document.getElementById('dayInput');
+    var lookupBtn = document.getElementById('lookupBtn');
+    var dayOut = document.getElementById('dayOut');
+    var days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    lookupBtn.addEventListener('click', function () {
+        var n = parseFloat(dayInput.value);
+        // TODO: If n is NaN, below 1, above 7 or not whole show "Enter 1 to 7";
+        // otherwise show "Day " + n + " is " + days[n - 1].
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 2: Question 2 ================= */
+function initApp() {
+    var ratingInput = document.getElementById('ratingInput');
+    var showBtn = document.getElementById('showBtn');
+    var stars = document.getElementById('stars');
+
+    showBtn.addEventListener('click', function () {
+        var n = parseFloat(ratingInput.value);
+        // TODO: If n is NaN, below 0, above 5 or not whole show "Enter 0 to 5".
+        // Otherwise build a string with n "\u2605" characters then (5 - n) "\u2606" characters and show it.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 3: Question 3 ================= */
+function initApp() {
+    var flashcard = document.getElementById('flashcard');
+
+    flashcard.addEventListener('click', function () {
+        // TODO: flashcard.classList.toggle("flipped"); then set flashcard.textContent to
+        // flashcard.getAttribute("data-back") when it has the class flipped, otherwise data-front.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 4: Question 4 ================= */
+function initApp() {
+    var servingsInput = document.getElementById('servingsInput');
+    var quantities = document.querySelectorAll('#ingredients .qty');
+
+    servingsInput.addEventListener('input', function () {
+        var servings = parseFloat(servingsInput.value);
+        // TODO: Loop over quantities. If servings is NaN or below 1 set each text to "?".
+        // Otherwise var base = parseFloat(span.getAttribute("data-base")); set text to parseFloat((base * servings / 2).toFixed(2)).
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 5: Question 5 ================= */
+function initApp() {
+    var postText = document.getElementById('postText');
+    var buttons = document.querySelectorAll('.emoji-btn');
+
+    function insertEmoji(emoji) {
+        // TODO: Append emoji to the end of postText.value.
+
+    }
+
+    function makeHandler(button) {
+        return function () {
+            insertEmoji(button.textContent);
+        };
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', makeHandler(buttons[i]));
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 6: Question 6 ================= */
+function initApp() {
+    var numberInput = document.getElementById('numberInput');
+    var checkBtn = document.getElementById('checkBtn');
+    var squareOut = document.getElementById('squareOut');
+
+    checkBtn.addEventListener('click', function () {
+        var n = parseFloat(numberInput.value);
+        // TODO: If n is NaN, negative or not whole show "Enter a whole number 0 or greater". var root = Math.sqrt(n);
+        // if Math.floor(root) === root show n + " is a perfect square (" + root + " \u00D7 " + root + ")", else n + " is not a perfect square".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 7: Question 7 ================= */
+function initApp() {
+    var wordInput = document.getElementById('wordInput');
+    var translateBtn = document.getElementById('translateBtn');
+    var pigOut = document.getElementById('pigOut');
+
+    translateBtn.addEventListener('click', function () {
+        var word = wordInput.value.trim();
+        // TODO: If word is "" or contains " " show "Enter one word". var lower = word.toLowerCase();
+        // if "aeiou".indexOf(lower.charAt(0)) !== -1 show lower + "way", else show lower.slice(1) + lower.charAt(0) + "ay".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 8: Question 8 ================= */
+function initApp() {
+    var buyBtn = document.getElementById('buyBtn');
+    var restockBtn = document.getElementById('restockBtn');
+    var ticketCount = document.getElementById('ticketCount');
+    var ticketStatus = document.getElementById('ticketStatus');
+    var left = 5;
+
+    buyBtn.addEventListener('click', function () {
+        // TODO: If left > 0: left = left - 1 and show it in ticketCount. Then if left === 0 show "Sold out"
+        // in ticketStatus and set buyBtn.disabled = true; otherwise show "Available".
+
+    });
+
+    restockBtn.addEventListener('click', function () {
+        left = 5;
+        ticketCount.textContent = left;
+        ticketStatus.textContent = 'Available';
+        buyBtn.disabled = false;
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 9: Question 9 ================= */
+function initApp() {
+    var wordInput = document.getElementById('wordInput');
+    var posInput = document.getElementById('posInput');
+    var showBtn = document.getElementById('showBtn');
+    var letterOut = document.getElementById('letterOut');
+    var letterStatus = document.getElementById('letterStatus');
+
+    showBtn.addEventListener('click', function () {
+        var word = wordInput.value.trim();
+        var pos = parseFloat(posInput.value);
+        // TODO: If word is "" → letterOut "?" and status "Enter a word". If pos is NaN, not whole, below 1 or above word.length
+        // → letterOut "?" and status "Position must be 1 to " + word.length. Otherwise letterOut = word.charAt(pos - 1)
+        // and status "Letter " + pos + " is " + that letter.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 10: Question 10 ================= */
+function initApp() {
+    var sentenceInput = document.getElementById('sentenceInput');
+    var findBtn = document.getElementById('findBtn');
+    var longestOut = document.getElementById('longestOut');
+
+    findBtn.addEventListener('click', function () {
+        var text = sentenceInput.value.trim();
+        // TODO: If text is "" show "Enter a sentence". Split on " " and loop; keep the first word whose length is
+        // strictly greater than the best so far. Show "Longest: " + word + " (" + word.length + " letters)".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 11: Question 11 ================= */
+function initApp() {
+    var selectAll = document.getElementById('selectAll');
+    var boxes = document.querySelectorAll('.pack-box');
+    var packCount = document.getElementById('packCount');
+
+    function refreshCount() {
+        var n = 0;
+        for (var i = 0; i < boxes.length; i++) {
+            if (boxes[i].checked) {
+                n = n + 1;
+            }
+        }
+        packCount.textContent = n + ' of ' + boxes.length + ' packed';
+    }
+
+    for (var j = 0; j < boxes.length; j++) {
+        boxes[j].addEventListener('change', refreshCount);
+    }
+
+    selectAll.addEventListener('change', function () {
+        // TODO: Loop over boxes and set each .checked to selectAll.checked, then call refreshCount().
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 12: Question 12 ================= */
+function initApp() {
+    var sentenceInput = document.getElementById('sentenceInput');
+    var reverseBtn = document.getElementById('reverseBtn');
+    var reversedOut = document.getElementById('reversedOut');
+
+    reverseBtn.addEventListener('click', function () {
+        var text = sentenceInput.value.trim();
+        // TODO: If text is "" show "Enter a sentence". Otherwise split on " ", push non-empty pieces into words,
+        // loop from the end to build a reversed array and show it joined with " ".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 13: Question 13 ================= */
+function initApp() {
+    var boxes = document.querySelectorAll('.book');
+    var progressFill = document.getElementById('progressFill');
+    var readCount = document.getElementById('readCount');
+
+    function updateProgress() {
+        // TODO: Count the checked boxes into n. progressFill.style.width = (n / boxes.length * 100) + "%";
+        // readCount.textContent = n + " of " + boxes.length + " read".
+
+    }
+
+    for (var i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener('change', updateProgress);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 14: Question 14 ================= */
+function initApp() {
+    var notes = document.getElementById('notes');
+    var pinStatus = document.getElementById('pinStatus');
+    var buttons = notes.querySelectorAll('.pin-btn');
+
+    function pinNote(card) {
+        // TODO: notes.insertBefore(card, notes.firstChild);
+        // pinStatus.textContent = "Pinned: " + card.querySelector(".note-title").textContent.
+
+    }
+
+    function makeHandler(button) {
+        return function () {
+            pinNote(button.parentNode);
+        };
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', makeHandler(buttons[i]));
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 15: Question 15 ================= */
+function initApp() {
+    var textInput = document.getElementById('textInput');
+    var convertBtn = document.getElementById('convertBtn');
+    var altOut = document.getElementById('altOut');
+
+    convertBtn.addEventListener('click', function () {
+        var text = textInput.value;
+        // TODO: If text.trim() is "" show "Type something first". Otherwise loop over text with index i and append
+        // text.charAt(i).toUpperCase() when i % 2 === 0, else .toLowerCase(); show the result.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 16: Question 16 ================= */
+function initApp() {
+    var slicesInput = document.getElementById('slicesInput');
+    var peopleInput = document.getElementById('peopleInput');
+    var shareBtn = document.getElementById('shareBtn');
+    var shareOut = document.getElementById('shareOut');
+
+    shareBtn.addEventListener('click', function () {
+        var slices = parseFloat(slicesInput.value);
+        var people = parseFloat(peopleInput.value);
+        // TODO: Validate slices (whole, >= 0) → "Enter slices"; people (whole, >= 1) → "Enter at least 1 person".
+        // each = Math.floor(slices / people); left = slices % people;
+        // show "Each person gets " + each + (each === 1 ? " slice, " : " slices, ") + left + " left over".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 17: Question 17 ================= */
+function initApp() {
+    var colorA = document.getElementById('colorA');
+    var colorB = document.getElementById('colorB');
+    var mixBtn = document.getElementById('mixBtn');
+    var mixOut = document.getElementById('mixOut');
+    var mixes = { 'red+blue': 'Purple', 'red+yellow': 'Orange', 'blue+yellow': 'Green' };
+
+    mixBtn.addEventListener('click', function () {
+        var a = colorA.value;
+        var b = colorB.value;
+        // TODO: If a === b show "Still " + a. Otherwise var result = mixes[a + "+" + b];
+        // if result is undefined use mixes[b + "+" + a]; show result.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 18: Question 18 ================= */
+function initApp() {
+    var subjectSel = document.getElementById('subjectSel');
+    var verbSel = document.getElementById('verbSel');
+    var objectSel = document.getElementById('objectSel');
+    var buildBtn = document.getElementById('buildBtn');
+    var sentenceOut = document.getElementById('sentenceOut');
+
+    buildBtn.addEventListener('click', function () {
+        var parts = [subjectSel.value, verbSel.value, objectSel.value];
+        // TODO: var sentence = parts.join(" ");
+        // show sentence.charAt(0).toUpperCase() + sentence.slice(1) + "." in sentenceOut.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 19: Question 19 ================= */
+function initApp() {
+    var scoreInput = document.getElementById('scoreInput');
+    var gradeBtn = document.getElementById('gradeBtn');
+    var gradeOut = document.getElementById('gradeOut');
+
+    gradeBtn.addEventListener('click', function () {
+        var score = parseFloat(scoreInput.value);
+        // TODO: If score is NaN, below 0 or above 100 show "Enter a score from 0 to 100".
+        // Otherwise pick the letter (>= 90 A, >= 80 B, >= 70 C, >= 60 D, else F) and show "Score " + score + " \u2192 " + letter.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 20: Question 20 ================= */
+function initApp() {
+    var radios = document.querySelectorAll('.size-radio');
+    var priceOut = document.getElementById('priceOut');
+
+    function updatePrice() {
+        var checked = document.querySelector('.size-radio:checked');
+        // TODO: If checked is null show "Pick a size". Otherwise var size = checked.value;
+        // show size.charAt(0).toUpperCase() + size.slice(1) + " pizza: $" + checked.getAttribute("data-price").
+
+    }
+
+    for (var i = 0; i < radios.length; i++) {
+        radios[i].addEventListener('change', updatePrice);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 21: Question 21 ================= */
+function initApp() {
+    var scoreInput = document.getElementById('scoreInput');
+    var submitBtn = document.getElementById('submitBtn');
+    var resetBestBtn = document.getElementById('resetBestBtn');
+    var bestScore = document.getElementById('bestScore');
+    var scoreStatus = document.getElementById('scoreStatus');
+    var best = 0;
+
+    submitBtn.addEventListener('click', function () {
+        var score = parseFloat(scoreInput.value);
+        // TODO: If score is NaN or below 0 show "Enter a score". If score > best: best = score, show best in bestScore
+        // and status "New high score!"; otherwise status "Best remains " + best.
+
+    });
+
+    resetBestBtn.addEventListener('click', function () {
+        best = 0;
+        bestScore.textContent = '0';
+        scoreStatus.textContent = '';
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 22: Question 22 ================= */
+function initApp() {
+    var nickname = document.getElementById('nickname');
+    var nickError = document.getElementById('nickError');
+
+    nickname.addEventListener('blur', function () {
+        var value = nickname.value.trim();
+        // TODO: If value is "" show "Nickname is required" in nickError and nickname.classList.add("invalid");
+        // otherwise set nickError text to "" and nickname.classList.remove("invalid").
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 23: Question 23 ================= */
+function initApp() {
+    var sticker = document.getElementById('sticker');
+    var rotateBtn = document.getElementById('rotateBtn');
+    var resetBtn = document.getElementById('resetBtn');
+    var angleOut = document.getElementById('angleOut');
+    var angle = 0;
+
+    rotateBtn.addEventListener('click', function () {
+        // TODO: angle = (angle + 90) % 360; sticker.style.transform = "rotate(" + angle + "deg)";
+        // angleOut.textContent = angle + "\u00B0".
+
+    });
+
+    resetBtn.addEventListener('click', function () {
+        angle = 0;
+        sticker.style.transform = '';
+        angleOut.textContent = '0\u00B0';
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 24: Question 24 ================= */
+function initApp() {
+    var songs = document.getElementById('songs');
+    var favorites = document.getElementById('favorites');
+    var favCount = document.getElementById('favCount');
+    var buttons = songs.querySelectorAll('.fav-btn');
+
+    function addFavorite(item, button) {
+        // TODO: favorites.appendChild(item); button.disabled = true; var n = favorites.children.length;
+        // favCount.textContent = n === 1 ? "1 favorite" : n + " favorites".
+
+    }
+
+    function makeHandler(button) {
+        return function () {
+            addFavorite(button.parentNode, button);
+        };
+    }
+
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].addEventListener('click', makeHandler(buttons[i]));
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 25: Question 25 ================= */
+function initApp() {
+    var wordA = document.getElementById('wordA');
+    var wordB = document.getElementById('wordB');
+    var checkBtn = document.getElementById('checkBtn');
+    var rhymeOut = document.getElementById('rhymeOut');
+
+    checkBtn.addEventListener('click', function () {
+        var a = wordA.value.trim();
+        var b = wordB.value.trim();
+        // TODO: If a.length < 3 or b.length < 3 show "Enter two words with at least 3 letters".
+        // Compare a.toLowerCase().slice(-2) with b.toLowerCase().slice(-2): show a + " and " + b + " rhyme!" or a + " and " + b + " do not rhyme".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 26: Question 26 ================= */
+function initApp() {
+    var wordInput = document.getElementById('wordInput');
+    var scoreBtn = document.getElementById('scoreBtn');
+    var scoreOut = document.getElementById('scoreOut');
+    var values = {
+        a: 1, b: 3, c: 3, d: 2, e: 1, f: 4, g: 2, h: 4, i: 1, j: 8, k: 5, l: 1, m: 3,
+        n: 1, o: 1, p: 3, q: 10, r: 1, s: 1, t: 1, u: 1, v: 4, w: 4, x: 8, y: 4, z: 10
+    };
+
+    scoreBtn.addEventListener('click', function () {
+        var word = wordInput.value.trim().toLowerCase();
+        // TODO: If word is "" show "Enter a word". Loop over word: if values[ch] is undefined show "Letters only" and stop,
+        // otherwise add values[ch] to a total. Finally show "Score: " + total.
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 27: Question 27 ================= */
+function initApp() {
+    var blendBtn = document.getElementById('blendBtn');
+    var blendOut = document.getElementById('blendOut');
+
+    blendBtn.addEventListener('click', function () {
+        var boxes = document.querySelectorAll('.fruit');
+        // TODO: Push the value of each checked box into an array. If it is empty show "Pick at least one ingredient";
+        // otherwise show "Your smoothie: " + picked.join(", ").
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 28: Question 28 ================= */
+function initApp() {
+    var langBtn = document.getElementById('langBtn');
+    var current = 'en';
+
+    langBtn.addEventListener('click', function () {
+        var nodes = document.querySelectorAll('[data-en]');
+        // TODO: current = current === "en" ? "es" : "en"; for each node set textContent to node.getAttribute("data-" + current);
+        // then set langBtn.textContent to "EN" when current is "es", otherwise "ES".
+
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+
+/* ================= QUESTION 29: Question 29 ================= */
+function initApp() {
+    var boxes = document.querySelectorAll('.topping-box');
+    var totalOut = document.getElementById('totalOut');
+
+    function updateTotal() {
+        var total = 8;
+        // TODO: For each checked box add parseFloat(box.getAttribute("data-price")) to total,
+        // then show "Total: $" + total.toFixed(2) in totalOut.
+
+    }
+
+    for (var i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener('change', updateTotal);
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initApp);
+} else {
+    initApp();
+}
+

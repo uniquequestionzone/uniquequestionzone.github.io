@@ -1,0 +1,1005 @@
+==========================================================
+QUESTION 1: Question 1 (Weekday Lookup)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Change this div into <label class="day-label" for="dayInput">
+Context:
+</p>
+        </div>
+        <div class="card-body">
+            <div class="field">
+                <!-- TODO: Change this div into <label class="day-label" for="dayInput"> -->
+                <div class="day-label">Day number (1-7)</div>
+                <input id="dayInput" class="input" type="number" min="1" max="7" value="3">
+            </div>
+            <div class="ac
+
+--- CSS TODOs ---
+Comment: TODO: Set background-color to #A7F3D0
+Context:
+isplay: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.day-out {
+    /* TODO: Set background-color to #A7F3D0 */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If n is NaN, below 1, above 7 or not whole show "Enter 1 to 7";
+        // otherwise show "Day " + n + " is " + days[n - 1].
+
+
+==========================================================
+QUESTION 2: Question 2 (Star Rating Preview)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add placeholder="0-5" to the input below
+Context:
+field">
+                <label class="field-label" for="ratingInput">Rating</label>
+                <!-- TODO: Add placeholder="0-5" to the input below -->
+                <input id="ratingInput" class="input" type="number" min="0" max="5">
+            </div>
+            <div class="actions">
+                <button id="showBtn" class="btn">Show</button
+
+--- CSS TODOs ---
+Comment: TODO: Set color to #F59E0B
+Context:
+ars {
+    display: block;
+    text-align: center;
+    font-size: 32px;
+    letter-spacing: 4px;
+    /* TODO: Set color to #F59E0B */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If n is NaN, below 0, above 5 or not whole show "Enter 0 to 5".
+        // Otherwise build a string with n "\u2605" characters then (5 - n) "\u2606" characters and show it.
+
+
+==========================================================
+QUESTION 3: Question 3 (Flashcard Flip)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add tabindex="0" to the div below
+Context:
+">Tap the card to reveal the answer.</p>
+        </div>
+        <div class="card-body">
+            <!-- TODO: Add tabindex="0" to the div below -->
+            <div id="flashcard" class="flashcard" data-front="Capital of Japan?" data-back="Tokyo">Capital of Japan?</div>
+            <p class="note">Click the card to flip it.</p>
+        </div>
+  
+
+--- CSS TODOs ---
+Comment: TODO: Set background-color to #DDD6FE
+Context:
+cus-visible {
+    outline: 3px dashed #7C3AED;
+    outline-offset: 4px;
+}
+
+.flashcard.flipped {
+    /* TODO: Set background-color to #DDD6FE */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: flashcard.classList.toggle("flipped"); then set flashcard.textContent to
+        // flashcard.getAttribute("data-back") when it has the class flipped, otherwise data-front.
+
+
+==========================================================
+QUESTION 4: Question 4 (Recipe Scaler)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add max="12" to the input below
+Context:
+d">
+                <label class="field-label" for="servingsInput">Servings</label>
+                <!-- TODO: Add max="12" to the input below -->
+                <input id="servingsInput" class="input" type="number" min="1" value="2">
+            </div>
+            <ul id="ingredients" class="list ingredient-list">
+                <li class="i
+
+--- CSS TODOs ---
+Comment: TODO: Set justify-content to space-between
+Context:
+last-child {
+    border-bottom: none;
+}
+
+.ingredient {
+    display: flex;
+    font-weight: 700;
+    /* TODO: Set justify-content to space-between */
+}
+
+.qty {
+    color: #7C3AED;
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: Loop over quantities. If servings is NaN or below 1 set each text to "?".
+        // Otherwise var base = parseFloat(span.getAttribute("data-base")); set text to parseFloat((base * servings / 2).toFixed(2)).
+
+
+==========================================================
+QUESTION 5: Question 5 (Emoji Inserter)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add maxlength="140" to the textarea below
+Context:
+field">
+                <label class="field-label" for="postText">Your post</label>
+                <!-- TODO: Add maxlength="140" to the textarea below -->
+                <textarea id="postText" class="input" rows="3">Great show tonight</textarea>
+            </div>
+            <div class="emoji-row">
+                <button class="emoji-btn" type="but
+
+--- CSS TODOs ---
+Comment: TODO: Set font-size to 24px
+Context:
+nd-color: #FFFFFF;
+    border: 3px solid #111111;
+    border-radius: 10px;
+    cursor: pointer;
+    /* TODO: Set font-size to 24px */
+}
+
+.emoji-btn:hover {
+    background-color: #FDE68A;
+}
+
+.emoji-btn:focus-visible {
+    outline: 3px
+
+--- JS TODOs ---
+Comment:
+// TODO: Append emoji to the end of postText.value.
+
+
+==========================================================
+QUESTION 6: Question 6 (Square Number Check)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add step="1" to the input below
+Context:
+field">
+                <label class="field-label" for="numberInput">Number</label>
+                <!-- TODO: Add step="1" to the input below -->
+                <input id="numberInput" class="input" type="number" min="0" value="49">
+            </div>
+            <div class="actions">
+                <button id="checkBtn" class="btn">Check</b
+
+--- CSS TODOs ---
+Comment: TODO: Set box-shadow to 6px 6px 0 #111111
+Context:
+put {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Square Number Check ===== */
+.square-out {
+    /* TODO: Set box-shadow to 6px 6px 0 #111111 */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If n is NaN, negative or not whole show "Enter a whole number 0 or greater". var root = Math.sqrt(n);
+        // if Math.floor(root) === root show n + " is a perfect square (" + root + " \u00D7 " + root + ")", else n + " is not a perfect square".
+
+
+==========================================================
+QUESTION 7: Question 7 (Pig Latin Word)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add for="wordInput" to the label below
+Context:
+</p>
+        </div>
+        <div class="card-body">
+            <div class="field">
+                <!-- TODO: Add for="wordInput" to the label below -->
+                <label class="field-label">Word</label>
+                <input id="wordInput" class="input" type="text" value="Pizza">
+            </div>
+            <div class="actions">
+           
+
+--- CSS TODOs ---
+Comment: TODO: Set text-transform to lowercase
+Context:
+20px;
+    height: 20px;
+}
+
+/* ===== Pig Latin Word ===== */
+.pig-out {
+    letter-spacing: 1px;
+    /* TODO: Set text-transform to lowercase */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If word is "" or contains " " show "Enter one word". var lower = word.toLowerCase();
+        // if "aeiou".indexOf(lower.charAt(0)) !== -1 show lower + "way", else show lower.slice(1) + lower.charAt(0) + "ay".
+
+
+==========================================================
+QUESTION 8: Question 8 (Tickets Left)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Change this span into a <strong> element (keep id="ticketCount")
+Context:
+class="card-body">
+            <p class="count-line">
+                Tickets left:
+                <!-- TODO: Change this span into a <strong> element (keep id="ticketCount") -->
+                <span id="ticketCount">5</span>
+            </p>
+            <div class="actions">
+                <button id="buyBtn" class="btn buy-btn">Buy ticket</button>
+                <button 
+
+--- CSS TODOs ---
+Comment: TODO: Set cursor to not-allowed
+Context:
+size: 22px;
+}
+
+.buy-btn:disabled {
+    opacity: 0.5;
+    transform: none;
+    box-shadow: none;
+    /* TODO: Set cursor to not-allowed */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If left > 0: left = left - 1 and show it in ticketCount. Then if left === 0 show "Sold out"
+        // in ticketStatus and set buyBtn.disabled = true; otherwise show "Available".
+
+
+==========================================================
+QUESTION 9: Question 9 (Letter at Position)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add min="1" to the input below
+Context:
+
+                    <label class="field-label" for="posInput">Position</label>
+                    <!-- TODO: Add min="1" to the input below -->
+                    <input id="posInput" class="input" type="number" value="2">
+                </div>
+            </div>
+            <div class="actions">
+                <button id="showBtn" class=
+
+--- CSS TODOs ---
+Comment: TODO: Set width to 64px
+Context:
+ center;
+    background-color: #FFFFFF;
+    border: 3px solid #111111;
+    border-radius: 10px;
+    /* TODO: Set width to 64px */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If word is "" → letterOut "?" and status "Enter a word". If pos is NaN, not whole, below 1 or above word.length
+        // → letterOut "?" and status "Position must be 1 to " + word.length. Otherwise letterOut = word.charAt(pos - 1)
+        // and status "Letter " + pos + " is " + that letter.
+
+
+==========================================================
+QUESTION 10: Question 10 (Longest Word)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add spellcheck="false" to the input below
+Context:
+d">
+                <label class="field-label" for="sentenceInput">Sentence</label>
+                <!-- TODO: Add spellcheck="false" to the input below -->
+                <input id="sentenceInput" class="input" type="text" value="an extraordinary day">
+            </div>
+            <div class="actions">
+                <button id="findBtn" class="btn"
+
+--- CSS TODOs ---
+Comment: TODO: Set text-decoration to underline
+Context:
+===== */
+.longest-out {
+    text-decoration-color: #7C3AED;
+    text-decoration-thickness: 3px;
+    /* TODO: Set text-decoration to underline */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If text is "" show "Enter a sentence". Split on " " and loop; keep the first word whose length is
+        // strictly greater than the best so far. Show "Longest: " + word + " (" + word.length + " letters)".
+
+
+==========================================================
+QUESTION 11: Question 11 (Packing List Select-All)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add title="Select all items" to the checkbox below
+Context:
+div>
+        <div class="card-body">
+            <label class="check master-check">
+                <!-- TODO: Add title="Select all items" to the checkbox below -->
+                <input id="selectAll" type="checkbox">
+                Select all
+            </label>
+            <ul class="list pack-list">
+                <li><label class="check pack-item"><inpu
+
+--- CSS TODOs ---
+Comment: TODO: Set accent-color to #7C3AED
+Context:
+
+}
+
+.pack-item {
+    font-weight: 600;
+}
+
+.pack-item input {
+    width: 20px;
+    height: 20px;
+    /* TODO: Set accent-color to #7C3AED */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: Loop over boxes and set each .checked to selectAll.checked, then call refreshCount().
+
+
+==========================================================
+QUESTION 12: Question 12 (Reverse Word Order)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add cols="40" to the textarea below
+Context:
+d">
+                <label class="field-label" for="sentenceInput">Sentence</label>
+                <!-- TODO: Add cols="40" to the textarea below -->
+                <textarea id="sentenceInput" class="input" rows="3">the quick brown fox</textarea>
+            </div>
+            <div class="actions">
+                <button id="reverseBtn" class="
+
+--- CSS TODOs ---
+Comment: TODO: Set text-indent to 12px
+Context:
+ut {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Reverse Word Order ===== */
+.reversed-out {
+    /* TODO: Set text-indent to 12px */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If text is "" show "Enter a sentence". Otherwise split on " ", push non-empty pieces into words,
+        // loop from the end to build a reversed array and show it joined with " ".
+
+
+==========================================================
+QUESTION 13: Question 13 (Reading Checklist)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add role="progressbar" to the div below
+Context:
+ox"> Wonder</label></li>
+            </ul>
+            <div class="progress-track">
+                <!-- TODO: Add role="progressbar" to the div below -->
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            <p id="readCount" class="note">0 of 5 read</p>
+        </div>
+    </div>
+    <script src="index.js">
+
+--- CSS TODOs ---
+Comment: TODO: Set background-color to #7C3AED
+Context:
+border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    width: 0;
+    height: 100%;
+    /* TODO: Set background-color to #7C3AED */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: Count the checked boxes into n. progressFill.style.width = (n / boxes.length * 100) + "%";
+        // readCount.textContent = n + " of " + boxes.length + " read".
+
+
+==========================================================
+QUESTION 14: Question 14 (Pin Note to Top)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Change each of the three <div class="note-card"> elements below into <article class="note-card">
+Context:
+  </div>
+        <div class="card-body">
+            <div id="notes" class="notes">
+                <!-- TODO: Change each of the three <div class="note-card"> elements below into <article class="note-card"> -->
+                <div class="note-card"><span class="note-title">Buy milk</span><button class="pin-btn" type="button" aria-label="Pin Buy milk">📌</button></div>
+                <div class="note-card">
+
+--- CSS TODOs ---
+Comment: TODO: Set background-color to #FDE68A
+Context:
+: 3px solid #111111;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.note-card:first-child {
+    /* TODO: Set background-color to #FDE68A */
+}
+
+.pin-btn {
+    padding: 4px 8px;
+    font-size: 18px;
+    background-color: #FFFFFF;
+    border:
+
+--- JS TODOs ---
+Comment:
+// TODO: notes.insertBefore(card, notes.firstChild);
+        // pinStatus.textContent = "Pinned: " + card.querySelector(".note-title").textContent.
+
+
+==========================================================
+QUESTION 15: Question 15 (Alternating Caps)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add placeholder="type something" to the input below
+Context:
+ield">
+                <label class="field-label" for="textInput">Your text</label>
+                <!-- TODO: Add placeholder="type something" to the input below -->
+                <input id="textInput" class="input" type="text" value="hello world">
+            </div>
+            <div class="actions">
+                <button id="convertBtn" class="btn">Convert</
+
+--- CSS TODOs ---
+Comment: TODO: Set font-family to "Comic Sans MS", cursive
+Context:
+: 20px;
+    height: 20px;
+}
+
+/* ===== Alternating Caps ===== */
+.alt-out {
+    font-size: 22px;
+    /* TODO: Set font-family to "Comic Sans MS", cursive */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If text.trim() is "" show "Type something first". Otherwise loop over text with index i and append
+        // text.charAt(i).toUpperCase() when i % 2 === 0, else .toLowerCase(); show the result.
+
+
+==========================================================
+QUESTION 16: Question 16 (Pizza Slice Share)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Change type="text" to type="number" on the input below
+Context:
+                    <label class="field-label" for="peopleInput">People</label>
+                    <!-- TODO: Change type="text" to type="number" on the input below -->
+                    <input id="peopleInput" class="input" type="text" value="3">
+                </div>
+            </div>
+            <div class="actions">
+                <button id="shareBtn" clas
+
+--- CSS TODOs ---
+Comment: TODO: Set background-color to #FBCFE8
+Context:
+ input {
+    width: 20px;
+    height: 20px;
+}
+
+/* ===== Pizza Slice Share ===== */
+.share-out {
+    /* TODO: Set background-color to #FBCFE8 */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: Validate slices (whole, >= 0) → "Enter slices"; people (whole, >= 1) → "Enter at least 1 person".
+        // each = Math.floor(slices / people); left = slices % people;
+        // show "Each person gets " + each + (each === 1 ? " slice, " : " slices, ") + left + " left over".
+
+
+==========================================================
+QUESTION 17: Question 17 (Color Mixer)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add the selected attribute to the Red option below
+Context:
+                   <label class="field-label" for="colorA">First colour</label>
+                    <!-- TODO: Add the selected attribute to the Red option below -->
+                    <select id="colorA" class="input">
+                        <option value="blue">Blue</option>
+                        <option value="red">Red</option>
+                        <opt
+
+--- CSS TODOs ---
+Comment: TODO: Set outline to 3px dashed #111111
+Context:
+h: 20px;
+    height: 20px;
+}
+
+/* ===== Color Mixer ===== */
+.mix-out {
+    outline-offset: 4px;
+    /* TODO: Set outline to 3px dashed #111111 */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If a === b show "Still " + a. Otherwise var result = mixes[a + "+" + b];
+        // if result is undefined use mixes[b + "+" + a]; show result.
+
+
+==========================================================
+QUESTION 18: Question 18 (Silly Sentence Builder)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add aria-live="polite" to the div below
+Context:
+s">
+                <button id="buildBtn" class="btn">Build</button>
+            </div>
+            <!-- TODO: Add aria-live="polite" to the div below -->
+            <div id="sentenceOut" class="result sentence-out"></div>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
+
+--- CSS TODOs ---
+Comment: TODO: Set text-shadow to 2px 2px 0 #FDE68A
+Context:
+ height: 20px;
+}
+
+/* ===== Silly Sentence Builder ===== */
+.sentence-out {
+    font-size: 20px;
+    /* TODO: Set text-shadow to 2px 2px 0 #FDE68A */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: var sentence = parts.join(" ");
+        // show sentence.charAt(0).toUpperCase() + sentence.slice(1) + "." in sentenceOut.
+
+
+==========================================================
+QUESTION 19: Question 19 (Grade Letter)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add max="100" to the input below
+Context:
+ld">
+                <label class="field-label" for="scoreInput">Test score</label>
+                <!-- TODO: Add max="100" to the input below -->
+                <input id="scoreInput" class="input" type="number" min="0" value="85">
+            </div>
+            <div class="actions">
+                <button id="gradeBtn" class="btn">Grade</bu
+
+--- CSS TODOs ---
+Comment: TODO: Set font-size to 48px
+Context:
+ Letter ===== */
+.grade-out {
+    display: block;
+    text-align: center;
+    line-height: 1.1;
+    /* TODO: Set font-size to 48px */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If score is NaN, below 0 or above 100 show "Enter a score from 0 to 100".
+        // Otherwise pick the letter (>= 90 A, >= 80 B, >= 70 C, >= 60 D, else F) and show "Score " + score + " \u2192 " + letter.
+
+
+==========================================================
+QUESTION 20: Question 20 (Pizza Size Price)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add the checked attribute to the radio below
+Context:
+ize-radio" type="radio" name="size" value="small" data-price="9">Small — $9</label>
+                <!-- TODO: Add the checked attribute to the radio below -->
+                <label class="size-option"><input class="size-radio" type="radio" name="size" value="medium" data-price="12">Medium — $12</label>
+                <label class="size-option"><input cla
+
+--- CSS TODOs ---
+Comment: TODO: Set gap to 10px
+Context:
+ border: 3px solid #111111;
+    border-radius: 10px;
+    font-weight: 700;
+    cursor: pointer;
+    /* TODO: Set gap to 10px */
+}
+
+.size-option input {
+    width: 20px;
+    height: 20px;
+    accent-color: #7C3AED;
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If checked is null show "Pick a size". Otherwise var size = checked.value;
+        // show size.charAt(0).toUpperCase() + size.slice(1) + " pizza: $" + checked.getAttribute("data-price").
+
+
+==========================================================
+QUESTION 21: Question 21 (High Score Tracker)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add autocomplete="off" to the input below
+Context:
+                 <label class="field-label" for="scoreInput">Your score</label>
+                    <!-- TODO: Add autocomplete="off" to the input below -->
+                    <input id="scoreInput" class="input" type="number" min="0" value="120">
+                </div>
+                <button id="submitBtn" class="btn">Submit score</button>
+           
+
+--- CSS TODOs ---
+Comment: TODO: Set color to #16A34A
+Context:
+
+.best-line {
+    margin: 0 0 14px;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.best-score {
+    /* TODO: Set color to #16A34A */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If score is NaN or below 0 show "Enter a score". If score > best: best = score, show best in bestScore
+        // and status "New high score!"; otherwise status "Best remains " + best.
+
+
+==========================================================
+QUESTION 22: Question 22 (Nickname Required)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add aria-required="true" to the input below
+Context:
+"field">
+                <label class="field-label" for="nickname">Nickname</label>
+                <!-- TODO: Add aria-required="true" to the input below -->
+                <input id="nickname" class="input" type="text" placeholder="e.g. pixelpanda">
+                <p id="nickError" class="error-text"></p>
+            </div>
+            <div class="fiel
+
+--- CSS TODOs ---
+Comment: TODO: Set color to #DC2626
+Context:
+or-text {
+    min-height: 20px;
+    margin: 6px 0 0;
+    font-size: 14px;
+    font-weight: 700;
+    /* TODO: Set color to #DC2626 */
+}
+
+.input.invalid {
+    border-color: #DC2626;
+    background-color: #FEE2E2;
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If value is "" show "Nickname is required" in nickError and nickname.classList.add("invalid");
+        // otherwise set nickError text to "" and nickname.classList.remove("invalid").
+
+
+==========================================================
+QUESTION 23: Question 23 (Rotate Sticker)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add role="img" to the div below
+Context:
+he sticker a quarter turn at a time.</p>
+        </div>
+        <div class="card-body">
+            <!-- TODO: Add role="img" to the div below -->
+            <div id="sticker" class="sticker" aria-label="Star sticker">★</div>
+            <div class="actions">
+                <button id="rotateBtn" class="btn">Rotate 90°</button>
+              
+
+--- CSS TODOs ---
+Comment: TODO: Set transition to transform 0.3s ease
+Context:
+e: 48px;
+    background-color: #FDE68A;
+    border: 3px solid #111111;
+    border-radius: 16px;
+    /* TODO: Set transition to transform 0.3s ease */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: angle = (angle + 90) % 360; sticker.style.transform = "rotate(" + angle + "deg)";
+        // angleOut.textContent = angle + "\u00B0".
+
+
+==========================================================
+QUESTION 24: Question 24 (Add to Favorites)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add role="list" to the ul below
+Context:
+li>
+            </ul>
+            <span class="field-label fav-label">Favourites</span>
+            <!-- TODO: Add role="list" to the ul below -->
+            <ul id="favorites" class="list favorites"></ul>
+            <p id="favCount" class="note">0 favorites</p>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
+
+--- CSS TODOs ---
+Comment: TODO: Set color to #7C3AED
+Context:
+  min-height: 44px;
+    border: 3px dashed #111111;
+    border-radius: 12px;
+}
+
+.favorites li {
+    /* TODO: Set color to #7C3AED */
+}
+
+.fav-label {
+    display: block;
+    margin-top: 16px;
+}
+
+.fav-btn {
+    padding: 4px 10px;
+    
+
+--- JS TODOs ---
+Comment:
+// TODO: favorites.appendChild(item); button.disabled = true; var n = favorites.children.length;
+        // favCount.textContent = n === 1 ? "1 favorite" : n + " favorites".
+
+
+==========================================================
+QUESTION 25: Question 25 (Rhyme Check)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add enterkeyhint="done" to the input below
+Context:
+
+                    <label class="field-label" for="wordB">Second word</label>
+                    <!-- TODO: Add enterkeyhint="done" to the input below -->
+                    <input id="wordB" class="input" type="text" value="hat">
+                </div>
+            </div>
+            <div class="actions">
+                <button id="checkBtn" class="b
+
+--- CSS TODOs ---
+Comment: TODO: Set padding-left to 24px
+Context:
+px;
+    height: 20px;
+}
+
+/* ===== Rhyme Check ===== */
+.rhyme-out {
+    border-left-width: 8px;
+    /* TODO: Set padding-left to 24px */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If a.length < 3 or b.length < 3 show "Enter two words with at least 3 letters".
+        // Compare a.toLowerCase().slice(-2) with b.toLowerCase().slice(-2): show a + " and " + b + " rhyme!" or a + " and " + b + " do not rhyme".
+
+
+==========================================================
+QUESTION 26: Question 26 (Scrabble Score)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add aria-label="Word" to the input below
+Context:
+="card-body">
+            <div class="row">
+                <div class="field">
+                    <!-- TODO: Add aria-label="Word" to the input below -->
+                    <input id="wordInput" class="input" type="text" value="quiz" placeholder="Type a word">
+                </div>
+                <button id="scoreBtn" class="btn">Score</button>
+   
+
+--- CSS TODOs ---
+Comment: TODO: Set font-size to 36px
+Context:
+core-result {
+    text-align: center;
+}
+
+.score-out {
+    display: block;
+    line-height: 1.1;
+    /* TODO: Set font-size to 36px */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: If word is "" show "Enter a word". Loop over word: if values[ch] is undefined show "Letters only" and stop,
+        // otherwise add values[ch] to a total. Finally show "Score: " + total.
+
+
+==========================================================
+QUESTION 27: Question 27 (Smoothie Builder)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add <legend>Pick ingredients</legend> here, as the first child of the fieldset
+Context:
+/div>
+        <div class="card-body">
+            <fieldset class="ingredient-box">
+                <!-- TODO: Add <legend>Pick ingredients</legend> here, as the first child of the fieldset -->
+
+                <label class="check"><input class="fruit" type="checkbox" value="mango"> Mango</label>
+                <label class="check"><input class="fruit" type="checkbox" value="banana"> Banan
+
+--- CSS TODOs ---
+Comment: TODO: Set font-weight to 800
+Context:
+{
+    margin-bottom: 8px;
+}
+
+.ingredient-box input {
+    accent-color: #7C3AED;
+}
+
+.blend-out {
+    /* TODO: Set font-weight to 800 */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: Push the value of each checked box into an array. If it is empty show "Pick at least one ingredient";
+        // otherwise show "Your smoothie: " + picked.join(", ").
+
+
+==========================================================
+QUESTION 28: Question 28 (Language Toggle)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Add lang="en" to the <html> element below
+Context:
+<!DOCTYPE html>
+<!-- TODO: Add lang="en" to the <html> element below -->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language Toggle</title>
+    <link rel="stylesheet" href="index.css">
+</h
+
+--- CSS TODOs ---
+Comment: TODO: Set border-style to dashed
+Context:
+ang-btn {
+    background-color: #FFFFFF;
+    color: #111111;
+    box-shadow: 4px 4px 0 #111111;
+    /* TODO: Set border-style to dashed */
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: current = current === "en" ? "es" : "en"; for each node set textContent to node.getAttribute("data-" + current);
+        // then set langBtn.textContent to "EN" when current is "es", otherwise "ES".
+
+
+==========================================================
+QUESTION 29: Question 29 (Toppings Total)
+==========================================================
+--- HTML TODOs ---
+Comment: TODO: Change this div into an <output> element (keep id and class)
+Context:
+opping-box" type="checkbox" data-price="2.25"> Bacon — $2.25</label>
+            </div>
+            <!-- TODO: Change this div into an <output> element (keep id and class) -->
+            <div id="totalOut" class="result">Total: $8.00</div>
+            <p class="note">Base pizza $8.00</p>
+        </div>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
+
+--- CSS TODOs ---
+Comment: TODO: Set cursor to pointer
+Context:
+;
+}
+
+/* ===== Toppings Total ===== */
+.toppings .check {
+    margin-bottom: 10px;
+}
+
+.topping {
+    /* TODO: Set cursor to pointer */
+}
+
+.topping input {
+    accent-color: #7C3AED;
+}
+
+output.result {
+    display: block;
+}
+
+--- JS TODOs ---
+Comment:
+// TODO: For each checked box add parseFloat(box.getAttribute("data-price")) to total,
+        // then show "Total: $" + total.toFixed(2) in totalOut.
+
+
