@@ -3727,12 +3727,12 @@
         { min: new THREE.Vector3(11.7, 13.6, 15.2), max: new THREE.Vector3(18.0, 26.0, 16.0), type: 'wall' },
 
         // 1st Floor Floor Slabs
-        { min: new THREE.Vector3(-10.0, 13.6, -15.2), max: new THREE.Vector3(17.2, 14.2, 15.2), type: 'step' },
-        { min: new THREE.Vector3(-17.2, 13.6, -15.2), max: new THREE.Vector3(-10.0, 14.2, -5.5), type: 'step' },
-        { min: new THREE.Vector3(-10.2, 14.0, -6.0), max: new THREE.Vector3(-9.8, 17.5, 10.0), type: 'railing' },
+        { min: new THREE.Vector3(-10.0, 13.6, -15.2), max: new THREE.Vector3(17.2, 14.0, 15.2), type: 'step' },
+        { min: new THREE.Vector3(-17.2, 13.6, -15.2), max: new THREE.Vector3(-10.0, 14.0, -5.2), type: 'step' },
+        { min: new THREE.Vector3(-10.2, 14.0, -5.2), max: new THREE.Vector3(-9.8, 17.5, 10.0), type: 'railing' },
 
         // Tactical Balcony
-        { min: new THREE.Vector3(3.0, 13.6, 15.2), max: new THREE.Vector3(16.0, 14.2, 21.0), type: 'step' },
+        { min: new THREE.Vector3(3.0, 13.6, 15.2), max: new THREE.Vector3(16.0, 14.0, 21.0), type: 'step' },
         { min: new THREE.Vector3(3.0, 14.2, 20.4), max: new THREE.Vector3(16.0, 20.0, 21.0), type: 'wall' },
         { min: new THREE.Vector3(3.0, 14.2, 15.2), max: new THREE.Vector3(3.6, 20.0, 20.4), type: 'wall' },
         { min: new THREE.Vector3(15.4, 14.2, 15.2), max: new THREE.Vector3(16.0, 20.0, 20.4), type: 'wall' },
@@ -3752,25 +3752,8 @@
         { min: new THREE.Vector3(-18.0, 26.4, -2.0), max: new THREE.Vector3(-17.2, 27.8, 16.0), type: 'cover_wall' }
     ];
 
-    // Staircase Steps (Ground to 1st Floor)
-    for (let i = 0; i < 16; i++) {
-        const z_start = 10.0 - i * 1.0;
-        STANDARD_BUILDING_BOXES.push({
-            min: new THREE.Vector3(-17.2, 0.0, z_start - 1.1),
-            max: new THREE.Vector3(-10.0, 0.4 + (i + 1) * 0.85, z_start),
-            type: 'step'
-        });
-    }
-
-    // Upper Staircase Steps (1st Floor to Rooftop / Top of Building across rear wall)
-    for (let i = 0; i < 14; i++) {
-        const x_start = -9.5 + i * 1.0;
-        STANDARD_BUILDING_BOXES.push({
-            min: new THREE.Vector3(x_start, 14.0, -15.5),
-            max: new THREE.Vector3(x_start + 1.1, 14.0 + (i + 1) * 0.88, -11.5),
-            type: 'step'
-        });
-    }
+    // NOTE: Stair flight physical collision is handled 100% smoothly via continuous physical ramps
+    // in updatePlayer, eliminating stair-step snagging, lip catching, and boundary friction for mobile & desktop.
 
     function buildCityHousesFurnishings(bldg, sharedStairGeo, sharedRiserGeo) {
         const hg = new THREE.Group();
@@ -11491,6 +11474,12 @@
         } else if (distToFrontDoor < 6.5) {
             nextPromptText = doorOpen ? "🚪 TAP / [E] TO CLOSE DOOR" : "🚪 TAP / [E] TO OPEN DOOR";
             nextDoorBtnText = doorOpen ? "CLOSE DOOR" : "OPEN DOOR";
+        } else if (player.pos.distanceTo(new THREE.Vector3(-13.6, 0.4, 10.0)) < 4.8 && player.pos.y < 3.0) {
+            nextPromptText = "🏢 WALK UP STAIRS TO 1ST FLOOR";
+        } else if (player.pos.distanceTo(new THREE.Vector3(-13.6, 14.0, -6.0)) < 4.2 && player.pos.y >= 12.0) {
+            nextPromptText = "🏢 1ST FLOOR LANDING &bull; WALK TO HALL OR ROOFTOP";
+        } else if (player.pos.distanceTo(new THREE.Vector3(-9.5, 14.0, -13.5)) < 4.2 && player.pos.y >= 12.0 && player.pos.y < 16.0) {
+            nextPromptText = "▲ ROOFTOP STAIRS &bull; WALK UP TO SNIPER NEST";
         }
 
         if (typeof _lastPromptText === 'undefined') window._lastPromptText = '';
@@ -11572,6 +11561,30 @@
                 player.vel.z = 0;
             }
 
+            // Mobile & Touch Stair Navigation Assist:
+            // When moving near the foot of the stairs on the ground floor, gently steer towards the center of the flight (-13.6)
+            if (typeof CITY_BUILDINGS !== 'undefined' && (touchJoystick.active || keys['KeyW'] || keys['w'] || keys['ArrowUp'])) {
+                for (let b = 0; b < CITY_BUILDINGS.length; b++) {
+                    const bldg = CITY_BUILDINGS[b];
+                    const dx = player.pos.x - bldg.x;
+                    const dz = player.pos.z - bldg.z;
+                    if (Math.abs(dx) > 28.0 || Math.abs(dz) > 28.0) continue;
+                    const rot = bldg.rotY || 0;
+                    const cosA = Math.cos(-rot);
+                    const sinA = Math.sin(-rot);
+                    const lx = dx * cosA - dz * sinA;
+                    const lz = dx * sinA + dz * cosA;
+
+                    // Near foot of stairs on ground floor (Z: 8.5 to 13.0, X: -17.5 to -8.5, Y < 3.0)
+                    if (lx >= -17.5 && lx <= -8.5 && lz >= 8.5 && lz <= 13.0 && player.pos.y < 3.0) {
+                        const targetDiffX = (-13.6 - lx) * Math.min(1.0, delta * 6.0);
+                        player.vel.x += targetDiffX * cosA * curSpeed;
+                        player.vel.z -= targetDiffX * sinA * curSpeed;
+                    }
+                    break;
+                }
+            }
+
             if ((keys['Space'] || touchJumpActive) && player.onGround) {
                 if (!tryVaultOverWall()) {
                     player.vel.y = player.jumpSpeed;
@@ -11606,63 +11619,90 @@
                 const localX = dx * cosA - dz * sinA;
                 const localZ = dx * sinA + dz * cosA;
 
-                // 1. Ground to 1st Floor Stairs (along left wall: localX in [-17.5, -9.5], localZ from +10.5 down to -6.5)
-                if (localX >= -17.5 && localX <= -9.5 && localZ >= -6.5 && localZ <= 10.5) {
+                // 1. Ground to 1st Floor Stairs (along left wall: wide forgiving envelope)
+                if (localX >= -17.8 && localX <= -8.8 && localZ >= -8.5 && localZ <= 12.8) {
                     inStairZone = true;
-                    const t = (10.0 - localZ) / 16.0; // 0 at bottom (Z=10.0), 1 at top (Z=-6.0)
-                    const rampY = 0.4 + Math.max(0.0, Math.min(1.0, t)) * 13.6; // 0.4m -> 14.0m
-                    if (newPos.y >= rampY - 2.5 && newPos.y <= rampY + 3.5) {
-                        floorY = Math.max(floorY, rampY);
-                        newPos.y = Math.max(newPos.y, rampY);
+                    const t = Math.max(0.0, Math.min(1.0, (10.0 - localZ) / 16.0)); // 0 at bottom (Z >= 10.0), 1 at top (Z <= -6.0)
+                    const rampY = 0.4 + t * 13.6; // 0.4m -> 14.0m
+                    floorY = Math.max(floorY, rampY);
+                    if (newPos.y < rampY) {
+                        newPos.y = rampY;
                         player.vel.y = 0;
                         player.onGround = true;
                     }
+                    // Lateral safety containment along active flight (Z in [-5.5, 9.5])
+                    // Prevents accidental fall off the open edge or scraping against walls on mobile touchscreens
+                    if (localZ < 9.5 && localZ > -5.5 && newPos.y > 1.2) {
+                        const targetX = Math.max(-16.2, Math.min(-10.5, localX));
+                        if (targetX !== localX) {
+                            const diffX = targetX - localX;
+                            newPos.x += diffX * cosA;
+                            newPos.z -= diffX * sinA;
+                        }
+                    }
                 }
 
-                // 2. 1st Floor Rear Landing & Slabs
-                // Rear landing behind top of stairs: localX in [-17.5, -9.5], localZ in [-15.5, -5.5]
-                if (localX >= -17.5 && localX <= -9.5 && localZ >= -15.5 && localZ <= -5.5 && newPos.y >= 11.5) {
+                // 2. 1st Floor Rear Landing & Slabs (Behind top of stairs)
+                if (localX >= -17.8 && localX <= -9.0 && localZ >= -15.5 && localZ <= -5.0 && newPos.y >= 11.5) {
                     floorY = Math.max(floorY, 14.0);
-                    newPos.y = Math.max(newPos.y, 14.0);
-                    player.vel.y = 0;
-                    player.onGround = true;
+                    if (newPos.y < 14.0) {
+                        newPos.y = 14.0;
+                        player.vel.y = 0;
+                        player.onGround = true;
+                    }
+                    inStairZone = true;
                 }
 
                 // 1st Floor main continuous slab: localX in [-10.0, 17.5], |localZ| <= 15.5
                 if (localX >= -10.0 && localX <= 17.5 && Math.abs(localZ) <= 15.5 && newPos.y >= 11.5 && newPos.y < 24.0) {
                     floorY = Math.max(floorY, 14.0);
-                    newPos.y = Math.max(newPos.y, 14.0);
-                    player.vel.y = 0;
-                    player.onGround = true;
-                }
-
-                // 1st Floor exterior squad balcony: localX in [3.0, 16.5], localZ in [15.2, 21.0]
-                if (localX >= 3.0 && localX <= 16.5 && localZ >= 15.2 && localZ <= 21.0 && newPos.y >= 11.5 && newPos.y < 24.0) {
-                    floorY = Math.max(floorY, 14.0);
-                    newPos.y = Math.max(newPos.y, 14.0);
-                    player.vel.y = 0;
-                    player.onGround = true;
-                }
-
-                // 3. 1st Floor to Rooftop Stairs (rising along rear wall: localX in [-10.5, 4.5], localZ in [-15.5, -11.0])
-                if (localX >= -10.5 && localX <= 4.5 && localZ >= -15.5 && localZ <= -11.0 && newPos.y >= 12.0) {
-                    inStairZone = true;
-                    const tRoof = (localX - (-10.0)) / 14.0; // 0 at 1st floor (X = -10.0), 1 at roof (X = 4.0)
-                    const rampRoofY = 14.0 + Math.max(0.0, Math.min(1.0, tRoof)) * 12.4; // 14.0m -> 26.4m
-                    if (newPos.y >= rampRoofY - 2.5 && newPos.y <= rampRoofY + 3.5) {
-                        floorY = Math.max(floorY, rampRoofY);
-                        newPos.y = Math.max(newPos.y, rampRoofY);
+                    if (newPos.y < 14.0) {
+                        newPos.y = 14.0;
                         player.vel.y = 0;
                         player.onGround = true;
                     }
                 }
 
-                // 4. Rooftop Walkable Floor Slab (|localX| <= 17.5, |localZ| <= 15.5, Y >= 24.8)
-                if (Math.abs(localX) <= 17.5 && Math.abs(localZ) <= 15.5 && newPos.y >= 24.8) {
+                // 1st Floor exterior squad balcony: localX in [3.0, 16.5], localZ in [15.2, 21.0]
+                if (localX >= 3.0 && localX <= 16.5 && localZ >= 15.2 && localZ <= 21.0 && newPos.y >= 11.5 && newPos.y < 24.0) {
+                    floorY = Math.max(floorY, 14.0);
+                    if (newPos.y < 14.0) {
+                        newPos.y = 14.0;
+                        player.vel.y = 0;
+                        player.onGround = true;
+                    }
+                }
+
+                // 3. 1st Floor to Rooftop Stairs (rising along rear wall: wide forgiving envelope)
+                if (localX >= -11.0 && localX <= 5.0 && localZ >= -16.0 && localZ <= -10.5 && newPos.y >= 12.0) {
+                    inStairZone = true;
+                    const tRoof = Math.max(0.0, Math.min(1.0, (localX - (-10.0)) / 14.0)); // 0 at 1st floor (X = -10.0), 1 at roof (X = 4.0)
+                    const rampRoofY = 14.0 + tRoof * 12.4; // 14.0m -> 26.4m
+                    floorY = Math.max(floorY, rampRoofY);
+                    if (newPos.y < rampRoofY) {
+                        newPos.y = rampRoofY;
+                        player.vel.y = 0;
+                        player.onGround = true;
+                    }
+                    // Lateral containment along Z (between rear wall and balustrade)
+                    if (localX > -9.5 && localX < 3.5 && newPos.y > 14.5) {
+                        const targetZ = Math.max(-15.2, Math.min(-11.6, localZ));
+                        if (targetZ !== localZ) {
+                            const diffZ = targetZ - localZ;
+                            newPos.x -= diffZ * sinA;
+                            newPos.z += diffZ * cosA;
+                        }
+                    }
+                }
+
+                // 4. Rooftop Walkable Floor Slab (|localX| <= 17.5, |localZ| <= 15.5, Y >= 24.5)
+                if (Math.abs(localX) <= 17.5 && Math.abs(localZ) <= 15.5 && newPos.y >= 24.5) {
                     floorY = Math.max(floorY, 26.4);
-                    newPos.y = Math.max(newPos.y, 26.4);
-                    player.vel.y = 0;
-                    player.onGround = true;
+                    if (newPos.y < 26.4) {
+                        newPos.y = 26.4;
+                        player.vel.y = 0;
+                        player.onGround = true;
+                    }
                 }
             }
 
@@ -11713,6 +11753,7 @@
                         }
                     } else if (box.type === 'wall' || box.type === 'cover_wall' || box.type === 'railing') {
                         if ((box.type === 'cover_wall' || box.type === 'railing') && isVaulting) continue;
+                        if (box.type === 'railing' && inStairZone) continue; // Never snag player on railing while on stairs!
 
                         // Check doorways across all buildings in local coordinates
                         let passingDoor = false;
@@ -11732,8 +11773,9 @@
                             const atBalconyDoor = (newPos.y >= 12.0 && newPos.y < 24.0 && lx >= 6.5 && lx <= 12.0 && lz >= 14.2 && lz <= 16.8);
                             const atRoofPenthouseDoor = (newPos.y >= 25.0 && lx >= -12.5 && lx <= -8.5 && lz >= -9.8 && lz <= -3.2);
                             const atRoofStairs = (newPos.y >= 12.0 && lx >= -10.8 && lx <= 5.0 && lz >= -16.0 && lz <= -10.8);
+                            const atGroundStairs = (newPos.y < 14.5 && lx >= -17.8 && lx <= -8.8 && lz >= -7.5 && lz <= 12.8);
 
-                            if (atFrontDoor || atBackDoor || atBalconyDoor || atRoofPenthouseDoor || atRoofStairs) {
+                            if (atFrontDoor || atBackDoor || atBalconyDoor || atRoofPenthouseDoor || atRoofStairs || atGroundStairs) {
                                 passingDoor = true;
                                 if (bldg.isMain && atFrontDoor) doorOpen = true;
                                 if (bldg.isMain && atBackDoor) backDoorOpen = true;
