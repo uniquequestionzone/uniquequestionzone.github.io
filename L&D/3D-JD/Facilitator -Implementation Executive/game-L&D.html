@@ -92,19 +92,19 @@ button{cursor:pointer}
 
 .hbtn:hover{border-color:var(--gold)}
 
-#prompt{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);background:var(--glass);color:#fff;padding:12px 20px;border-radius:12px;font-size:16px;font-weight:700;border:1px solid var(--gold)}
+#prompt{position:absolute;bottom:120px;left:50%;transform:translateX(-50%);background:var(--glass);color:#fff;padding:12px 20px;border-radius:12px;font-size:16px;font-weight:700;border:1px solid var(--gold);pointer-events:none}
 
 .kbd{display:inline-block;background:var(--gold);color:var(--ink);border-radius:6px;padding:1px 8px;margin-right:6px}
 
-#joy{position:absolute;left:28px;bottom:28px;width:120px;height:120px;border-radius:50%;background:rgba(15,34,54,.45);border:2px solid rgba(255,255,255,.3);pointer-events:auto;touch-action:none;display:none}
+#joy{position:absolute;left:28px;bottom:28px;width:120px;height:120px;border-radius:50%;background:rgba(15,34,54,.45);border:2px solid rgba(255,255,255,.3);pointer-events:auto;touch-action:none;display:none;user-select:none;-webkit-user-select:none}
 
-#knob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.8)}
+#knob{position:absolute;left:35px;top:35px;width:50px;height:50px;border-radius:50%;background:rgba(255,255,255,.8);pointer-events:none}
 
-#btnAct{position:absolute;right:28px;bottom:36px;width:92px;height:92px;border-radius:50%;background:var(--glass);border:2px solid rgba(255,255,255,.35);color:#fff;font-weight:700;pointer-events:auto;display:none}
+#btnAct{position:absolute;right:28px;bottom:36px;width:92px;height:92px;border-radius:50%;background:var(--glass);border:2px solid rgba(255,255,255,.35);color:#fff;font-weight:700;pointer-events:auto;display:none;user-select:none;-webkit-user-select:none}
 
 #btnAct.live{background:var(--gold);color:var(--ink);border-color:#fff}
 
-@media (pointer:coarse){#joy,#btnAct{display:block}#prompt{bottom:170px}#lock-hint{display:none!important}}
+@media (pointer:coarse), (max-width:860px){#joy,#btnAct{display:block}#prompt{bottom:170px}#lock-hint{display:none!important}}
 
 .toasts{position:fixed;top:84px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;align-items:center;z-index:60;pointer-events:none;width:min(520px,92vw)}
 
@@ -2686,6 +2686,7 @@ function nearPad(){const p=W.player.position;let best=null,bd=3.4;W.pads.forEach
    ========================================================= */
 
 const $=id=>document.getElementById(id);
+const isMobile=()=>window.innerWidth<=860||window.matchMedia('(max-width: 860px)').matches||window.matchMedia('(pointer: coarse)').matches||('ontouchstart' in window)||(navigator.maxTouchPoints&&navigator.maxTouchPoints>0);
 
 const P={name:'',mode:'guided',xp:0,ms:{},streak:0,best:0,started:null};
 
@@ -2792,7 +2793,9 @@ function closeOv(id){
   $(id).classList.add('hidden');
   if(document.querySelectorAll('.ov:not(.hidden)').length===0){
     W.paused=false;
-    const lh=$('lock-hint');if(lh&&document.pointerLockElement!==$('world'))lh.style.display='block';
+    const lh=$('lock-hint');
+    if(!isMobile()&&lh&&document.pointerLockElement!==$('world'))lh.style.display='block';
+    else if(lh)lh.style.display='none';
   }
   refreshHUD();
 }
@@ -2839,7 +2842,7 @@ async function showStep(){const steps=L.ms.demo.steps;const [say,act]=steps[L.st
   $('cSkip').onclick=startPractice;
 
   const myStep=L.step;
-  const isMob=window.matchMedia('(max-width: 860px)').matches;
+  const isMob=isMobile();
 
   // Trigger 3D animation cue for this step on the 3D Stage
   if(STG&&STG.stepAnimation){
@@ -3017,7 +3020,16 @@ function setupInput(){
 
     if(e.code.startsWith('Arrow')&&!W.paused)e.preventDefault()});
 
-  addEventListener('keyup',e=>W.keys[e.code]=false);addEventListener('blur',()=>W.keys={});
+  addEventListener('keyup',e=>W.keys[e.code]=false);
+  addEventListener('blur',()=>{
+    W.keys={};
+    jid=null;jc=null;
+    W.joy.x=0;W.joy.y=0;
+    if(kn)kn.style.transform='';
+    touchDrag=null;
+    activePointers.clear();
+    pinchDist=null;
+  });
 
   const cv=$('world');
   let isPointerLocked=false,lastMouseX=null,lastMouseY=null;
@@ -3025,6 +3037,10 @@ function setupInput(){
 
   cv.addEventListener('click',()=>{
     if(W.paused)return;
+    if(isMobile()){
+      interact();
+      return;
+    }
     if(document.pointerLockElement!==cv){
       try{const req=cv.requestPointerLock();if(req&&req.catch)req.catch(()=>{})}catch(e){}
     }else{
@@ -3036,8 +3052,10 @@ function setupInput(){
     isPointerLocked=(document.pointerLockElement===cv);
     if(isPointerLocked){
       if(lockHint)lockHint.style.display='none';
-    }else if(!W.paused&&document.querySelectorAll('.ov:not(.hidden)').length===0){
+    }else if(!isMobile()&&!W.paused&&document.querySelectorAll('.ov:not(.hidden)').length===0){
       if(lockHint)lockHint.style.display='block';
+    }else if(lockHint){
+      lockHint.style.display='none';
     }
   });
 
@@ -3045,8 +3063,14 @@ function setupInput(){
     console.warn('Pointer lock notice:',e);
   });
 
+  let touchDrag=null;
+  let activePointers=new Map();
+  let pinchDist=null;
+
   window.addEventListener('mousemove',e=>{
     if(W.paused)return;
+    if(touchDrag||activePointers.size>0)return;
+    if(isMobile())return;
     const isLocked=(document.pointerLockElement===cv);
     let dx=0,dy=0;
     if(isLocked){
@@ -3067,18 +3091,70 @@ function setupInput(){
 
   window.addEventListener('mouseout',()=>{lastMouseX=null;lastMouseY=null;});
 
-  let touchDrag=null;
-  cv.addEventListener('pointerdown',e=>{
-    if(e.pointerType==='touch'){touchDrag={x:e.clientX,y:e.clientY,id:e.pointerId};cv.setPointerCapture(e.pointerId)}
-  });
-  cv.addEventListener('pointermove',e=>{
+  const onDragStart=e=>{
+    if(W.paused)return;
+    if(jid!==null&&e.pointerId===jid)return;
+    if(e.target&&e.target.closest&&e.target.closest('button, input, textarea, select, .panel, .hbtn, #joy, #knob, #btnAct, .hudcard, .topright, .ov:not(.hidden)'))return;
+    if(e.pointerType==='mouse'&&e.buttons!==1&&!isMobile())return;
+
+    activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    if(activePointers.size===1){
+      touchDrag={x:e.clientX,y:e.clientY,id:e.pointerId};
+      pinchDist=null;
+    }else if(activePointers.size>=2){
+      touchDrag=null;
+      const pts=[...activePointers.values()];
+      pinchDist=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);
+    }
+    try{cv.setPointerCapture(e.pointerId)}catch(err){}
+  };
+
+  const onDragMove=e=>{
+    if(W.paused)return;
+    if(activePointers.has(e.pointerId)){
+      activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+    }
+    if(activePointers.size>=2&&pinchDist!==null){
+      const pts=[...activePointers.values()];
+      const d=Math.hypot(pts[0].x-pts[1].x,pts[0].y-pts[1].y);
+      const diff=d-pinchDist;
+      pinchDist=d;
+      W.dist=Math.max(6,Math.min(24,W.dist-diff*0.04));
+      return;
+    }
     if(!touchDrag||touchDrag.id!==e.pointerId)return;
-    W.yaw-=(e.clientX-touchDrag.x)*.006;
-    W.pitch=Math.max(.08,Math.min(1.2,W.pitch+(e.clientY-touchDrag.y)*.004));
-    touchDrag.x=e.clientX;touchDrag.y=e.clientY;
+    const dx=e.clientX-touchDrag.x;
+    const dy=e.clientY-touchDrag.y;
+    touchDrag.x=e.clientX;
+    touchDrag.y=e.clientY;
+    const sens=isMobile()?0.006:0.0035;
+    W.yaw-=dx*sens;
+    W.pitch=Math.max(.08,Math.min(1.2,W.pitch+dy*sens*0.8));
+  };
+
+  const onDragEnd=e=>{
+    activePointers.delete(e.pointerId);
+    if(activePointers.size<2)pinchDist=null;
+    if(touchDrag&&touchDrag.id===e.pointerId){
+      try{cv.releasePointerCapture(e.pointerId)}catch(err){}
+      touchDrag=null;
+      if(activePointers.size===1){
+        const [id,pt]=[...activePointers.entries()][0];
+        touchDrag={x:pt.x,y:pt.y,id};
+      }
+    }
+  };
+
+  cv.addEventListener('pointerdown',onDragStart);
+  window.addEventListener('pointerdown',e=>{
+    if(e.target===$('hud'))onDragStart(e);
   });
-  cv.addEventListener('pointerup',e=>{if(touchDrag&&touchDrag.id===e.pointerId)touchDrag=null});
-  cv.addEventListener('pointercancel',e=>{if(touchDrag&&touchDrag.id===e.pointerId)touchDrag=null});
+  cv.addEventListener('pointermove',onDragMove);
+  window.addEventListener('pointermove',onDragMove);
+  cv.addEventListener('pointerup',onDragEnd);
+  window.addEventListener('pointerup',onDragEnd);
+  cv.addEventListener('pointercancel',onDragEnd);
+  window.addEventListener('pointercancel',onDragEnd);
 
   cv.addEventListener('wheel',e=>{W.dist=Math.max(6,Math.min(24,W.dist+e.deltaY*.01));e.preventDefault()},{passive:false});
 
@@ -3086,11 +3162,36 @@ function setupInput(){
 
   const jz=$('joy'),kn=$('knob');let jid=null,jc=null;
 
-  jz.addEventListener('pointerdown',e=>{jid=e.pointerId;const r=jz.getBoundingClientRect();jc={x:r.left+r.width/2,y:r.top+r.height/2,r:r.width/2};jz.setPointerCapture(jid);mv(e)});
+  jz.addEventListener('pointerdown',e=>{
+    jid=e.pointerId;
+    const r=jz.getBoundingClientRect();
+    jc={x:r.left+r.width/2,y:r.top+r.height/2,r:r.width/2};
+    try{jz.setPointerCapture(jid)}catch(err){}
+    mv(e);
+  });
 
-  const mv=e=>{if(e.pointerId!==jid)return;let dx=(e.clientX-jc.x)/jc.r,dy=(e.clientY-jc.y)/jc.r;const l=Math.hypot(dx,dy);if(l>1){dx/=l;dy/=l}W.joy.x=dx;W.joy.y=dy;kn.style.transform=`translate(${dx*34}px,${dy*34}px)`};
+  const mv=e=>{
+    if(e.pointerId!==jid||!jc)return;
+    let dx=(e.clientX-jc.x)/jc.r,dy=(e.clientY-jc.y)/jc.r;
+    const l=Math.hypot(dx,dy);
+    if(l>1){dx/=l;dy/=l}
+    W.joy.x=dx;W.joy.y=dy;
+    kn.style.transform=`translate(${dx*34}px,${dy*34}px)`;
+  };
 
-  jz.addEventListener('pointermove',mv);const end=()=>{jid=null;W.joy.x=W.joy.y=0;kn.style.transform=''};jz.addEventListener('pointerup',end);jz.addEventListener('pointercancel',end);
+  const end=e=>{
+    if(e&&jid!==null&&e.pointerId!==jid)return;
+    jid=null;jc=null;
+    W.joy.x=0;W.joy.y=0;
+    kn.style.transform='';
+  };
+
+  jz.addEventListener('pointermove',mv);
+  window.addEventListener('pointermove',mv);
+  jz.addEventListener('pointerup',end);
+  window.addEventListener('pointerup',end);
+  jz.addEventListener('pointercancel',end);
+  window.addEventListener('pointercancel',end);
 
   $('btnAct').onclick=interact;$('btnMap').onclick=openMap;$('btnSave').onclick=saveProgress;$('btnHelp').onclick=()=>openOv('helpOv');
 
@@ -3104,7 +3205,11 @@ function setupInput(){
 
   $('certPrint').onclick=()=>window.print();
 
-  addEventListener('resize',()=>{if(STG&&L)STG.resize()});
+  addEventListener('resize',()=>{
+    if(isMobile()&&document.pointerLockElement){try{document.exitPointerLock()}catch(e){}}
+    const lh=$('lock-hint');if(lh&&isMobile())lh.style.display='none';
+    if(STG&&L)STG.resize();
+  });
 
 }
 
@@ -3142,8 +3247,14 @@ function begin(){
   $('intro').classList.add('hidden');W.paused=false;refreshHUD();$('hud').classList.remove('hidden');
   toast(`Welcome, ${esc(P.name)}. Follow the glowing beam to your first milestone.`);
   const cv=$('world');
-  if(cv&&cv.requestPointerLock){try{const req=cv.requestPointerLock();if(req&&req.catch)req.catch(()=>{})}catch(e){}}
-  const lh=$('lock-hint');if(lh&&document.pointerLockElement!==cv)lh.style.display='block';
+  if(!isMobile()&&cv&&cv.requestPointerLock){
+    try{const req=cv.requestPointerLock();if(req&&req.catch)req.catch(()=>{})}catch(e){}
+  }else if(isMobile()&&document.pointerLockElement){
+    try{document.exitPointerLock()}catch(e){}
+  }
+  const lh=$('lock-hint');
+  if(!isMobile()&&lh&&document.pointerLockElement!==cv)lh.style.display='block';
+  else if(lh)lh.style.display='none';
 }
 
 window.addEventListener('DOMContentLoaded',boot);
