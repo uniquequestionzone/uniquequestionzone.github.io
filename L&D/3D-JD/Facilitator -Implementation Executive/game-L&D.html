@@ -202,9 +202,9 @@ button{cursor:pointer}
 
 #lesson{padding:0;display:block;background:var(--paper)}
 
-.lwrap{display:grid;grid-template-rows:auto minmax(0,1fr);height:100%;width:100%}
+.lwrap{display:flex;flex-direction:column;height:100%;width:100%;overflow:hidden}
 
-.lhead{display:flex;align-items:center;gap:16px;padding:12px 20px;border-bottom:4px solid var(--st);background:var(--surface)}
+.lhead{flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:12px 20px;border-bottom:4px solid var(--st);background:var(--surface)}
 
 .lhead .t{flex:1;min-width:0} .lhead small{color:var(--muted);font-size:13px} .lhead h2{margin:0;font-size:21px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
@@ -216,7 +216,7 @@ button{cursor:pointer}
 
 #lsDots{display:flex;gap:5px;align-items:center} #lsDots i{width:14px;height:14px;border-radius:50%;background:var(--surface2);border:1px solid var(--line)} #lsDots i.on{background:var(--gold);border-color:var(--gold)} #lsDots span{font-size:13px;color:var(--muted);margin-left:6px}
 
-.lbody{display:grid;grid-template-columns:minmax(300px,40%) 1fr;grid-template-rows:minmax(0,1fr);min-height:0}
+.lbody{flex:1 1 0;min-height:0;display:grid;grid-template-columns:minmax(300px,40%) 1fr;grid-template-rows:minmax(0,1fr)}
 
 .lleft{background:radial-gradient(circle at 50% 35%,#24476a,#0d1b28 75%);position:relative;display:flex;flex-direction:column;min-height:0}
 
@@ -233,10 +233,13 @@ button{cursor:pointer}
 .cbtns{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
 
 .cbtns .btn{background:#fff;color:#1d2a36;border-color:#d9dee4} .cbtns .btn.primary{background:var(--st);color:#fff;border-color:var(--st)}
+.cbtns .btn:disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
 
 .lright{overflow:auto;padding:20px 26px 40px}
 
 #work{max-width:820px} #work.demo{pointer-events:none}
+
+.mob-sec-header{display:none}
 
 .task{font-size:17px;line-height:1.5;margin:0 0 14px;max-width:70ch}
 
@@ -398,10 +401,122 @@ select,.qrow input{border:1px solid var(--line);background:var(--surface2);color
 
 @media (max-width:860px){
 
-  .introbox{grid-template-columns:1fr}.lbody{grid-template-columns:1fr;grid-template-rows:auto auto;overflow:auto}.stagebox{min-height:200px}.lhead .t{flex-basis:100%}.lhead{gap:10px;padding:10px 14px}.lright{padding:16px}#intro{place-items:start center;overflow:auto}
+  .introbox{grid-template-columns:1fr}
+  #intro{place-items:start center;overflow:auto}
+  #objective{display:none}
+  .hudcard{min-width:0}
+  #minimap{width:110px;height:110px}
 
-  .lright{overflow:visible}#objective{display:none}.hudcard{min-width:0}.lhead{flex-wrap:wrap}#minimap{width:110px;height:110px}
+  /* Lesson header adjustments on mobile */
+  .lhead{gap:8px;padding:10px 14px;flex-wrap:wrap}
+  .lhead .t{flex:1 1 100%;margin-bottom:2px}
+  .lhead h2{font-size:18px}
+  .tabs button{padding:6px 11px;font-size:13px}
 
+  /* Mobile lesson body: single scrollable column with Question ABOVE and 3D Animation BELOW */
+  .lbody{
+    display:flex!important;
+    flex-direction:column!important;
+    flex:1 1 0;
+    min-height:0;
+    height:100%;
+    overflow-y:auto!important;
+    -webkit-overflow-scrolling:touch;
+    scroll-behavior:smooth;
+    padding:12px 14px 40px!important;
+    gap:16px;
+  }
+
+  /* Question & Solve section: placed ABOVE (order: 1) */
+  .lright{
+    order:1!important;
+    display:block!important;
+    width:100%!important;
+    padding:16px!important;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
+    overflow:visible!important;
+    flex-shrink:0;
+  }
+
+  /* 3D Animation section: placed BELOW (order: 2) */
+  .lleft{
+    order:2!important;
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    background:radial-gradient(circle at 50% 35%,#24476a,#0d1b28 75%)!important;
+    border:1px solid var(--line);
+    border-radius:12px;
+    overflow:hidden!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+    flex-shrink:0;
+    margin-bottom:16px;
+  }
+
+  .lleft .stagebox{
+    min-height:220px!important;
+    height:250px!important;
+    position:relative!important;
+    width:100%!important;
+  }
+
+  /* Visual section headers on mobile */
+  .mob-sec-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:12px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .mob-sec-header.anim-hdr{
+    margin-bottom:0;
+    padding:10px 14px;
+    background:rgba(0,0,0,.25);
+    border-bottom:1px solid rgba(255,255,255,.08);
+  }
+  .mob-sec-title{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    font-size:14.5px;
+    font-weight:700;
+    color:var(--text);
+  }
+  .anim-hdr .mob-sec-title{
+    color:#fff;
+  }
+  .mob-scroll-link{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    padding:4px 10px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:var(--surface2);
+    color:var(--muted);
+    font-size:12px;
+    font-weight:600;
+    cursor:pointer;
+    text-decoration:none;
+    transition:all .15s ease;
+  }
+  .mob-scroll-link:active{
+    transform:scale(0.97);
+  }
+  .anim-hdr .mob-scroll-link{
+    background:rgba(255,255,255,.12);
+    border-color:rgba(255,255,255,.18);
+    color:#e3ebf3;
+  }
+
+}
+
+@media (max-width:500px){
+  #lsDots span{display:none}
 }
 
 </style>
@@ -511,9 +626,25 @@ select,.qrow input{border:1px solid var(--line);background:var(--surface2);color
 
   <div class="lbody">
 
-    <div class="lleft"><div class="stagebox"><canvas id="stage"></canvas></div><div id="coach" class="hidden"></div></div>
+    <!-- 3D Animation section (on mobile order: 2 displays BELOW) -->
+    <div class="lleft" id="stageSec">
+      <div class="mob-sec-header anim-hdr">
+        <div class="mob-sec-title"><span class="icon">🎬</span><span>3D Animation</span></div>
+        <button type="button" class="mob-scroll-link" id="btnScrollToWork">↑ Question</button>
+      </div>
+      <div class="stagebox"><canvas id="stage"></canvas></div>
+      <div id="coach" class="hidden"></div>
+    </div>
 
-    <div class="lright"><div id="work"></div><div id="fb" class="fb"></div></div>
+    <!-- Question & Solve section (on mobile order: 1 displays ABOVE) -->
+    <div class="lright" id="workSec">
+      <div class="mob-sec-header">
+        <div class="mob-sec-title"><span class="icon">📝</span><span>Question &amp; Solve</span></div>
+        <button type="button" class="mob-scroll-link" id="btnScrollToAnim">↓ 3D Animation</button>
+      </div>
+      <div id="work"></div>
+      <div id="fb" class="fb"></div>
+    </div>
 
   </div>
 
@@ -1647,6 +1778,8 @@ xl(ch,el,o){
 
    <div class="actions"><button class="btn primary" data-chk="1">${ch.rows[1]>ch.rows[0]?`Enter and copy down to ${ch.target+ch.rows[1]}`:'Enter formula'}</button></div>`;
 
+  o.stage&&o.stage.xlGrid&&o.stage.xlGrid(ch);
+
   const inp=el.querySelector('.formula');
 
   inp.addEventListener('keydown',e=>{if(e.key==='Enter')check()});
@@ -1753,7 +1886,11 @@ triage(ch,el,o){
 
     <div class="actions"><button class="btn primary" data-chk="1" ${set.every(Boolean)?'':'disabled'}>Check priorities</button></div>`;
 
-    el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{set[+b.dataset.t]=b.dataset.p;draw()});
+    el.querySelectorAll('[data-t]').forEach(b=>b.onclick=()=>{
+      const idx=+b.dataset.t, pr=b.dataset.p;
+      set[idx]=pr;draw();
+      o.stage&&o.stage.triageAssign&&o.stage.triageAssign(pr,ch.tickets[idx][0]);
+    });
 
     el.querySelector('[data-chk]').onclick=check;
 
@@ -1763,11 +1900,13 @@ triage(ch,el,o){
 
     el.querySelectorAll('.tick').forEach((t,i)=>t.classList.add(wrong.includes(i)?'bad':'good'));
 
+    if(!wrong.length&&o.stage){o.stage.flash(true);o.stage.celebrate&&o.stage.celebrate()}
+
     o.onResult({ok:!wrong.length,body:wrong.length?wrong.map(i=>`"${esc(ch.tickets[i][0])}" is <b>${ch.tickets[i][1]}</b>: ${esc(SLA[ch.tickets[i][1]])}`).join('<br>'):'Every ticket has the right priority, so the right SLA clock starts.'})}
 
-  draw();
+  draw(); o.stage&&o.stage.triageStage&&o.stage.triageStage();
 
-  return {async assign(i,p){const b=el.querySelector(`[data-t="${i}"][data-p="${p}"]`);pulse(b);await sleep(300);set[i]=p;draw();await sleep(200)},check,flash(){pulse(el.querySelector('.sla'));el.querySelector('.sla').open=true}};
+  return {async assign(i,p){const b=el.querySelector(`[data-t="${i}"][data-p="${p}"]`);pulse(b);await sleep(300);set[i]=p;draw();o.stage&&o.stage.triageAssign&&o.stage.triageAssign(p,ch.tickets[i][0]);await sleep(200)},check,flash(){pulse(el.querySelector('.sla'));el.querySelector('.sla').open=true}};
 
 },
 
@@ -1789,7 +1928,11 @@ email(ch,el,o){
 
     <div class="actions"><button class="btn primary" data-chk="1" ${pick.every(p=>p!==null)?'':'disabled'}>Score my email</button></div>`;
 
-    el.querySelectorAll('.mopt').forEach(b=>b.onclick=()=>{pick[+b.dataset.s]=+b.dataset.j;draw()});
+    el.querySelectorAll('.mopt').forEach(b=>b.onclick=()=>{
+      const s=+b.dataset.s, j=+b.dataset.j;
+      pick[s]=j;draw();
+      o.stage&&o.stage.emailSlotLit&&o.stage.emailSlotLit(s,opts[s][j].good);
+    });
 
     el.querySelector('[data-chk]').onclick=check;
 
@@ -1799,13 +1942,15 @@ email(ch,el,o){
 
     el.querySelectorAll('.mslot').forEach((s,i)=>s.classList.add(res[i]?'good':'bad'));
 
+    if(score===em.slots.length&&o.stage){o.stage.flash(true);o.stage.celebrate&&o.stage.celebrate()}
+
     const rub=['Structure and clarity','Understanding of the scenario','Tone and empathy','Solution and ownership','Grammar and closing'];
 
     o.onResult({ok:score===em.slots.length,body:`Rubric score: <b>${score*3} / 15</b><br>`+em.slots.map((s,i)=>`${res[i]?'✔':'✘'} <b>${s[0]}</b> (${rub[i]}): ${esc(s[2])}`).join('<br>')})}
 
-  draw();
+  draw(); o.stage&&o.stage.emailStage&&o.stage.emailStage();
 
-  return {async choose(i){const j=opts[i].findIndex(x=>x.good);const b=el.querySelector(`[data-s="${i}"][data-j="${j}"]`);pulse(b);await sleep(400);pick[i]=j;draw();await sleep(250)},check,flash(){pulse(el.querySelector('.mail'))}};
+  return {async choose(i){const j=opts[i].findIndex(x=>x.good);const b=el.querySelector(`[data-s="${i}"][data-j="${j}"]`);pulse(b);await sleep(400);pick[i]=j;draw();o.stage&&o.stage.emailSlotLit&&o.stage.emailSlotLit(i,true);await sleep(250)},check,flash(){pulse(el.querySelector('.mail'))}};
 
 },
 
@@ -1830,6 +1975,8 @@ mcq(ch,el,o){
   }
 
   function check(){done=true;draw();el.querySelectorAll('.opt').forEach((b,i)=>{if(i===ch.ans)b.classList.add('good');else if(i===sel)b.classList.add('bad')});
+
+    const ok=sel===ch.ans;if(ok&&o.stage&&o.stage.celebrate)o.stage.celebrate();
 
     o.onResult({ok:sel===ch.ans,body:(sel===ch.ans?'':`The best answer is <b>${esc(ch.opts[ch.ans])}</b>. `)+esc(ch.exp)})}
 
@@ -1858,6 +2005,8 @@ input(ch,el,o){
   function check(){const v=inp.value.trim().toUpperCase().replace(/\s+/g,'');if(!v){o.onResult({ok:false,soft:true,body:'Type your answer first.'});return}
 
     const ok=v===ch.answer.toUpperCase();inp.classList.add(ok?'good':'bad');
+
+    if(ok&&o.stage&&o.stage.revealAnswer)o.stage.revealAnswer(ch.answer);
 
     o.onResult({ok,body:(ok?'':`The answer is <b>${esc(ch.answer)}</b>. `)+esc(ch.exp)})}
 
@@ -2054,6 +2203,227 @@ class Stage{
     parts.forEach((t,i)=>{const q=t==='?';const m=new THREE.Mesh(new THREE.BoxGeometry(1.6,1.6,1.6),[0,1,2,3,4,5].map(f=>new THREE.MeshStandardMaterial(f===4?{map:labelTex(t,{bg:q?'#f2b233':'#efe6ff',fg:'#2a1660',w:128,h:128,size:t.length>4?30:54})}:{color:q?0xf2b233:0x8b5cf6})));
 
       const b=this.add(m,new THREE.Vector3((i-(n-1)/2)*Math.min(2.1,15/n),1.2+(i%2)*.3,0));b.userData.bob=i})}
+
+  /* ---- SQL highlight ---- */
+  sqlHighlight(filterFn){
+    if(!this.crates) return;
+    const rows = this.join ? JOINED : CLIENTS;
+    this.crates.forEach((c, i)=>{
+      const match = filterFn ? filterFn(rows[i]) : true;
+      if(match){
+        c.userData.t.y = 1.1;
+        c.userData.s = 1.12;
+        if(c.material && c.material[4]){
+          c.material[4].emissive = new THREE.Color(0x35d0c0);
+          c.material[4].emissiveIntensity = 0.45;
+        }
+      } else {
+        c.userData.t.y = 0.6;
+        c.userData.s = 0.95;
+        if(c.material && c.material[4]){
+          c.material[4].emissiveIntensity = 0;
+        }
+      }
+    });
+    this.spin = 0.25;
+    setTimeout(()=>{
+      if(!this.crates) return;
+      this.crates.forEach(c => {
+        if(c.material && c.material[4]) c.material[4].emissiveIntensity = 0;
+        c.userData.t.y = 0.6;
+        c.userData.s = 1.0;
+      });
+      this.spin = 0;
+    }, 1400);
+  }
+
+  /* ---- Excel 3D grid and bars ---- */
+  xlGrid(ch){
+    this.clear();
+    this.cam.position.set(0, 7, 16);
+    this.cam.lookAt(0, 1, 0);
+    const n = Math.min(8, (ch.rows[1] - ch.rows[0] + 1));
+    this.xlCells = [];
+    for(let r=0; r<n; r++){
+      const m = new THREE.Mesh(
+        new THREE.BoxGeometry(3.6, 0.65, 1.2),
+        new THREE.MeshStandardMaterial({color: 0x1f9d55, metalness: .3, roughness: .5, emissive: 0x1f9d55, emissiveIntensity: 0.15})
+      );
+      const p = new THREE.Vector3(0, 0.6 + (n - 1 - r) * 0.85, 0);
+      const b = this.add(m, p);
+      const s = textSprite(`${ch.target}${ch.rows[0]+r}`, {bg:'#0f2b1d', fg:'#75fbc0', w:160, h:60, size:28}, [1.6, 0.6]);
+      this.add(s, new THREE.Vector3(p.x, p.y + 0.55, p.z));
+      this.xlCells.push({mesh: b, sprite: s});
+    }
+  }
+
+  xlBars(oks){
+    if(!this.xlCells) return;
+    oks.forEach((ok, i)=>{
+      if(!this.xlCells[i]) return;
+      const m = this.xlCells[i].mesh;
+      m.material.color.set(ok ? 0x22c55e : 0xef4444);
+      m.material.emissive.set(ok ? 0x22c55e : 0xef4444);
+      m.material.emissiveIntensity = 0.75;
+      m.userData.t.y += 0.35;
+      setTimeout(()=>{ if(m && m.userData && m.userData.t) m.userData.t.y -= 0.35; }, 500);
+    });
+    if(oks.every(Boolean)) { this.celebrate(); this.flash(true); }
+  }
+
+  /* ---- Triage 3D pedestals ---- */
+  triageStage(){
+    this.clear();
+    this.cam.position.set(0, 8, 17);
+    this.cam.lookAt(0, 1.2, 0);
+    const prs = [
+      {k:'P1', col:0xef4444, name:'Critical'},
+      {k:'P2', col:0xf59e0b, name:'High'},
+      {k:'P3', col:0x3b82f6, name:'Medium'},
+      {k:'P4', col:0x64748b, name:'Low'}
+    ];
+    this.triagePil = {};
+    prs.forEach((p, i)=>{
+      const x = (i - 1.5) * 3.2;
+      const m = new THREE.Mesh(
+        new THREE.CylinderGeometry(1.0, 1.15, 1.2, 24),
+        new THREE.MeshStandardMaterial({color: p.col, emissive: p.col, emissiveIntensity: 0.2, metalness: .3, roughness: .4})
+      );
+      const base = this.add(m, new THREE.Vector3(x, 0.6, 0));
+      const s = textSprite(p.k, {bg: '#0f172a', fg: '#fff', accent: '#'+p.col.toString(16), w:128, h:64, size:36}, [1.4, 0.7]);
+      this.add(s, new THREE.Vector3(x, 1.7, 0));
+      this.triagePil[p.k] = {mesh: base, count: 0, x, col: p.col};
+    });
+  }
+
+  triageAssign(p, ticketText){
+    if(!this.triagePil || !this.triagePil[p]) return;
+    const pil = this.triagePil[p];
+    pil.count++;
+    const tBox = new THREE.Mesh(
+      new THREE.BoxGeometry(1.5, 0.45, 0.9),
+      new THREE.MeshStandardMaterial({color: pil.col, emissive: 0xffffff, emissiveIntensity: 0.25})
+    );
+    const pos = new THREE.Vector3(pil.x, 1.1 + pil.count * 0.55, 0);
+    tBox.position.set(pil.x, 5, 0);
+    this.add(tBox, pos);
+    pil.mesh.material.emissiveIntensity = 0.9;
+    setTimeout(()=>{ if(pil && pil.mesh) pil.mesh.material.emissiveIntensity = 0.2; }, 500);
+  }
+
+  /* ---- Email 3D sections ---- */
+  emailStage(){
+    this.clear();
+    this.cam.position.set(0, 8, 16);
+    this.cam.lookAt(0, 2, 0);
+    this.mailSlots = [];
+    const names = ['Subject', 'Opening', 'Situation', 'Impact & Plan', 'Closing'];
+    names.forEach((name, i)=>{
+      const m = new THREE.Mesh(
+        new THREE.BoxGeometry(4.8, 0.65, 0.8),
+        new THREE.MeshStandardMaterial({color: 0x334155, emissive: 0x334155, emissiveIntensity: 0.1})
+      );
+      const p = new THREE.Vector3(0, 4.2 - i * 0.85, 0);
+      const b = this.add(m, p);
+      const s = textSprite(name, {bg: '#1e293b', fg: '#94a3b8', w:256, h:64, size:26}, [2.2, 0.55]);
+      this.add(s, new THREE.Vector3(p.x, p.y + 0.5, p.z));
+      this.mailSlots.push({mesh: b, sprite: s});
+    });
+  }
+
+  emailSlotLit(i, good=true){
+    if(!this.mailSlots || !this.mailSlots[i]) return;
+    const slot = this.mailSlots[i];
+    const col = good ? 0x10b981 : 0xef4444;
+    slot.mesh.material.color.set(col);
+    slot.mesh.material.emissive.set(col);
+    slot.mesh.material.emissiveIntensity = 0.7;
+    slot.mesh.userData.t.z = 0.4;
+  }
+
+  /* ---- Puzzle answers & Chart highlights ---- */
+  revealAnswer(ans){
+    if(!this.g) return;
+    const lastMesh = this.g.children.find(o => o.geometry && o.geometry.type === 'BoxGeometry' && o.userData && o.userData.bob !== undefined);
+    if(lastMesh && Array.isArray(lastMesh.material) && lastMesh.material[4]){
+      lastMesh.material[4].map = labelTex(ans, {bg: '#22c55e', fg: '#ffffff', w: 128, h: 128, size: ans.length>4?32:50});
+      lastMesh.material[4].needsUpdate = true;
+      lastMesh.material[4].emissive = new THREE.Color(0x22c55e);
+      lastMesh.material[4].emissiveIntensity = 0.5;
+      lastMesh.userData.s = 1.25;
+      this.celebrate();
+      this.flash(true);
+    }
+  }
+
+  highlightBars(indices){
+    if(!this.g) return;
+    const meshes = this.g.children.filter(o => o.geometry && o.geometry.type === 'BoxGeometry');
+    meshes.forEach((m, i)=>{
+      if(indices.includes(i)){
+        m.material.color.set(0x38bdf8);
+        m.material.emissive.set(0x38bdf8);
+        m.material.emissiveIntensity = 0.85;
+        m.userData.s = 1.15;
+      } else {
+        m.material.color.set(0x8b5cf6);
+        m.material.emissive.set(0x8b5cf6);
+        m.material.emissiveIntensity = 0.15;
+        m.userData.s = 1.0;
+      }
+    });
+  }
+
+  stepAnimation(msId, stepIndex, say){
+    const s = String(say || '').toLowerCase();
+    if(msId.startsWith('sql')){
+      if(s.includes('enterprise')) this.sqlHighlight(r => r.plan === 'Enterprise');
+      else if(s.includes('implementation')) this.sqlHighlight(r => r.status === 'In Implementation');
+      else if(s.includes('from') || s.includes('crates')) this.sqlHighlight();
+      else if(s.includes('join') && !this.join) this.sqlBase(true);
+      else this.sqlHighlight();
+    } else if(msId === 'imp1'){
+      if(this.pil){
+        const target = Math.min(this.pil.length - 1, stepIndex * 2);
+        this.pil.forEach((p, i) => {
+          if(i <= target){
+            p.userData.s = 1.15;
+            setTimeout(() => { if(p) p.userData.s = 1.0; }, 600);
+          }
+        });
+      }
+    } else if(msId === 'imp2'){
+      if(this.triagePil){
+        Object.values(this.triagePil).forEach(p => {
+          p.mesh.material.emissiveIntensity = 0.7;
+          setTimeout(() => { if(p.mesh) p.mesh.material.emissiveIntensity = 0.2; }, 600);
+        });
+      }
+    } else if(msId.startsWith('xl')){
+      if(this.xlCells){
+        this.xlCells.forEach((c, i) => {
+          c.mesh.userData.t.y += 0.2;
+          setTimeout(() => { if(c.mesh && c.mesh.userData.t) c.mesh.userData.t.y -= 0.2; }, 300 + i * 60);
+        });
+      }
+    } else if(msId === 'lr3'){
+      if(s.includes('monday') || s.includes('thursday') || s.includes('40') || s.includes('60')){
+        this.highlightBars([0, 3]);
+      }
+    } else if(msId === 'lr1' || msId === 'lr2'){
+      if(this.g){
+        this.g.children.forEach(o => {
+          if(o.userData && o.userData.bob !== undefined){
+            o.userData.s = 1.15;
+            setTimeout(() => { if(o) o.userData.s = 1.0; }, 500);
+          }
+        });
+      }
+    } else {
+      this.spin = 1.6;
+      setTimeout(() => { this.spin = 0.6; }, 1000);
+    }
+  }
 
 }
 
@@ -2462,16 +2832,62 @@ async function startDemo(){L.phase='demo';renderDots();mountCh(L.ms.demo.make(),
 async function showStep(){const steps=L.ms.demo.steps;const [say,act]=steps[L.step];const last=L.step===steps.length-1;
 
   $('coach').innerHTML=`<div class="cav">Coach</div><div class="ctext"><small>Demo step ${L.step+1} of ${steps.length}</small><p>${esc(say)}</p>
-
     <div class="cbtns"><button class="btn" id="cSkip">Skip to practice</button><button class="btn primary" id="cNext" disabled>${last?'Now you try':'Next step'}</button></div></div>`;
 
   $('coach').classList.remove('hidden');
 
   $('cSkip').onclick=startPractice;
 
-  const myStep=L.step;try{await act(L.ctl)}catch(e){console.error(e)}
+  const myStep=L.step;
+  const isMob=window.matchMedia('(max-width: 860px)').matches;
 
-  if(!L||L.phase!=='demo'||L.step!==myStep)return;
+  // Trigger 3D animation cue for this step on the 3D Stage
+  if(STG&&STG.stepAnimation){
+    try{STG.stepAnimation(L.ms.id,L.step,say)}catch(e){console.error(e)}
+  }
+
+  if(isMob){
+    // 1. Show the 1st 3D ANIMATION section
+    const stg=$('stageSec');
+    if(stg){
+      stg.scrollIntoView({behavior:'smooth',block:'start'});
+      if(STG)setTimeout(()=>STG.resize(),50);
+    }
+    await sleep(1200);
+    if(!L||L.phase!=='demo'||L.step!==myStep)return;
+
+    // 2. Move up to "Question & Solve" section
+    const wrk=$('workSec');
+    if(wrk)wrk.scrollIntoView({behavior:'smooth',block:'start'});
+    await sleep(400);
+    if(!L||L.phase!=='demo'||L.step!==myStep)return;
+
+    // Execute the demonstration action while viewing Question & Solve
+    let hadMajorReaction=false;
+    try{
+      await act(L.ctl);
+      hadMajorReaction=(say.toLowerCase().includes('run')||say.toLowerCase().includes('check')||last);
+    }catch(e){console.error(e)}
+    await sleep(650);
+    if(!L||L.phase!=='demo'||L.step!==myStep)return;
+
+    // If the step action triggered a 3D animation (like c.run or check), showcase the 3D result
+    if(hadMajorReaction&&stg){
+      stg.scrollIntoView({behavior:'smooth',block:'start'});
+      await sleep(1100);
+      if(!L||L.phase!=='demo'||L.step!==myStep)return;
+    }
+
+    // 3. Come back to the "Next step" button section
+    const coach=$('coach');
+    if(coach)coach.scrollIntoView({behavior:'smooth',block:'center'});
+    await sleep(350);
+    if(!L||L.phase!=='demo'||L.step!==myStep)return;
+  } else {
+    // Desktop: side-by-side view
+    try{await act(L.ctl)}catch(e){console.error(e)}
+    if(!L||L.phase!=='demo'||L.step!==myStep)return;
+  }
 
   const n=$('cNext');if(n){n.disabled=false;n.focus();n.onclick=()=>{if(last)startPractice();else{L.step++;showStep()}}}
 
@@ -2479,7 +2895,11 @@ async function showStep(){const steps=L.ms.demo.steps;const [say,act]=steps[L.st
 
 function startPractice(){L.phase='practice';renderDots();$('coach').classList.add('hidden');$('work').classList.remove('demo');mountCh(L.ms.gen(),false);
 
-  $('fb').innerHTML=`<p class="sub">Your turn. Solve this one yourself. Every round is a new variation, so keep practising until it feels easy.</p>`}
+  $('fb').innerHTML=`<p class="sub">Your turn. Solve this one yourself. Every round is a new variation, so keep practising until it feels easy.</p>`;
+  const wrk=$('workSec');
+  if(wrk)wrk.scrollIntoView({behavior:'smooth',block:'start'});
+  else{const lb=document.querySelector('.lbody');if(lb)lb.scrollTop=0;}
+}
 
 function onResult(r,demo){
 
@@ -2677,6 +3097,10 @@ function setupInput(){
   document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>closeOv(b.dataset.close));
 
   $('lsClose').onclick=closeLesson;$('tabDemo').onclick=()=>L&&startDemo();$('tabPrac').onclick=()=>L&&startPractice();
+
+  const bScrollAnim=$('btnScrollToAnim'), bScrollWork=$('btnScrollToWork');
+  if(bScrollAnim)bScrollAnim.onclick=()=>{const el=$('stageSec');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
+  if(bScrollWork)bScrollWork.onclick=()=>{const el=$('workSec');if(el)el.scrollIntoView({behavior:'smooth',block:'start'})};
 
   $('certPrint').onclick=()=>window.print();
 
