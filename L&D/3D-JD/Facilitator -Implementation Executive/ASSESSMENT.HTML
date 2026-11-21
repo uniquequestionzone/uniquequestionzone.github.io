@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Facilitator (Implementation Executive) Assessment</title>
+
+<style>
+
+:root{
+
+  --bg:#F3F6F9; --surface:#FFFFFF; --surface-2:#EEF3F7; --ink:#14304A; --text:#1F2D3A; --muted:#5B6B7B;
+
+  --line:#D6DFE8; --teal:#0E7C7B; --teal-soft:#DDF0EF; --amber:#B97800; --amber-soft:#FBEFD5;
+
+  --red:#B42318; --red-soft:#FBE3E0; --green:#1E7A3C; --green-soft:#DDF2E3; --blue:#2F5F8F; --blue-soft:#E1ECF7;
+
+  --code-bg:#F7F9FB; --shadow:0 1px 2px rgba(20,48,74,.08);
+
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+
+  --sans:"Segoe UI",system-ui,-apple-system,Roboto,"Helvetica Neue",Arial,sans-serif;
+
+  --mono:"Cascadia Code",Consolas,"SFMono-Regular",Menlo,monospace;
+
+  color-scheme:light;
+
+}
+
+@media (prefers-color-scheme:dark){
+
+  :root{
+
+    --bg:#0E1824; --surface:#152335; --surface-2:#1B2D43; --ink:#E4ECF5; --text:#D9E3EE; --muted:#93A4B6;
+
+    --line:#2A3E56; --teal:#3CC2BF; --teal-soft:#123B3D; --amber:#F0B437; --amber-soft:#3A2E12;
+
+    --red:#F2766B; --red-soft:#3D1D1B; --green:#5CCB83; --green-soft:#16362A; --blue:#7DB1E6; --blue-soft:#1A3350;
+
+    --code-bg:#101C2B; --shadow:none; color-scheme:dark;
+
+  }
+
+}
+
+*{box-sizing:border-box}
+
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+
+h1,h2,h3{font-family:var(--serif);color:var(--ink);font-weight:600;margin:0}
+
+button{font:inherit;cursor:pointer}
+
+button:focus-visible,textarea:focus-visible,input:focus-visible,.opt:focus-visible{outline:3px solid var(--teal);outline-offset:2px}
+
+.hidden{display:none!important}
+
+.wrap{max-width:1180px;margin:0 auto;padding:24px}
+
+.btn{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:9px 16px;border-radius:8px}
+
+.btn:hover{border-color:var(--teal)}
+
+.btn-primary{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:600}
+
+@media (prefers-color-scheme:dark){.btn-primary{color:#06201F}}
+
+.btn-primary:hover{filter:brightness(1.07)}
+
+.btn-primary:disabled{opacity:.45;cursor:not-allowed}
+
+.btn-amber{border-color:var(--amber);color:var(--amber)}
+
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:20px;background:var(--surface-2);color:var(--muted);margin-right:6px}
+
+ 
+
+/* ---------- start screen ---------- */
+
+.start-head{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:end;padding:28px 0 24px;border-bottom:2px solid var(--ink)}
+
+.start-head h1{font-size:44px;line-height:1.08;letter-spacing:-.5px}
+
+.start-head p{color:var(--muted);margin:10px 0 0;max-width:60ch}
+
+.facts{display:flex;gap:28px;justify-content:flex-end}
+
+.facts div{text-align:right}
+
+.facts b{display:block;font-family:var(--serif);font-size:34px;color:var(--ink);line-height:1}
+
+.facts span{font-size:13px;color:var(--muted)}
+
+.start-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;margin-top:28px;align-items:start}
+
+.plan{width:100%;border-collapse:collapse;font-size:14.5px}
+
+.plan th{text-align:left;font-weight:600;color:var(--muted);font-size:13px;border-bottom:1px solid var(--line);padding:8px 6px}
+
+.plan td{border-bottom:1px solid var(--line);padding:11px 6px;vertical-align:top}
+
+.plan td.n{font-family:var(--serif);font-size:20px;color:var(--teal);width:34px}
+
+.plan td.r{text-align:right;white-space:nowrap}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:var(--shadow)}
+
+.field{margin-bottom:14px}
+
+.field label{display:block;font-size:14px;font-weight:600;margin-bottom:5px}
+
+.field input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit}
+
+.rules{font-size:14px;color:var(--muted);padding-left:18px;margin:8px 0 16px}
+
+.rules li{margin-bottom:5px}
+
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:14px;margin-bottom:16px}
+
+.err{color:var(--red);font-size:13px;min-height:18px}
+
+ 
+
+/* ---------- exam ---------- */
+
+.topbar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+
+.topbar .wrap{display:flex;align-items:center;gap:20px;padding:12px 24px}
+
+.brand{font-family:var(--serif);font-weight:600;color:var(--ink);font-size:17px;white-space:nowrap}
+
+.stepper{display:flex;gap:6px;flex:1;justify-content:center}
+
+.step{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--muted);padding:5px 10px;border-radius:20px}
+
+.step i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);font-size:12px}
+
+.step.done{color:var(--green)} .step.done i{background:var(--green);border-color:var(--green);color:#fff}
+
+.step.now{background:var(--teal-soft);color:var(--ink);font-weight:600} .step.now i{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.timer{font-family:var(--mono);font-size:20px;font-weight:600;color:var(--ink);padding:4px 12px;border:1px solid var(--line);border-radius:8px;min-width:96px;text-align:center}
+
+.timer.warn{color:var(--amber);border-color:var(--amber)} .timer.crit{color:#fff;background:var(--red);border-color:var(--red)}
+
+.exam-grid{display:grid;grid-template-columns:1fr 290px;gap:24px;align-items:start}
+
+.qcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:26px;box-shadow:var(--shadow);min-height:420px}
+
+.qmeta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-size:13px;color:var(--muted)}
+
+.qtext{font-size:17.5px;color:var(--ink);margin:0 0 18px;max-width:75ch}
+
+.opts{display:grid;gap:10px}
+
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text)}
+
+.opt:hover{border-color:var(--teal)}
+
+.opt .k{flex:none;width:26px;height:26px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:13px;font-weight:600;color:var(--muted)}
+
+.opt.sel{border-color:var(--teal);background:var(--teal-soft)} .opt.sel .k{background:var(--teal);border-color:var(--teal);color:#fff}
+
+.qnav{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid var(--line)}
+
+.qnav .sp{flex:1}
+
+.mini{border-collapse:collapse;font-size:14px;margin:4px 0 16px}
+
+.mini th,.mini td{border:1px solid var(--line);padding:5px 12px;text-align:left}
+
+.mini th{background:var(--surface-2)}
+
+.side{position:sticky;top:76px}
+
+.palette{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:12px 0 16px}
+
+.pbtn{aspect-ratio:1;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:14px;font-weight:600}
+
+.pbtn.ans{background:var(--green);border-color:var(--green);color:#fff}
+
+.pbtn.mark{background:var(--amber);border-color:var(--amber);color:#fff}
+
+.pbtn.seen{background:var(--red-soft);border-color:var(--red);color:var(--red)}
+
+.pbtn.cur{outline:3px solid var(--ink);outline-offset:1px}
+
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px;font-size:12.5px;color:var(--muted);margin-bottom:16px}
+
+.legend span{display:flex;align-items:center;gap:6px}
+
+.legend i{width:13px;height:13px;border-radius:3px;display:inline-block;border:1px solid var(--line)}
+
+.counts{font-size:13.5px;color:var(--muted);margin-bottom:14px}
+
+.counts b{color:var(--text)}
+
+ 
+
+/* sql */
+
+.schema{background:var(--code-bg);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:14px;font-size:13.5px}
+
+.schema summary{cursor:pointer;font-weight:600;color:var(--ink)}
+
+.schema .tbls{display:flex;flex-wrap:wrap;gap:12px 20px;margin-top:10px}
+
+.schema .tbls>div{overflow-x:auto;max-width:100%}
+
+.schema .mini td,.schema .mini th{white-space:nowrap}
+
+.schema code{font-family:var(--mono);font-size:12.5px}
+
+.schema .mini{font-size:12px;margin:6px 0 0}
+
+.schema .mini td,.schema .mini th{padding:3px 7px}
+
+.editor{width:100%;min-height:170px;font-family:var(--mono);font-size:14px;padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--code-bg);color:var(--text);resize:vertical;line-height:1.55}
+
+.runrow{display:flex;gap:10px;align-items:center;margin:10px 0}
+
+.runrow .btn{flex:none;white-space:nowrap}
+
+.engine{font-size:12.5px;color:var(--muted)}
+
+.out{border:1px solid var(--line);border-radius:10px;padding:10px;max-height:240px;overflow:auto;font-size:13px;background:var(--surface)}
+
+.out .mini{margin:0}
+
+.out .e{color:var(--red);font-family:var(--mono)}
+
+/* email */
+
+.scenario{border-left:4px solid var(--teal);background:var(--teal-soft);padding:14px 16px;border-radius:0 10px 10px 0;margin-bottom:14px;font-size:15px;max-width:80ch}
+
+.email{width:100%;min-height:320px;padding:14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;line-height:1.6;resize:vertical}
+
+.wc{font-size:13px;color:var(--muted);margin-top:6px}
+
+ 
+
+/* interstitial & modal */
+
+.inter{max-width:640px;margin:60px auto;text-align:left}
+
+.inter .num{font-family:var(--serif);font-size:96px;line-height:1;color:var(--teal)}
+
+.inter h2{font-size:34px;margin:6px 0 10px}
+
+.inter p{color:var(--muted)}
+
+.inter dl{display:grid;grid-template-columns:auto 1fr;gap:6px 20px;margin:20px 0 28px;font-size:15px}
+
+.inter dt{color:var(--muted)} .inter dd{margin:0;font-weight:600}
+
+.modal-bg{position:fixed;inset:0;background:rgba(10,20,30,.55);display:grid;place-items:center;z-index:50;padding:20px}
+
+.modal{background:var(--surface);border-radius:14px;padding:26px;max-width:440px;width:100%;border:1px solid var(--line)}
+
+.modal h3{font-size:22px;margin-bottom:8px}
+
+.modal p{color:var(--muted);margin:0 0 18px}
+
+.modal .row{display:flex;gap:10px;justify-content:flex-end}
+
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:10px;z-index:60;font-size:14px;max-width:90vw}
+
+ 
+
+/* ---------- dashboard ---------- */
+
+.dash-head{display:grid;grid-template-columns:auto 1fr auto;gap:32px;align-items:center;padding:24px 0 26px;border-bottom:2px solid var(--ink)}
+
+.ring{position:relative;width:180px;height:180px}
+
+.ring svg{transform:rotate(-90deg)}
+
+.ring .c{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+
+.ring .c b{font-family:var(--serif);font-size:52px;color:var(--ink);line-height:1;display:block}
+
+.ring .c span{font-size:13px;color:var(--muted)}
+
+.ring circle.fg{transition:stroke-dashoffset 1.2s ease}
+
+@media (prefers-reduced-motion:reduce){.ring circle.fg{transition:none}}
+
+.who h1{font-size:34px}
+
+.who p{margin:4px 0;color:var(--muted);font-size:14.5px}
+
+.verdict{display:inline-block;margin-top:10px;padding:6px 14px;border-radius:8px;font-weight:700;font-size:15px}
+
+.v-good{background:var(--green-soft);color:var(--green)} .v-mid{background:var(--amber-soft);color:var(--amber)} .v-bad{background:var(--red-soft);color:var(--red)}
+
+.dash-actions{display:flex;flex-direction:column;gap:8px}
+
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:0;border-bottom:1px solid var(--line)}
+
+.kpi{padding:18px 14px;border-right:1px solid var(--line)}
+
+.kpi:last-child{border-right:none}
+
+.kpi b{display:block;font-family:var(--serif);font-size:28px;color:var(--ink);line-height:1.1}
+
+.kpi span{font-size:13px;color:var(--muted)}
+
+.dgrid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:26px}
+
+.dgrid .full{grid-column:1/-1}
+
+.panel h2{font-size:21px;margin-bottom:4px}
+
+.panel .sub{font-size:13.5px;color:var(--muted);margin:0 0 16px}
+
+.bars .row{display:grid;grid-template-columns:170px 1fr 112px;gap:12px;align-items:center;margin-bottom:12px;font-size:14px}
+
+.bars .track{height:14px;background:var(--surface-2);border-radius:7px;position:relative;overflow:hidden}
+
+.bars .fill{height:100%;border-radius:7px}
+
+.bars .cut{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.55}
+
+.bars .val{text-align:right;font-variant-numeric:tabular-nums}
+
+.stbl{width:100%;border-collapse:collapse;font-size:14px}
+
+.stbl th{text-align:left;font-size:12.5px;color:var(--muted);font-weight:600;padding:8px;border-bottom:1px solid var(--line)}
+
+.stbl td{padding:10px 8px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+
+.stbl tr:last-child td{border-bottom:none;font-weight:700}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+
+.chip{border:1px solid var(--line);background:var(--surface);padding:6px 12px;border-radius:20px;font-size:13.5px;color:var(--text)}
+
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+.rv{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+
+.rv-h{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--muted);margin-bottom:6px}
+
+.rv-q{color:var(--ink);font-weight:600;margin-bottom:8px}
+
+.rv-a{font-size:14px;margin:3px 0}
+
+.rv-x{font-size:13.5px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+
+.st{font-weight:700;font-size:12.5px;padding:2px 9px;border-radius:12px}
+
+.st-c{background:var(--green-soft);color:var(--green)} .st-w{background:var(--red-soft);color:var(--red)} .st-s{background:var(--surface-2);color:var(--muted)} .st-p{background:var(--amber-soft);color:var(--amber)}
+
+pre.code{font-family:var(--mono);font-size:13px;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:10px;white-space:pre-wrap;margin:6px 0}
+
+.insights{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+
+.insights ul{margin:6px 0 0;padding-left:18px;font-size:14.5px}
+
+.insights li{margin-bottom:6px}
+
+.insights h3{font-size:16px;font-family:var(--sans)}
+
+.rub .row{display:grid;grid-template-columns:200px 1fr 50px;gap:12px;align-items:center;font-size:14px;margin-bottom:10px}
+
+.legend2{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted);margin-top:10px}
+
+.legend2 i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.emailbox{white-space:pre-wrap;font-size:14px;background:var(--code-bg);border:1px solid var(--line);border-radius:8px;padding:12px;max-height:260px;overflow:auto}
+
+ 
+
+@media (max-width:900px){
+
+  .start-head,.start-grid,.exam-grid,.dgrid,.insights{grid-template-columns:1fr}
+
+  .facts{justify-content:flex-start} .facts div{text-align:left}
+
+  .side{position:static}
+
+  .stepper .step span{display:none}
+
+  .dash-head{grid-template-columns:1fr;justify-items:start}
+
+  .dash-actions{flex-direction:row}
+
+  .kpis{grid-template-columns:repeat(3,1fr)}
+
+  .kpi:nth-child(3){border-right:none}
+
+  .bars .row{grid-template-columns:120px 1fr 70px}
+
+  .schema .tbls{grid-template-columns:1fr}
+
+  .rub .row{grid-template-columns:130px 1fr 44px}
+
+}
+
+@media (max-width:560px){.start-head h1{font-size:32px}.brand{display:none}.wrap{padding:16px}}
+
+@media print{
+
+  .topbar,.dash-actions,.chips,.no-print{display:none!important}
+
+  body{background:#fff}
+
+  .panel{break-inside:avoid;box-shadow:none}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+ 
+
+<!-- START -->
+
+<section id="start" class="wrap">
+
+  <div class="start-head">
+
+    <div>
+
+      <h1>Facilitator (Implementation Executive) Assessment</h1>
+
+      <p>This test checks how you handle client implementations: querying data, working through implementation scenarios, using Excel, writing to clients and reasoning through problems.</p>
+
+    </div>
+
+    <div class="facts">
+
+      <div><b>5</b><span>sections</span></div>
+
+      <div><b>43</b><span>questions</span></div>
+
+      <div><b>120</b><span>minutes</span></div>
+
+      <div><b>100</b><span>marks</span></div>
+
+    </div>
+
+  </div>
+
+  <div class="start-grid">
+
+    <div>
+
+      <h2 style="font-size:22px;margin-bottom:8px">Test plan</h2>
+
+      <table class="plan" id="planTable"></table>
+
+      <h2 style="font-size:22px;margin:28px 0 6px">Before you begin</h2>
+
+      <ul class="rules">
+
+        <li>Each section has its own timer. When it runs out, the section is submitted automatically.</li>
+
+        <li>Once you submit a section, you cannot return to it.</li>
+
+        <li>Within a section, you can move between questions and mark them for review.</li>
+
+        <li>There is no negative marking.</li>
+
+        <li>SQL answers are checked by running your query against the sample tables. Use the Run query button to test it.</li>
+
+        <li>Switching tabs or windows is recorded and shown in your report.</li>
+
+      </ul>
+
+    </div>
+
+    <div class="panel">
+
+      <h2 style="font-size:22px;margin-bottom:14px">Your details</h2>
+
+      <div class="field"><label for="cName">Full name</label><input id="cName" autocomplete="name"></div>
+
+      <div class="field"><label for="cEmail">Email</label><input id="cEmail" type="email" autocomplete="email"></div>
+
+      <div class="field"><label for="cId">Candidate ID (optional)</label><input id="cId"></div>
+
+      <label class="agree"><input type="checkbox" id="cAgree"> I have read the instructions and will attempt this test on my own.</label>
+
+      <div class="err" id="startErr"></div>
+
+      <button class="btn btn-primary" id="startBtn" style="width:100%;padding:12px">Start test</button>
+
+    </div>
+
+  </div>
+
+</section>
+
+ 
+
+<!-- EXAM -->
+
+<div id="exam" class="hidden">
+
+  <header class="topbar"><div class="wrap">
+
+    <div class="brand">Implementation Executive Assessment</div>
+
+    <nav class="stepper" id="stepper" aria-label="Sections"></nav>
+
+    <div class="timer" id="timer" aria-live="polite">00:00</div>
+
+  </div></header>
+
+  <div id="interstitial" class="wrap"></div>
+
+  <div id="qarea" class="wrap hidden">
+
+    <div class="exam-grid">
+
+      <main class="qcard" id="qcard"></main>
+
+      <aside class="side panel">
+
+        <h3 style="font-size:17px" id="sideTitle"></h3>
+
+        <div class="palette" id="palette"></div>
+
+        <div class="legend">
+
+          <span><i style="background:var(--green);border-color:var(--green)"></i>Answered</span>
+
+          <span><i style="background:var(--amber);border-color:var(--amber)"></i>Marked for review</span>
+
+          <span><i style="background:var(--red-soft);border-color:var(--red)"></i>Seen, not answered</span>
+
+          <span><i></i>Not seen</span>
+
+        </div>
+
+        <div class="counts" id="counts"></div>
+
+        <button class="btn btn-primary" id="submitSecBtn" style="width:100%">Submit section</button>
+
+      </aside>
+
+    </div>
+
+  </div>
+
+</div>
+
+ 
+
+<!-- DASHBOARD -->
+
+<div id="dash" class="wrap hidden"></div>
+
+ 
+
+<div id="modalRoot"></div>
+
+ 
+
+<script src=https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/sql-wasm.js></script>
+
+<script>
+
+/* ================= DATA ================= */
+
+const SCHEMA = `
+
+CREATE TABLE clients(client_id INT PRIMARY KEY, client_name VARCHAR(50), city VARCHAR(30), plan VARCHAR(20), status VARCHAR(30), onboarding_date DATE);
+
+INSERT INTO clients VALUES
+
+(101,'Apex Retail','Chennai','Enterprise','Live','2025-11-04'),
+
+(102,'BlueLeaf Foods','Bengaluru','Standard','In Implementation','2026-02-16'),
+
+(103,'Cobalt Logistics','Chennai','Enterprise','In Implementation','2026-01-09'),
+
+(104,'Delta Clinics','Hyderabad','Standard','Live','2025-08-21'),
+
+(105,'Evergreen Schools','Chennai','Basic','On Hold','2026-03-02'),
+
+(106,'Fortune Textiles','Coimbatore','Standard','In Implementation','2026-03-18'),
+
+(107,'Granite Infra','Mumbai','Enterprise','Live','2025-06-12'),
+
+(108,'Horizon Pharma','Pune','Enterprise','In Implementation','2025-12-01');
+
+CREATE TABLE tickets(ticket_id INT PRIMARY KEY, client_id INT, priority VARCHAR(10), status VARCHAR(10), created_on DATE);
+
+INSERT INTO tickets VALUES
+
+(1,101,'High','Open','2026-03-02'),(2,101,'Low','Closed','2026-01-15'),(3,102,'Medium','Open','2026-03-20'),
+
+(4,103,'High','Open','2026-03-11'),(5,103,'High','Open','2026-03-14'),(6,103,'Low','Closed','2026-02-03'),
+
+(7,104,'Medium','Closed','2025-12-19'),(8,106,'Low','Open','2026-03-21'),(9,106,'Medium','Open','2026-03-22'),
+
+(10,106,'High','Open','2026-03-25'),(11,107,'Low','Closed','2025-10-08'),(12,108,'High','Open','2026-03-05'),
+
+(13,108,'Medium','Closed','2026-02-11'),(14,101,'Medium','Open','2026-03-18');`;
+
+ 
+
+const SUMIF_TABLE = `<table class="mini"><tr><th></th><th>A (Region)</th><th>B (Amount)</th></tr>
+
+<tr><td>2</td><td>North</td><td>100</td></tr><tr><td>3</td><td>South</td><td>200</td></tr>
+
+<tr><td>4</td><td>North</td><td>150</td></tr><tr><td>5</td><td>East</td><td>50</td></tr></table>`;
+
+const DI_TABLE = `<table class="mini"><tr><th>Day</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th></tr>
+
+<tr><td>Tickets resolved</td><td>40</td><td>55</td><td>45</td><td>60</td><td>50</td></tr></table>`;
+
+ 
+
+const M = (q,opts,ans,marks,diff,topic,exp,extra) => ({type:'mcq',q,opts,ans,marks,diff,topic,exp,extra});
+
+ 
+
+const SECTIONS = [
+
+{title:'ANSI SQL (MySQL)', short:'SQL', mins:25, weight:25, cut:40, questions:[
+
+  {type:'sql',diff:'Easy',marks:10,topic:'SELECT, WHERE, ORDER BY',
+
+   q:"List the client_name and onboarding_date of every client whose status is 'In Implementation'. Sort the result by onboarding_date, oldest first.",
+
+   ref:"SELECT client_name, onboarding_date\nFROM clients\nWHERE status = 'In Implementation'\nORDER BY onboarding_date;",
+
+   ordered:true, keys:['select','client_name','onboarding_date','from clients','where','status',"'in implementation'",'order by']},
+
+  {type:'sql',diff:'Medium',marks:15,topic:'JOIN, GROUP BY, HAVING',
+
+   q:"For each client that has more than one ticket with status 'Open', show client_name and the number of open tickets as open_tickets. Sort by open_tickets (highest first), then by client_name (A to Z).",
+
+   ref:"SELECT c.client_name, COUNT(*) AS open_tickets\nFROM clients c\nJOIN tickets t ON c.client_id = t.client_id\nWHERE t.status = 'Open'\nGROUP BY c.client_id, c.client_name\nHAVING COUNT(*) > 1\nORDER BY open_tickets DESC, c.client_name;",
+
+   ordered:true, keys:['select','client_name','count(','join','group by','having',"'open'",'order by','desc']}
+
+]},
+
+{title:'Software Implementation and Client Facilitation', short:'Implementation', mins:35, weight:30, cut:40, questions:[
+
+  M("Which implementation phase is mainly used to document what the client needs the system to do?",["Go-live","Requirement gathering","Hypercare","User acceptance testing"],1,1,'Easy','Implementation lifecycle',"Requirement gathering captures the client's business needs before configuration starts."),
+
+  M("User Acceptance Testing (UAT) is usually carried out by:",["The development team","The implementation team only","The client's business users","An external auditor"],2,1,'Easy','Implementation lifecycle',"UAT is done by the client's end users to confirm the system meets their business needs."),
+
+  M("What does 'hypercare' mean in an implementation project?",["A period of extra support right after go-live","The final sign-off meeting","A paid premium support plan","Testing done before configuration"],0,1,'Easy','Implementation lifecycle',"Hypercare is the period of heightened support immediately after go-live, when issues are most likely."),
+
+  M("A fit-gap analysis is used to:",["Estimate the project budget","Compare client requirements against what the product offers as standard","Measure user satisfaction after go-live","Decide the training schedule"],1,1,'Easy','Fit-gap analysis',"Fit-gap identifies which requirements the product meets as-is and which need configuration, customisation or workarounds."),
+
+  M("A Business Requirements Document (BRD) mainly records:",["Server and network settings","The client's business needs and objectives","Daily status of support tickets","Source code changes"],1,1,'Easy','Documentation',"A BRD describes what the business needs and why, not how it is technically built."),
+
+  M("In Agile, a short, fixed-length period in which a set of work is completed is called a:",["Milestone","Phase gate","Sprint","Baseline"],2,1,'Easy','SDLC basics',"A sprint is a time-boxed iteration, usually 1 to 4 weeks."),
+
+  M("A Service Level Agreement (SLA) in client support defines:",["The software licence price","Agreed response and resolution times for issues","The list of project team members","The product roadmap"],1,1,'Easy','Ticketing and SLA',"An SLA sets the committed response and resolution times, often by ticket priority."),
+
+  M("Which issue should normally be logged as the highest priority (P1)?",["A spelling error on a report header","A request for a new report","The system is down and no users can log in","A user forgot their password"],2,1,'Easy','Incident priority',"P1 covers business-critical outages affecting all or most users."),
+
+  M("Before loading legacy client data into the new system, which activity makes sure each old field goes into the correct new field?",["Data mapping","Data archiving","Load testing","Code review"],0,1,'Easy','Data migration',"Data mapping links each source field to its target field, including any transformation rules."),
+
+  M("Which statement best describes the Waterfall model?",["Work is delivered in short repeated cycles","Phases run in sequence, each finishing before the next starts","There is no documentation","Testing happens before requirements"],1,1,'Easy','SDLC basics',"Waterfall is linear and sequential: requirements, design, build, test, deploy."),
+
+  M("During UAT, the client asks for a new feature that is not in the agreed scope. What is the best response?",["Build it quietly so the client stays happy","Refuse, because it is out of scope","Log it as a change request, assess the effect on timeline and cost, and get approval before starting","Tell the client to raise it after go-live and forget it"],2,2,'Medium','Change management',"A change request keeps scope controlled and transparent while still taking the client's need seriously."),
+
+  M("The day before go-live, you find a bug that calculates salaries wrongly for some employees. What should you do first?",["Go live anyway and fix it later","Inform the client and internal stakeholders straight away, assess impact with the tech team and agree a go/no-go decision together","Fix the data manually without telling anyone","Postpone go-live without explaining why"],1,2,'Medium','Escalation handling',"Critical defects need immediate, transparent escalation and a joint decision on going live, a workaround or a new date."),
+
+  M("In a training session, a few users keep saying the old system was better and stop participating. What works best?",["Ignore them and focus on keen users","Report them to their manager","Ask about their concerns, show how the new system handles their daily tasks and give them hands-on practice","End the session early"],2,2,'Medium','User training and facilitation',"Resistance usually comes from fear of change; linking the system to their real work and practising builds confidence."),
+
+  M("A client sends an angry email about delays. The delay is mainly because the client has not sent required data. How do you reply?",["Point out clearly that it is their fault","Stay calm, acknowledge their frustration, list the pending items and their impact, and propose a plan with dates","Forward the email to your manager and wait","Promise the original date even though it is not possible"],1,2,'Medium','Client handling',"State facts without blame, show empathy and move the conversation to a joint plan."),
+
+  M("Two issues arrive together: Client A's system is down for all users (P1). Client B's director wants a report's font changed (P3). What do you do?",["Handle Client B first because a director asked","Work on Client A's outage first and give Client B an acknowledgement with an expected time","Handle both at the same time, splitting your attention","Ask both clients to wait until tomorrow"],1,2,'Medium','Prioritisation',"Priority follows business impact, not seniority; still acknowledge the lower-priority request with an ETA."),
+
+  M("A user writes 'the system is not working' with no other details. What is your first step?",["Escalate to the product team immediately","Close the ticket because it is unclear","Ask for the error message, the steps they took, screenshots and which screen they were on","Reinstall the software for them"],2,2,'Medium','Troubleshooting',"You need specific details to reproduce and diagnose the problem."),
+
+  M("You realise you cannot fix a technical issue within its SLA. What should you do?",["Wait and hope it gets fixed in time","Escalate to the next support level as per the escalation matrix and update the client with a new ETA before the SLA is breached","Change the ticket priority so the SLA is longer","Mark it resolved and reopen it later"],1,2,'Medium','Escalation handling',"Escalating early and keeping the client informed protects trust; changing priority to hide a breach is dishonest."),
+
+  M("After migration, the new system shows 4,800 employee records but the client's source file has 5,000. What is the right approach?",["Tell the client the difference is small enough to ignore","Compare source and target to find the missing records, check the rejection log, fix and reload them, and share a reconciliation report","Delete all data and start again without analysis","Ask the client to re-enter 200 records by hand"],1,2,'Medium','Data migration and reconciliation',"Reconciliation finds exactly which records failed and why, then fixes them with evidence."),
+
+  M("The client's project manager has not responded to UAT sign-off requests for a week. What should you do?",["Assume sign-off and go live","Stop work on the project","Follow up with a clear deadline and the impact of further delay, and if needed escalate politely through the agreed project governance","Complain about them on a group email"],2,2,'Medium','Stakeholder management',"A clear follow-up with impact, then escalation through governance, keeps the project moving professionally."),
+
+  M("Midway through implementation, the client changes its main point of contact. What is the best step?",["Continue as before and copy the new person on emails","Arrange a handover meeting, share project status and documents, and reconfirm priorities and pending approvals","Restart the project from requirement gathering","Wait for the new contact to reach out"],1,2,'Medium','Stakeholder management',"A structured handover prevents lost context and rework.")
+
+]},
+
+{title:'MS Excel', short:'Excel', mins:20, weight:15, cut:40, questions:[
+
+  M("The formula =A2*$B$1 is copied from C2 down to C10. Which part of the formula stays the same in every row?",["A2","$B$1","Both A2 and $B$1","Neither"],1,1.5,'Easy','Cell referencing',"The $ signs make $B$1 an absolute reference; A2 is relative and changes to A3, A4 and so on."),
+
+  M("Cell B2 contains 60. What does =IF(B2>=60,\"Pass\",\"Fail\") return?",["Fail","Pass","TRUE","#VALUE!"],1,1.5,'Easy','Logical functions',"60 is greater than or equal to 60, so the condition is TRUE and the result is \"Pass\"."),
+
+  M("In VLOOKUP, which value of the last argument makes it look for an exact match?",["TRUE","1","FALSE","-1"],2,1.5,'Easy','Lookup functions',"FALSE (or 0) forces an exact match; TRUE gives an approximate match."),
+
+  M("A lookup returns #N/A when an ID is missing. Which formula shows \"Not Found\" instead?",["=IFERROR(VLOOKUP(A2,D:E,2,FALSE),\"Not Found\")","=IF(VLOOKUP(A2,D:E,2,FALSE),\"Not Found\")","=ISNA(\"Not Found\")","=VLOOKUP(A2,D:E,2,\"Not Found\")"],0,1.5,'Easy','Logical and lookup functions',"IFERROR returns the second argument when the first one gives an error."),
+
+  M("Client names in a migration file have extra spaces before and after them. Which function removes these?",["CLEAN","TRIM","SUBSTITUTE","PROPER"],1,1.5,'Easy','Text functions and data cleaning',"TRIM removes leading, trailing and repeated spaces between words."),
+
+  M("Using the table below, what does =SUMIF(A2:A5,\"North\",B2:B5) return?",["100","150","250","500"],2,1.5,'Easy','Aggregation functions',"Only the North rows are added: 100 + 150 = 250.",SUMIF_TABLE),
+
+  M("You need a quick summary of ticket counts by client and by priority from 5,000 rows. What is the best tool?",["Conditional formatting","Pivot table","Freeze panes","Text to columns"],1,1.5,'Easy','Pivot tables',"A pivot table summarises large data sets by any combination of fields in seconds."),
+
+  M("You want users to choose a status only from a dropdown list (Open, In Progress, Closed). Which feature do you use?",["Data Validation","Conditional Formatting","Protect Sheet","Goal Seek"],0,1.5,'Easy','Data validation',"Data Validation with a List restricts entries to the allowed values."),
+
+  M("You want overdue dates in a column to turn red automatically. Which feature do you use?",["Sort and Filter","Data Validation","Conditional Formatting","Format Painter"],2,1.5,'Easy','Conditional formatting',"Conditional Formatting changes cell formatting based on a rule, such as date < TODAY()."),
+
+  M("What is one advantage of XLOOKUP over VLOOKUP?",["It only works with numbers","It can return a value from a column to the left of the lookup column","It needs a column index number","It always uses approximate match"],1,1.5,'Easy','Lookup functions',"XLOOKUP uses separate lookup and return ranges, so it can look left, and it defaults to exact match.")
+
+]},
+
+{title:'Business Communication', short:'Communication', mins:25, weight:15, cut:40, questions:[
+
+  {type:'email',diff:'Medium',marks:15,topic:'Client email writing',
+
+   q:"Write an email to the client's project manager, Ms. Priya Raman of Cobalt Logistics.",
+
+   scenario:"The go-live of Cobalt Logistics was planned for 30 March. The employee master data and the approved leave policy, which the client promised by 15 March, have still not been received. Because of this, go-live will slip by about one week. Write an email to the client's project manager that explains the situation, its impact and the way forward. Include a subject line."}
+
+]},
+
+{title:'Logical Reasoning', short:'Reasoning', mins:15, weight:15, cut:40, questions:[
+
+  M("Find the next number: 3, 6, 11, 18, 27, ?",["36","38","39","40"],1,1.5,'Easy','Number series',"Differences are 3, 5, 7, 9, so the next difference is 11: 27 + 11 = 38."),
+
+  M("Find the next letter: B, E, H, K, ?",["M","N","O","L"],1,1.5,'Easy','Letter series',"Each letter moves 3 places forward: K + 3 = N."),
+
+  M("If CLIENT is written as DMJFOU, how is SERVER written?",["TFSWFS","TFRWFS","RDQUDQ","TFSWES"],0,1.5,'Easy','Coding-decoding',"Each letter is shifted one place forward: S→T, E→F, R→S, V→W, E→F, R→S."),
+
+  M("Pointing to a man, Riya says, \"He is the son of my grandfather's only son.\" How is the man related to Riya?",["Cousin","Uncle","Brother","Father"],2,1.5,'Easy','Blood relations',"Her grandfather's only son is her father, so his son is her brother."),
+
+  M("Five people A, B, C, D and E sit in a row facing north. C is in the middle. B is to the immediate right of C. A is at the left end. E is not next to B. Who sits at the right end?",["B","E","D","C"],2,1.5,'Easy','Seating arrangement',"Order from left: A, E, C, B, D. E cannot be at position 5 because it is next to B."),
+
+  M("Statements: All implementers are trainers. Some trainers are analysts.\nConclusions: I. Some implementers are analysts. II. Some analysts are trainers.",["Only I follows","Only II follows","Both follow","Neither follows"],1,1.5,'Easy','Syllogism',"II is the reverse of 'some trainers are analysts', so it follows. I is possible but not certain."),
+
+  M("Using the table, what is the average number of tickets resolved per day?",["48","50","52","55"],1,1.5,'Easy','Data interpretation',"Total = 250 over 5 days, so the average is 50.",DI_TABLE),
+
+  M("Using the same table, by what percentage did tickets resolved increase from Monday to Thursday?",["20%","33%","40%","50%"],3,1.5,'Easy','Data interpretation',"(60 − 40) ÷ 40 × 100 = 50%.",DI_TABLE),
+
+  M("\"Since the new training module was introduced, support tickets dropped by 30%. So the training module caused the drop.\" Which statement weakens this argument the most?",["Users rated the training module highly","In the same period, a major bug that caused many tickets was fixed","The training module took two months to build","Support staff liked the new module"],1,1.5,'Easy','Critical reasoning',"Another cause for the drop during the same period weakens the claim that training caused it."),
+
+  M("Which number is the odd one out? 121, 144, 169, 196, 210",["144","169","196","210"],3,1.5,'Easy','Odd one out',"All others are perfect squares (11², 12², 13², 14²); 210 is not.")
+
+]}
+
+];
+
+SECTIONS.forEach(s=>s.max=s.questions.reduce((a,q)=>a+q.marks,0));
+
+ 
+
+/* ================= STATE ================= */
+
+const S = {cand:{}, sec:0, q:0, answers:[], status:[], qtime:[], secUsed:[], remaining:0, timerId:null, qStart:0,
+
+  tabSwitches:0, pastes:0, started:null, ended:null, inExam:false, inSection:false, sqlRuns:[]};
+
+let SQL=null, engineState='loading';
+
+if(window.initSqlJs){
+
+  initSqlJs({locateFile:f=>'https://cdnjs.cloudflare.com/ajax/libs/sql.js/1.8.0/'+f})
+
+   .then(m=>{SQL=m;engineState='ready';refreshEngine();}).catch(()=>{engineState='off';refreshEngine();});
+
+} else engineState='off';
+
+ 
+
+const $=id=>document.getElementById(id);
+
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+const fmt=s=>{s=Math.max(0,Math.round(s));const m=Math.floor(s/60),x=s%60;return String(m).padStart(2,'0')+':'+String(x).padStart(2,'0')};
+
+const fmtLong=s=>{s=Math.round(s);const m=Math.floor(s/60),x=s%60;return m?`${m} min ${x} s`:`${x} s`};
+
+const r1=n=>Math.round(n*10)/10;
+
+ 
+
+/* ================= START ================= */
+
+$('planTable').innerHTML='<tr><th></th><th>Section</th><th>Questions</th><th style="text-align:right">Time</th><th style="text-align:right">Marks</th></tr>'+
+
+SECTIONS.map((s,i)=>`<tr><td class="n">${i+1}</td><td><b>${esc(s.title)}</b><br><span style="font-size:13px;color:var(--muted)">${planType(s)}</span></td><td>${s.questions.length}</td><td class="r">${s.mins} min</td><td class="r">${s.max}</td></tr>`).join('');
+
+function planType(s){const t=[...new Set(s.questions.map(q=>q.type==='sql'?'SQL query':q.type==='email'?'Email writing':(q.diff==='Medium'?'Scenario-based MCQ':'MCQ')))];return t.join(' and ')}
+
+ 
+
+$('startBtn').onclick=()=>{
+
+  const n=$('cName').value.trim(), e=$('cEmail').value.trim();
+
+  if(!n){$('startErr').textContent='Enter your full name to continue.';return}
+
+  if(!/^\S+@\S+\.\S+$/.test(e)){$('startErr').textContent='Enter a valid email address, for example name@company.com.';return}
+
+  if(!$('cAgree').checked){$('startErr').textContent='Tick the checkbox to confirm you have read the instructions.';return}
+
+  S.cand={name:n,email:e,id:$('cId').value.trim()||'Not provided'};
+
+  S.answers=SECTIONS.map(s=>s.questions.map(()=>null));
+
+  S.status=SECTIONS.map(s=>s.questions.map(()=>({seen:false,mark:false})));
+
+  S.qtime=SECTIONS.map(s=>s.questions.map(()=>0));
+
+  S.secUsed=SECTIONS.map(()=>0);
+
+  S.sqlRuns=SECTIONS[0].questions.map(()=>0);
+
+  S.started=new Date(); S.inExam=true;
+
+  $('start').classList.add('hidden'); $('exam').classList.remove('hidden');
+
+  showInterstitial(0);
+
+};
+
+ 
+
+/* ================= SECTION FLOW ================= */
+
+function renderStepper(){
+
+  $('stepper').innerHTML=SECTIONS.map((s,i)=>`<div class="step ${i<S.sec?'done':i===S.sec?'now':''}"><i>${i<S.sec?'✓':i+1}</i><span>${esc(s.short)}</span></div>`).join('');
+
+}
+
+function showInterstitial(i){
+
+  S.sec=i; S.inSection=false; renderStepper();
+
+  const s=SECTIONS[i];
+
+  $('timer').textContent=fmt(s.mins*60); $('timer').className='timer';
+
+  $('qarea').classList.add('hidden'); $('interstitial').classList.remove('hidden');
+
+  $('interstitial').innerHTML=`<div class="inter">
+
+    <div class="num">${i+1}</div>
+
+    <h2>${esc(s.title)}</h2>
+
+    <p>${sectionNote(i)}</p>
+
+    <dl><dt>Questions</dt><dd>${s.questions.length}</dd><dt>Time</dt><dd>${s.mins} minutes</dd><dt>Marks</dt><dd>${s.max} (${s.weight}% of the total)</dd><dt>Question type</dt><dd>${planType(s)}</dd></dl>
+
+    <button class="btn btn-primary" id="beginSec" style="padding:12px 22px">Start section ${i+1}</button></div>`;
+
+  $('beginSec').onclick=()=>beginSection(i);
+
+  window.scrollTo(0,0);
+
+}
+
+function sectionNote(i){
+
+  return ['Write queries against two sample tables, clients and tickets. You can run your query as many times as you like before moving on.',
+
+   'The first 10 questions check your knowledge of the implementation process (1 mark each). The next 10 describe real client situations; pick the best action (2 marks each).',
+
+   'Questions on formulas and features used to clean, check and summarise client data. 1.5 marks each.',
+
+   'Write one professional email based on a client scenario. It is scored on understanding, structure, tone, solution and language.',
+
+   'Short reasoning and data interpretation questions. 1.5 marks each.'][i];
+
+}
+
+function beginSection(i){
+
+  S.inSection=true; S.q=0; S.remaining=SECTIONS[i].mins*60;
+
+  $('interstitial').classList.add('hidden'); $('qarea').classList.remove('hidden');
+
+  $('sideTitle').textContent=`Section ${i+1}: ${SECTIONS[i].short}`;
+
+  S.qStart=Date.now(); renderQ(); tick();
+
+  clearInterval(S.timerId); S.timerId=setInterval(tick,1000);
+
+}
+
+function tick(){
+
+  if(!S.inSection) return;
+
+  const t=$('timer'); t.textContent=fmt(S.remaining);
+
+  t.className='timer'+(S.remaining<=60?' crit':S.remaining<=300?' warn':'');
+
+  if(S.remaining===300) toast('5 minutes left in this section.');
+
+  if(S.remaining<=0){finishSection(true);return}
+
+  S.remaining--;
+
+}
+
+function logQTime(){ if(S.inSection){S.qtime[S.sec][S.q]+= (Date.now()-S.qStart)/1000; S.qStart=Date.now();} }
+
+function finishSection(auto){
+
+  logQTime(); saveCurrent();
+
+  clearInterval(S.timerId);
+
+  S.secUsed[S.sec]=SECTIONS[S.sec].mins*60-Math.max(0,S.remaining);
+
+  S.inSection=false; closeModal();
+
+  if(auto) toast(`Time is up. Section ${S.sec+1} has been submitted.`);
+
+  if(S.sec<SECTIONS.length-1) showInterstitial(S.sec+1); else endExam();
+
+}
+
+ 
+
+/* ================= QUESTION RENDER ================= */
+
+function isAnswered(si,qi){const a=S.answers[si][qi];return a!==null && a!==undefined && String(a).trim()!==''}
+
+function renderQ(){
+
+  const s=SECTIONS[S.sec], q=s.questions[S.q], st=S.status[S.sec][S.q];
+
+  st.seen=true;
+
+  let body='';
+
+  if(q.type==='mcq'){
+
+    body=`<p class="qtext">${esc(q.q).replace(/\n/g,'<br>')}</p>${q.extra||''}<div class="opts" role="radiogroup">`+
+
+      q.opts.map((o,i)=>`<button class="opt ${S.answers[S.sec][S.q]===i?'sel':''}" role="radio" aria-checked="${S.answers[S.sec][S.q]===i}" data-i="${i}"><span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')+'</div>';
+
+  } else if(q.type==='sql'){
+
+    body=`<p class="qtext">${esc(q.q)}</p>${schemaHtml()}
+
+      <label for="sqlEd" style="font-size:14px;font-weight:600">Your query</label>
+
+      <textarea id="sqlEd" class="editor" spellcheck="false" placeholder="SELECT ...">${esc(S.answers[S.sec][S.q]||'')}</textarea>
+
+      <div class="runrow"><button class="btn" id="runBtn">Run query</button><span class="engine" id="engineNote"></span></div>
+
+      <div class="out" id="sqlOut"><span style="color:var(--muted)">Run your query to see the result here.</span></div>`;
+
+  } else {
+
+    const v=S.answers[S.sec][S.q]||'';
+
+    body=`<p class="qtext">${esc(q.q)}</p><div class="scenario">${esc(q.scenario)}</div>
+
+      <label for="emailEd" style="font-size:14px;font-weight:600">Your email</label>
+
+      <textarea id="emailEd" class="email" placeholder="Subject: ...&#10;&#10;Dear Ms. Raman,&#10;&#10;...">${esc(v)}</textarea>
+
+      <div class="wc" id="wc"></div>`;
+
+  }
+
+  const last=S.q===s.questions.length-1;
+
+  $('qcard').innerHTML=`<div class="qmeta"><span>Question ${S.q+1} of ${s.questions.length}</span>
+
+    <span><span class="tag">${esc(q.diff)}</span><span class="tag">${q.marks} ${q.marks===1?'mark':'marks'}</span></span></div>${body}
+
+    <div class="qnav"><button class="btn" id="prevBtn" ${S.q===0?'disabled':''}>Previous</button>
+
+    <button class="btn btn-amber" id="markBtn">${st.mark?'Remove review mark':'Mark for review'}</button>
+
+    <button class="btn" id="clearBtn">Clear answer</button><span class="sp"></span>
+
+    <button class="btn btn-primary" id="nextBtn">${last?'Save':'Save and next'}</button></div>`;
+
+  if(q.type==='mcq') document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{S.answers[S.sec][S.q]=+b.dataset.i;renderQ()});
+
+  if(q.type==='sql'){ $('runBtn').onclick=runUserSQL; refreshEngine(); $('sqlEd').oninput=e=>{S.answers[S.sec][S.q]=e.target.value;renderSide()};
+
+    $('sqlEd').addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();runUserSQL()}}); }
+
+  if(q.type==='email'){ const ed=$('emailEd'); const upd=()=>{S.answers[S.sec][S.q]=ed.value;const w=words(ed.value);$('wc').textContent=`${w} words. Aim for 120 to 250 words.`;renderSide()};
+
+    ed.oninput=upd; ed.addEventListener('paste',()=>S.pastes++); upd(); }
+
+  $('prevBtn').onclick=()=>go(S.q-1);
+
+  $('nextBtn').onclick=()=>{ if(last){saveCurrent();toast('Answer saved. Submit the section when you are ready.');renderSide()} else go(S.q+1)};
+
+  $('markBtn').onclick=()=>{st.mark=!st.mark;renderQ()};
+
+  $('clearBtn').onclick=()=>{S.answers[S.sec][S.q]=null;renderQ()};
+
+  renderSide();
+
+}
+
+function saveCurrent(){
+
+  const q=SECTIONS[S.sec]?.questions[S.q]; if(!q) return;
+
+  if(q.type==='sql'&&$('sqlEd')) S.answers[S.sec][S.q]=$('sqlEd').value;
+
+  if(q.type==='email'&&$('emailEd')) S.answers[S.sec][S.q]=$('emailEd').value;
+
+}
+
+function go(i){ saveCurrent(); logQTime(); S.q=i; renderQ(); window.scrollTo({top:0}); }
+
+function renderSide(){
+
+  const s=SECTIONS[S.sec];
+
+  $('palette').innerHTML=s.questions.map((q,i)=>{
+
+    const st=S.status[S.sec][i], a=isAnswered(S.sec,i);
+
+    const cls=st.mark?'mark':a?'ans':st.seen?'seen':'';
+
+    return `<button class="pbtn ${cls} ${i===S.q?'cur':''}" data-i="${i}" aria-label="Question ${i+1}">${i+1}</button>`}).join('');
+
+  document.querySelectorAll('.pbtn').forEach(b=>b.onclick=()=>go(+b.dataset.i));
+
+  const ans=s.questions.filter((_,i)=>isAnswered(S.sec,i)).length, mk=S.status[S.sec].filter(x=>x.mark).length;
+
+  $('counts').innerHTML=`<b>${ans}</b> of ${s.questions.length} answered, <b>${mk}</b> marked for review`;
+
+}
+
+$('submitSecBtn').onclick=()=>{
+
+  saveCurrent();
+
+  const s=SECTIONS[S.sec], ans=s.questions.filter((_,i)=>isAnswered(S.sec,i)).length, un=s.questions.length-ans, mk=S.status[S.sec].filter(x=>x.mark).length;
+
+  const lastSec=S.sec===SECTIONS.length-1;
+
+  modal(`Submit section ${S.sec+1}?`,
+
+   `You have answered ${ans} of ${s.questions.length} questions${un?`, and ${un} ${un===1?'is':'are'} still unanswered`:''}${mk?`. ${mk} ${mk===1?'is':'are'} marked for review`:''}. You will not be able to return to this section.${lastSec?' This is the last section, so your test will end.':''}`,
+
+   lastSec?'Submit and finish test':'Submit section',()=>finishSection(false));
+
+};
+
+ 
+
+/* ================= SQL ================= */
+
+function schemaHtml(){
+
+  const db=freshDb(); let sample='';
+
+  if(db){ ['clients','tickets'].forEach(t=>{const r=db.exec(`SELECT * FROM ${t}`)[0]; sample+=`<div><code><b>${t}</b></code>${resTable(r)}</div>`}); db.close(); }
+
+  else sample=staticSample();
+
+  return `<details class="schema" open><summary>Tables and sample data</summary>
+
+   <p style="margin:8px 0 0;color:var(--muted)">clients(client_id, client_name, city, plan, status, onboarding_date) and tickets(ticket_id, client_id, priority, status, created_on). tickets.client_id refers to clients.client_id. Status values in tickets are 'Open' and 'Closed'.</p>
+
+   <div class="tbls">${sample}</div></details>`;
+
+}
+
+function staticSample(){
+
+  return ['clients','tickets'].map(t=>{
+
+    const cols=SCHEMA.match(new RegExp('CREATE TABLE '+t+'\\(([^;]*)\\);'))[1].split(',').map(c=>c.trim().split(' ')[0]);
+
+    const body=SCHEMA.match(new RegExp('INSERT INTO '+t+' VALUES([\\s\\S]*?);'))[1].trim().replace(/^\(|\)$/g,'');
+
+    const vals=body.split(/\),\s*\(/).map(r=>r.split(',').map(v=>v.trim().replace(/^'|'$/g,'')));
+
+    return `<div><code><b>${t}</b></code>${resTable({columns:cols,values:vals})}</div>`;}).join('');
+
+}
+
+function freshDb(){ if(!SQL) return null; const db=new SQL.Database(); db.run(SCHEMA); return db; }
+
+function resTable(r){
+
+  if(!r) return '<span style="color:var(--muted)">The query ran but returned no rows.</span>';
+
+  return `<table class="mini"><tr>${r.columns.map(c=>`<th>${esc(c)}</th>`).join('')}</tr>${r.values.map(v=>`<tr>${v.map(x=>`<td>${esc(x===null?'NULL':x)}</td>`).join('')}</tr>`).join('')}</table>`;
+
+}
+
+function refreshEngine(){
+
+  const n=$('engineNote'); if(!n) return;
+
+  n.textContent=engineState==='ready'?'Press Ctrl + Enter to run.':engineState==='loading'?'Loading the query engine…':'The query engine could not load, so queries cannot be run here. Your answer will still be saved and checked for the right clauses.';
+
+  if($('runBtn')) $('runBtn').disabled=engineState!=='ready';
+
+  if(engineState==='ready' && SECTIONS[S.sec]?.questions[S.q]?.type==='sql' && !document.querySelector('.schema .mini')) {
+
+    const d=document.querySelector('.schema'); if(d) d.outerHTML=schemaHtml();
+
+  }
+
+}
+
+function execSQL(sql){
+
+  const db=freshDb(); try{ const r=db.exec(sql); return {ok:true,res:r.length?r[r.length-1]:null}; }
+
+  catch(e){ return {ok:false,err:e.message}; } finally{ db.close(); }
+
+}
+
+function runUserSQL(){
+
+  const sql=$('sqlEd').value.trim(); S.answers[S.sec][S.q]=sql;
+
+  if(!sql){$('sqlOut').innerHTML='<span class="e">Type a query before running it.</span>';return}
+
+  S.sqlRuns[S.q]++;
+
+  const r=execSQL(sql);
+
+  $('sqlOut').innerHTML=r.ok?resTable(r.res)+(r.res?`<div style="font-size:12px;color:var(--muted);margin-top:6px">${r.res.values.length} row(s)</div>`:''):`<span class="e">Error: ${esc(r.err)}</span>`;
+
+  renderSide();
+
+}
+
+const norm=v=>{ if(v===null) return 'null'; if(typeof v==='number'||(/^-?\d+(\.\d+)?$/.test(String(v).trim()))) return String(+(+v).toFixed(4)); return String(v).trim().toLowerCase(); };
+
+function gradeSQL(q,ans){
+
+  if(!ans||!ans.trim()) return {score:0,status:'skip',note:'No query was submitted.'};
+
+  if(engineState!=='ready'){
+
+    const low=ans.toLowerCase().replace(/\s+/g,' '); const hit=q.keys.filter(k=>low.includes(k)).length;
+
+    const sc=r1(q.marks*hit/q.keys.length*0.8);
+
+    return {score:sc,status:sc>=q.marks*0.75?'part':sc>0?'part':'wrong',note:`Estimated from query structure (${hit} of ${q.keys.length} expected clauses found) because the query engine was not available.`};
+
+  }
+
+  const u=execSQL(ans), ref=execSQL(q.ref).res;
+
+  if(!u.ok) return {score:0,status:'wrong',note:'The query returned an error: '+u.err};
+
+  if(!u.res) return {score:0,status:'wrong',note:'The query returned no rows; the expected result has '+ref.values.length+' rows.'};
+
+  const R=u.res;
+
+  if(R.columns.length!==ref.columns.length) return {score:r1(q.marks*0.2),status:'part',note:`The query runs, but returns ${R.columns.length} column(s) instead of ${ref.columns.length}.`};
+
+  const a=R.values.map(r=>r.map(norm).join('|')), b=ref.values.map(r=>r.map(norm).join('|'));
+
+  if(a.join('#')===b.join('#')) return {score:q.marks,status:'correct',note:'The result matches the expected output exactly.'};
+
+  if([...a].sort().join('#')===[...b].sort().join('#')) return {score:r1(q.marks*0.7),status:'part',note:'The correct rows are returned, but not in the required order.'};
+
+  const overlap=a.filter(x=>b.includes(x)).length;
+
+  if(overlap) return {score:r1(q.marks*0.3),status:'part',note:`${overlap} of ${b.length} expected rows are correct, but the result also differs from what was asked (${a.length} rows returned).`};
+
+  return {score:r1(q.marks*0.1),status:'wrong',note:'The query runs, but the result does not match the expected output.'};
+
+}
+
+ 
+
+/* ================= EMAIL SCORING ================= */
+
+const words=t=>(t.trim().match(/\S+/g)||[]).length;
+
+function gradeEmail(t){
+
+  const out={total:0,parts:[],notes:[]};
+
+  if(!t||!t.trim()){out.parts=RUBRIC.map(r=>({name:r,score:0}));out.notes.push('No email was submitted.');return out}
+
+  const low=t.toLowerCase(), w=words(t), has=re=>re.test(low);
+
+  // understanding
+
+  let u=0; if(has(/go[- ]?live|launch|live date/))u++; if(has(/delay|slip|postpone|reschedul|push(ed)? (back|out)|one week|1 week|revised|new date/))u++;
+
+  if(has(/employee (master )?data|master data|leave policy|pending (data|items|inputs)|data (from|on) your|not (yet )?(been )?received/))u++;
+
+  // structure
+
+  let s=0; if(/^\s*subject\s*:/im.test(t))s+=.75; if(has(/^\s*(dear|hi|hello|good (morning|afternoon))\b/m))s+=.75;
+
+  if(has(/(regards|sincerely|thank you|thanks|warm wishes|best)\s*,?\s*\n?/)&&has(/\n\s*\S+\s*$/))s+=.75;
+
+  if(t.split(/\n\s*\n/).filter(p=>p.trim()).length>=3)s+=.75;
+
+  // tone
+
+  let tn=0; const emp=(low.match(/understand|apolog|regret|sorry|appreciate|inconvenience|thank you for|we value|assure|concern/g)||[]).length;
+
+  tn+=Math.min(2,emp); if(!has(/your fault|you failed|because of you|blame|careless|you people|you did not bother|irresponsible/))tn+=1; else out.notes.push('The email contains wording that may sound like blaming the client.');
+
+  if(has(/!!|[A-Z]{6,}/)&&/[A-Z]{6,}/.test(t)){tn=Math.max(0,tn-0.5)}
+
+  // solution
+
+  let so=0; if(has(/(\d{1,2}(st|nd|rd|th)?\s*(of\s*)?(march|april|mar|apr))|((march|april)\s*\d{1,2})|revised (date|timeline|go)|new (go-live )?date|by (monday|tuesday|wednesday|thursday|friday)/))so++;
+
+  if(has(/next step|plan|we will|we'll|schedule|call|meeting|checklist|support|help you|assist/))so++;
+
+  if(has(/\bi will\b|\bi'll\b|we will ensure|we commit|i shall|ownership|i am (personally )?(tracking|following)|ensure/))so++;
+
+  // grammar
+
+  let g=0; g+= w>=120&&w<=300?1.5:w>=80&&w<=400?1:w>=40?.5:0;
+
+  const sents=t.split(/[.!?]+\s/).filter(x=>x.trim().length>2);
+
+  const capOk=sents.filter(x=>/^[\s"'(]*[A-Z0-9]/.test(x.trim())).length/(sents.length||1);
+
+  const avg=w/(sents.length||1); let gq=1.5;
+
+  if(capOk<.8)gq-=.5; if(/\bi\b/.test(t))gq-=.5; if(avg>35||avg<5)gq-=.5; if(/ {2,}\S|\s,|,,|\.\./.test(t))gq-=.25;
+
+  g+=Math.max(0,gq);
+
+  const vals=[u,s,tn,so,g].map(v=>r1(Math.min(3,Math.max(0,v))));
+
+  out.parts=RUBRIC.map((r,i)=>({name:r,score:vals[i]})); out.total=r1(vals.reduce((a,b)=>a+b,0));
+
+  if(w<80) out.notes.push(`At ${w} words, the email is short for this scenario.`);
+
+  if(!/^\s*subject\s*:/im.test(t)) out.notes.push('No subject line was found.');
+
+  return out;
+
+}
+
+const RUBRIC=['Understanding of the scenario','Structure and clarity','Tone and empathy','Solution and ownership','Grammar and language'];
+
+ 
+
+/* ================= END & RESULTS ================= */
+
+function endExam(){
+
+  S.inExam=false; S.ended=new Date(); clearInterval(S.timerId);
+
+  $('exam').classList.add('hidden'); $('dash').classList.remove('hidden');
+
+  renderDash(computeResults()); window.scrollTo(0,0);
+
+}
+
+function computeResults(){
+
+  const secs=SECTIONS.map((s,si)=>{
+
+    let score=0,correct=0,wrong=0,skip=0,partial=0; const items=[];
+
+    s.questions.forEach((q,qi)=>{
+
+      const a=S.answers[si][qi]; let it={q,a,qi,time:S.qtime[si][qi]};
+
+      if(q.type==='mcq'){ if(a===null){it.status='skip';it.score=0;skip++} else if(a===q.ans){it.status='correct';it.score=q.marks;correct++} else {it.status='wrong';it.score=0;wrong++} }
+
+      else if(q.type==='sql'){ const g=gradeSQL(q,a); Object.assign(it,g); it.runs=S.sqlRuns[qi]; if(g.status==='skip')skip++; else if(g.status==='correct')correct++; else if(g.status==='part')partial++; else wrong++; }
+
+      else { const g=gradeEmail(a); it.email=g; it.score=g.total; it.status=!a||!a.trim()?'skip':g.total>=12?'correct':g.total>=6?'part':'wrong'; if(it.status==='skip')skip++; else if(it.status==='correct')correct++; else if(it.status==='part')partial++; else wrong++; }
+
+      score+=it.score; items.push(it);
+
+    });
+
+    score=r1(score);
+
+    return {s,si,score,pct:s.max?score/s.max*100:0,correct,wrong,skip,partial,attempted:s.questions.length-skip,used:S.secUsed[si],items};
+
+  });
+
+  const total=r1(secs.reduce((a,x)=>a+x.score,0));
+
+  const mcqItems=secs.flatMap(x=>x.items.filter(i=>i.q.type==='mcq'));
+
+  const mcqAtt=mcqItems.filter(i=>i.status!=='skip'), mcqCor=mcqItems.filter(i=>i.status==='correct');
+
+  const allItems=secs.flatMap(x=>x.items);
+
+  const diff={}; allItems.forEach(i=>{const d=i.q.diff;diff[d]=diff[d]||{got:0,max:0};diff[d].got+=i.score;diff[d].max+=i.q.marks});
+
+  const minSec=Math.min(...secs.map(x=>x.pct));
+
+  let verdict,vc; if(total>=65&&minSec>=40){verdict='Recommended for interview';vc='v-good'} else if(total>=50){verdict='Borderline: review before deciding';vc='v-mid'} else {verdict='Not recommended at this stage';vc='v-bad'}
+
+  const topics={}; allItems.forEach(i=>{const k=i.q.topic;topics[k]=topics[k]||{got:0,max:0,sec:i.q};topics[k].got+=i.score;topics[k].max+=i.q.marks});
+
+  return {secs,total,mcq:{att:mcqAtt.length,cor:mcqCor.length,tot:mcqItems.length},diff,verdict,vc,
+
+    timeTaken:secs.reduce((a,x)=>a+x.used,0),topics,
+
+    counts:{correct:secs.reduce((a,x)=>a+x.correct,0),wrong:secs.reduce((a,x)=>a+x.wrong,0),partial:secs.reduce((a,x)=>a+x.partial,0),skip:secs.reduce((a,x)=>a+x.skip,0)}};
+
+}
+
+const colorFor=p=>p>=70?'var(--green)':p>=40?'var(--amber)':'var(--red)';
+
+ 
+
+function renderDash(R){
+
+  const C=2*Math.PI*78, off=C*(1-R.total/100);
+
+  const totalQ=SECTIONS.reduce((a,s)=>a+s.questions.length,0);
+
+  const d=S.ended;
+
+  let h=`<div class="dash-head">
+
+   <div class="ring"><svg width="180" height="180" viewBox="0 0 180 180"><circle cx="90" cy="90" r="78" fill="none" stroke="var(--surface-2)" stroke-width="14"/>
+
+     <circle class="fg" id="ringFg" cx="90" cy="90" r="78" fill="none" stroke="${colorFor(R.total)}" stroke-width="14" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C}"/></svg>
+
+     <div class="c"><div><b>${R.total}</b><span>out of 100</span></div></div></div>
+
+   <div class="who"><h1>${esc(S.cand.name)}</h1>
+
+     <p>${esc(S.cand.email)} · Candidate ID: ${esc(S.cand.id)}</p>
+
+     <p>Facilitator (Implementation Executive) assessment, completed ${d.toLocaleDateString(undefined,{day:'numeric',month:'long',year:'numeric'})} at ${d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</p>
+
+     <span class="verdict ${R.vc}">${R.verdict}</span></div>
+
+   <div class="dash-actions"><button class="btn btn-primary" onclick="window.print()">Print or save as PDF</button><button class="btn" onclick="location.reload()">Start a new test</button></div>
+
+  </div>
+
+  <div class="kpis">
+
+   <div class="kpi"><b>${R.total}%</b><span>Overall score</span></div>
+
+   <div class="kpi"><b>${R.secs.reduce((a,x)=>a+x.attempted,0)}/${totalQ}</b><span>Questions attempted</span></div>
+
+   <div class="kpi"><b>${R.mcq.att?Math.round(R.mcq.cor/R.mcq.att*100):0}%</b><span>MCQ accuracy (${R.mcq.cor} of ${R.mcq.att} attempted)</span></div>
+
+   <div class="kpi"><b>${Math.round(R.timeTaken/60)} min</b><span>Time taken of 120 min</span></div>
+
+   <div class="kpi"><b>${R.secs.filter(x=>x.pct>=x.s.cut).length}/5</b><span>Sections at or above 40%</span></div>
+
+   <div class="kpi"><b style="color:${S.tabSwitches>2?'var(--red)':'var(--ink)'}">${S.tabSwitches}</b><span>Tab or window switches</span></div>
+
+  </div>
+
+  <div class="dgrid">
+
+   <div class="panel"><h2>Section scores</h2><p class="sub">Percentage of marks scored in each section. The line shows the 40% section cut-off.</p>
+
+    <div class="bars">${R.secs.map(x=>`<div class="row"><span>${esc(x.s.short)} <span style="color:var(--muted);font-size:12px">(${x.s.weight}%)</span></span>
+
+      <div class="track"><div class="fill" style="width:${x.pct}%;background:${colorFor(x.pct)}"></div><div class="cut" style="left:40%"></div></div>
+
+      <span class="val">${x.score}/${x.s.max}</span></div>`).join('')}</div></div>
+
+   <div class="panel"><h2>Competency profile</h2><p class="sub">Score in each skill area as a share of its maximum.</p>${radar(R.secs)}</div>
+
+   <div class="panel"><h2>Answer breakdown</h2><p class="sub">Across all ${totalQ} questions. Partly correct applies to SQL and email answers.</p>${donut(R.counts,totalQ)}</div>
+
+   <div class="panel"><h2>Time used per section</h2><p class="sub">Time spent compared with the time allowed.</p>
+
+    <div class="bars">${R.secs.map(x=>{const p=Math.min(100,x.used/(x.s.mins*60)*100);return `<div class="row"><span>${esc(x.s.short)}</span>
+
+      <div class="track"><div class="fill" style="width:${p}%;background:var(--blue)"></div></div><span class="val">${fmt(x.used)} / ${x.s.mins}:00</span></div>`}).join('')}</div>
+
+    <h3 style="font-size:16px;font-family:var(--sans);margin:22px 0 10px">Score by difficulty</h3><div class="bars">${Object.entries(R.diff).map(([k,v])=>{const p=v.got/v.max*100;return `<div class="row"><span>${k} questions</span><div class="track"><div class="fill" style="width:${p}%;background:${colorFor(p)}"></div></div><span class="val">${r1(v.got)}/${v.max}</span></div>`}).join('')}</div></div>
+
+   <div class="panel full"><h2>Section summary</h2><p class="sub">Detailed counts for each section.</p><div style="overflow-x:auto">
+
+    <table class="stbl"><tr><th>Section</th><th>Questions</th><th>Attempted</th><th>Correct</th><th>Partly correct</th><th>Wrong</th><th>Skipped</th><th>Time used</th><th>Score</th><th>Result</th></tr>
+
+    ${R.secs.map(x=>`<tr><td>${x.si+1}. ${esc(x.s.title)}</td><td>${x.s.questions.length}</td><td>${x.attempted}</td><td>${x.correct}</td><td>${x.partial}</td><td>${x.wrong}</td><td>${x.skip}</td><td>${fmt(x.used)}</td><td>${x.score} / ${x.s.max}</td><td><span class="st ${x.pct>=70?'st-c':x.pct>=40?'st-p':'st-w'}">${x.pct>=70?'Strong':x.pct>=40?'Meets cut-off':'Below cut-off'}</span></td></tr>`).join('')}
+
+    <tr><td>Total</td><td>${totalQ}</td><td>${R.secs.reduce((a,x)=>a+x.attempted,0)}</td><td>${R.counts.correct}</td><td>${R.counts.partial}</td><td>${R.counts.wrong}</td><td>${R.counts.skip}</td><td>${fmt(R.timeTaken)}</td><td>${R.total} / 100</td><td></td></tr></table></div></div>
+
+   <div class="panel full"><h2>Strengths and areas to improve</h2><p class="sub">Based on topic-level scores. Topics at 75% or more count as strengths; below 50% need work.</p>${insights(R)}</div>
+
+   ${emailPanel(R)}
+
+   <div class="panel full"><h2>Answer review</h2><p class="sub">Every question with your answer, the correct answer and an explanation.</p>
+
+    <div class="chips" id="rvSec"></div><div class="chips" id="rvFil"></div><div id="rvList"></div></div>
+
+  </div>
+
+  <p style="font-size:13px;color:var(--muted);margin:24px 0">Result rule: Recommended needs 65 or more overall and at least 40% in every section. Borderline is 50 to 64, or 65+ with a section below 40%. The email score is an automatic estimate based on the rubric; an evaluator should confirm it. ${S.pastes?`Text was pasted into the email ${S.pastes} time(s).`:''}</p>`;
+
+  $('dash').innerHTML=h;
+
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{const f=$('ringFg'); if(f) f.style.strokeDashoffset=off;}));
+
+  setupReview(R);
+
+}
+
+function radar(secs){
+
+  const cx=160,cy=150,r=105,n=secs.length, pt=(i,v)=>{const a=-Math.PI/2+i*2*Math.PI/n;return [cx+Math.cos(a)*r*v,cy+Math.sin(a)*r*v]};
+
+  let g=''; [.25,.5,.75,1].forEach(l=>{g+=`<polygon points="${secs.map((_,i)=>pt(i,l).join(',')).join(' ')}" fill="none" stroke="var(--line)"/>`});
+
+  secs.forEach((_,i)=>{const [x,y]=pt(i,1);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`});
+
+  const poly=secs.map((x,i)=>pt(i,Math.max(.02,x.pct/100)).join(',')).join(' ');
+
+  g+=`<polygon points="${pt(0,.4).join(',')} ${secs.slice(1).map((_,i)=>pt(i+1,.4).join(',')).join(' ')}" fill="none" stroke="var(--amber)" stroke-dasharray="4 4"/>`;
+
+  g+=`<polygon points="${poly}" fill="var(--teal)" fill-opacity=".22" stroke="var(--teal)" stroke-width="2"/>`;
+
+  secs.forEach((x,i)=>{const [px,py]=pt(i,Math.max(.02,x.pct/100));g+=`<circle cx="${px}" cy="${py}" r="4" fill="var(--teal)"/>`;
+
+    const [lx,ly]=pt(i,1.2); const anchor=Math.abs(lx-cx)<10?'middle':lx>cx?'start':'end';
+
+    g+=`<text x="${lx}" y="${ly}" text-anchor="${anchor}" font-size="12.5" fill="var(--text)" dominant-baseline="middle">${esc(x.s.short)} ${Math.round(x.pct)}%</text>`});
+
+  return `<svg viewBox="-85 -5 490 310" width="100%" style="max-width:520px;display:block;margin:0 auto" role="img" aria-label="Competency radar chart">${g}</svg>
+
+   <div class="legend2" style="justify-content:center"><span><i style="background:var(--teal)"></i>Your score</span><span><i style="background:var(--amber)"></i>40% cut-off</span></div>`;
+
+}
+
+function donut(c,tot){
+
+  const parts=[['Correct',c.correct,'var(--green)'],['Partly correct',c.partial,'var(--amber)'],['Wrong',c.wrong,'var(--red)'],['Skipped',c.skip,'var(--muted)']];
+
+  const R=62,C=2*Math.PI*R; let acc=0, segs='';
+
+  parts.forEach(([_,v,col])=>{ if(!v) return; const len=C*v/tot; segs+=`<circle cx="80" cy="80" r="${R}" fill="none" stroke="${col}" stroke-width="22" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-acc}"/>`; acc+=len; });
+
+  return `<div style="display:flex;gap:28px;align-items:center;flex-wrap:wrap"><svg width="160" height="160" viewBox="0 0 160 160" style="transform:rotate(-90deg)" role="img" aria-label="Answer breakdown chart"><circle cx="80" cy="80" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="22"/>${segs}</svg>
+
+   <table class="stbl" style="width:auto;min-width:200px">${parts.map(([l,v,col])=>`<tr><td><i style="display:inline-block;width:11px;height:11px;border-radius:2px;background:${col};margin-right:8px"></i>${l}</td><td style="text-align:right"><b>${v}</b></td></tr>`).join('')}<tr><td>Total</td><td style="text-align:right">${tot}</td></tr></table></div>`;
+
+}
+
+function insights(R){
+
+  const t=Object.entries(R.topics).map(([k,v])=>({k,p:v.got/v.max*100,got:v.got,max:v.max}));
+
+  const strAll=t.filter(x=>x.p>=75).sort((a,b)=>b.p-a.p||b.max-a.max), weakAll=t.filter(x=>x.p<50).sort((a,b)=>a.p-b.p||b.max-a.max);
+
+  const str=strAll.slice(0,6), weak=weakAll.slice(0,6);
+
+  const more=(a,b)=>a.length>b.length?`<li style="list-style:none;margin-left:-18px;color:var(--muted)">and ${a.length-b.length} more topics</li>`:'';
+
+  const li=a=>a.length?a.map(x=>`<li>${esc(x.k)}: ${r1(x.got)} of ${x.max} (${Math.round(x.p)}%)</li>`).join(''):'<li style="list-style:none;margin-left:-18px;color:var(--muted)">None</li>';
+
+  const notes=[];
+
+  R.secs.forEach(x=>{ if(x.pct<40) notes.push(`${x.s.title} is below the 40% cut-off.`); if(x.skip>=Math.ceil(x.s.questions.length/2)) notes.push(`${x.skip} questions were skipped in ${x.s.short}; check whether time was the problem.`);
+
+    if(x.used<x.s.mins*60*0.35 && x.pct<60) notes.push(`${x.s.short} was finished in ${fmt(x.used)} with a low score, which suggests rushing.`); });
+
+  if(S.tabSwitches>2) notes.push(`The candidate switched tabs or windows ${S.tabSwitches} times during the test.`);
+
+  const s2=R.secs[1].items, sc=s2.filter(i=>i.q.diff==='Medium'), scp=sc.reduce((a,i)=>a+i.score,0)/sc.reduce((a,i)=>a+i.q.marks,0)*100;
+
+  notes.push(`Client situation judgement (Section 2 scenarios): ${Math.round(scp)}%. ${scp>=70?'Good judgement in client-facing situations.':scp>=50?'Reasonable judgement; probe escalation and prioritisation in the interview.':'Weak judgement in client situations; this is a key gap for the role.'}`);
+
+  return `<div class="insights"><div><h3 style="color:var(--green)">Strengths</h3><ul>${li(str)}${more(strAll,str)}</ul></div><div><h3 style="color:var(--red)">Areas to improve</h3><ul>${li(weak)}${more(weakAll,weak)}</ul></div></div>
+
+   <h3 style="font-size:16px;font-family:var(--sans);margin-top:18px">Notes for the evaluator</h3><ul style="font-size:14.5px;padding-left:18px">${notes.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`;
+
+}
+
+function emailPanel(R){
+
+  const it=R.secs[3].items[0], g=it.email;
+
+  return `<div class="panel full"><h2>Email writing: rubric score</h2><p class="sub">Automatic estimate out of 15. An evaluator should read the email and confirm or adjust each score.</p>
+
+   <div class="dgrid" style="margin-top:0"><div class="rub">${g.parts.map(p=>`<div class="row"><span>${p.name}</span><div class="bars"><div class="track"><div class="fill" style="width:${p.score/3*100}%;background:${colorFor(p.score/3*100)}"></div></div></div><b style="text-align:right">${p.score}/3</b></div>`).join('')}
+
+    <div class="row" style="font-weight:700;border-top:1px solid var(--line);padding-top:8px"><span>Total</span><span></span><span style="text-align:right">${g.total}/15</span></div>
+
+    ${g.notes.length?`<ul style="font-size:13.5px;color:var(--muted);padding-left:18px">${g.notes.map(n=>`<li>${esc(n)}</li>`).join('')}</ul>`:''}</div>
+
+    <div><div style="font-size:13px;color:var(--muted);margin-bottom:6px">Submitted email (${words(it.a||'')} words)</div><div class="emailbox">${it.a?esc(it.a):'<span style="color:var(--muted)">No email submitted.</span>'}</div></div></div></div>`;
+
+}
+
+function setupReview(R){
+
+  let sec=0, fil='all';
+
+  const draw=()=>{
+
+    $('rvSec').innerHTML=R.secs.map((x,i)=>`<button class="chip ${i===sec?'on':''}" data-s="${i}">${esc(x.s.short)}</button>`).join('');
+
+    $('rvFil').innerHTML=[['all','All'],['correct','Correct'],['wrong','Wrong'],['part','Partly correct'],['skip','Skipped']].map(([k,l])=>`<button class="chip ${k===fil?'on':''}" data-f="${k}">${l}</button>`).join('');
+
+    document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{sec=+b.dataset.s;draw()});
+
+    document.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{fil=b.dataset.f;draw()});
+
+    const items=R.secs[sec].items.filter(i=>fil==='all'||i.status===fil);
+
+    $('rvList').innerHTML=items.length?items.map(rvItem).join(''):'<p style="color:var(--muted)">No questions match this filter. Choose another filter to see more.</p>';
+
+  };
+
+  draw();
+
+}
+
+const stLabel={correct:['Correct','st-c'],wrong:['Wrong','st-w'],skip:['Skipped','st-s'],part:['Partly correct','st-p']};
+
+function rvItem(it){
+
+  const q=it.q,[l,c]=stLabel[it.status];
+
+  let body='';
+
+  if(q.type==='mcq'){
+
+    body=`${q.extra||''}<div class="rv-a">Your answer: <b>${it.a===null?'Not answered':esc('ABCD'[it.a]+'. '+q.opts[it.a])}</b></div>
+
+     ${it.status!=='correct'?`<div class="rv-a">Correct answer: <b style="color:var(--green)">${esc('ABCD'[q.ans]+'. '+q.opts[q.ans])}</b></div>`:''}
+
+     <div class="rv-x">${esc(q.exp)}</div>`;
+
+  } else if(q.type==='sql'){
+
+    let out=''; if(it.a&&engineState==='ready'){const r=execSQL(it.a); out=r.ok?`<div style="font-size:13px;color:var(--muted)">Your result</div>${resTable(r.res)}`:'';}
+
+    const ref=engineState==='ready'?`<div style="font-size:13px;color:var(--muted)">Expected result</div>${resTable(execSQL(q.ref).res)}`:'';
+
+    body=`<div style="font-size:13px;color:var(--muted)">Your query (run ${it.runs} time${it.runs===1?'':'s'} during the test)</div><pre class="code">${it.a?esc(it.a):'No query submitted'}</pre>
+
+     <div class="dgrid" style="margin-top:8px;gap:16px"><div>${out}</div><div>${ref}</div></div>
+
+     <div style="font-size:13px;color:var(--muted);margin-top:8px">Model answer</div><pre class="code">${esc(q.ref)}</pre><div class="rv-x">${esc(it.note)}</div>`;
+
+  } else body=`<div class="rv-x">See the email rubric panel above for the full breakdown.</div>`;
+
+  return `<div class="rv"><div class="rv-h"><span>Q${it.qi+1} · ${esc(q.topic)} · ${esc(q.diff)} · ${fmtLong(it.time)}</span><span><span class="st ${c}">${l}</span> &nbsp;${r1(it.score)}/${q.marks}</span></div>
+
+   <div class="rv-q">${esc(q.q).replace(/\n/g,'<br>')}</div>${body}</div>`;
+
+}
+
+ 
+
+/* ================= UTIL ================= */
+
+function modal(title,text,okLabel,onOk){
+
+  $('modalRoot').innerHTML=`<div class="modal-bg" role="dialog" aria-modal="true"><div class="modal"><h3>${esc(title)}</h3><p>${esc(text)}</p>
+
+   <div class="row"><button class="btn" id="mNo">Keep working</button><button class="btn btn-primary" id="mOk">${esc(okLabel)}</button></div></div></div>`;
+
+  $('mNo').onclick=closeModal; $('mOk').onclick=()=>{closeModal();onOk()}; $('mOk').focus();
+
+}
+
+function closeModal(){$('modalRoot').innerHTML=''}
+
+let toastT; function toast(m){let t=document.querySelector('.toast'); if(!t){t=document.createElement('div');t.className='toast';t.setAttribute('role','status');document.body.appendChild(t)} t.textContent=m; clearTimeout(toastT); toastT=setTimeout(()=>t.remove(),3800)}
+
+document.addEventListener('visibilitychange',()=>{ if(!S.inExam) return; if(document.hidden) S.tabSwitches++; else toast(`You left the test window (${S.tabSwitches} time${S.tabSwitches===1?'':'s'}). This is recorded in your report.`); });
+
+window.addEventListener('beforeunload',e=>{ if(S.inExam){e.preventDefault();e.returnValue=''} });
+
+</script>
+
+</body>
+
+</html>

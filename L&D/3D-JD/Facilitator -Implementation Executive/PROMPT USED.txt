@@ -1,0 +1,13 @@
+please give me blueprint of "Facilitator (Implementation Executive) " in doc . I am sharing other sample blueprint . please follow same approch but for "Facilitator (Implementation Executive) " role.
+
+ 
+
+ 
+
+Based on this blueprint create 1 assessment which will be single HTML,CSS and javascript webpage. After exam it will show the complete dashboard of the exam which is given by candidate.
+
+ 
+
+ 
+
+create a 3d game based on blueprint. I have shared the 3d game sample. I want the game should be downloandable in zip or direct file here. Please not in game there will be mile stone of learning each topics with practical game demo and user will see the demo and try to complete that by ownself. This repeated practice will help the user to learn by game .
