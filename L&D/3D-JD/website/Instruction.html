@@ -1,0 +1,1089 @@
+<!doctype html>
+<html lang="en"><head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700" rel="stylesheet">
+
+    <title>Instruction</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<!--
+Ramayana CSS Template
+https://templatemo.com/tm-529-ramayana
+-->
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/templatemo-style.css">
+    <link rel="stylesheet" href="assets/css/owl.css">
+
+  <style>
+        html,body{overflow-x:hidden}
+        .lumenboard-page-section{padding-bottom:60px}
+        .lumenboard-lesson-controls{position:sticky;top:0;z-index:10020;display:flex;align-items:center;gap:10px;padding:12px 0;background:rgba(249,247,242,.96);border-bottom:1px solid #ddd9d0}
+        .lumenboard-lesson-controls button,.lumenboard-previous-page,.lumenboard-next-page{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid #c8c3bb;border-radius:7px;color:#252239;background:#fff;text-decoration:none;font:600 13px Arial,sans-serif;cursor:pointer}
+        .lumenboard-lesson-controls button:hover,.lumenboard-previous-page:hover,.lumenboard-next-page:hover{color:#fff;background:#535ba0;border-color:#535ba0}
+        .lumenboard-previous-page.disabled,.lumenboard-next-page.disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
+        .lumenboard-exit-button{background:#535ba0!important;color:#fff!important;border-color:#535ba0!important}
+
+        /* Sidebar navigation: Stay strictly within black boundary on desktop and mobile by changing line */
+        #sidebar{box-sizing:border-box!important;background-color:#24252d!important;overflow-x:hidden!important;overflow-y:auto!important}
+        #sidebar *{box-sizing:border-box!important}
+        #sidebar>.inner{width:100%!important;max-width:100%!important;min-height:100%;padding:20px 20px!important;overflow-x:hidden!important}
+        #sidebar #header{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;max-width:100%!important;height:auto!important;min-height:50px!important;margin:0 0 16px 0!important;padding:12px 14px!important;background-color:#535ba0!important;border-radius:6px!important;box-sizing:border-box!important}
+        #sidebar #header .logo{display:block!important;width:100%!important;height:auto!important;line-height:1.2!important;text-align:center!important;margin:0!important;padding:0!important}
+        #sidebar #header .logo a{display:block!important;width:100%!important;margin:0!important;padding:0!important;font-size:18px!important;font-weight:700!important;color:#fff!important;text-decoration:none!important;text-transform:uppercase!important;letter-spacing:1px!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:break-word!important}
+        #main #header{display:none!important}
+        #menu{width:100%!important;max-width:100%!important;margin-top:16px!important}
+        #menu ul{width:100%!important;max-width:100%!important;padding:0!important;margin:0!important;list-style:none!important}
+        #menu>ul>li{width:100%!important;max-width:100%!important;border-top:1px solid rgba(255,255,255,.08)!important;margin:.2em 0!important;padding:.2em 0!important;overflow:hidden!important}
+        #menu>ul>li:first-child{border-top:0!important}
+        #menu ul a,#menu ul span{display:block!important;width:100%!important;max-width:100%!important;padding:10px 8px!important;font-size:14px!important;line-height:1.45!important;white-space:normal!important;overflow-wrap:anywhere!important;word-break:break-word!important;word-wrap:break-word!important;hyphens:auto!important;color:#fff!important;text-decoration:none!important;border-radius:4px!important}
+        #menu ul a:hover,#menu ul span:hover{background:rgba(83,91,160,.25)!important;color:#a4afff!important}
+
+        /* Focus / Full Screen Mode */
+        .lumenboard-lesson-controls [hidden],
+        [data-lumenboard-floating-zoom][hidden],
+        .lumenboard-floating-zoom[hidden],
+        [hidden]{display:none!important}
+
+        body:not(.lumenboard-focus-mode) [data-lumenboard-exit-focus],
+        body:not(.lumenboard-focus-mode) .lumenboard-floating-zoom{display:none!important}
+        body.lumenboard-focus-mode [data-lumenboard-enter-focus]{display:none!important}
+        body.lumenboard-focus-mode [data-lumenboard-exit-focus]{display:inline-flex!important}
+        body.lumenboard-focus-mode .lumenboard-floating-zoom{display:flex!important}
+
+        body.lumenboard-focus-mode{overflow:hidden!important;width:100vw!important;height:100vh!important;margin:0!important;padding:0!important}
+        body.lumenboard-focus-mode #wrapper{display:block!important;padding:0!important;margin:0!important;width:100vw!important;height:100vh!important;max-width:100vw!important;overflow:hidden!important}
+        body.lumenboard-focus-mode #sidebar,body.lumenboard-focus-mode #header,body.lumenboard-focus-mode #footer,body.lumenboard-focus-mode .page-heading,body.lumenboard-focus-mode .main-banner,body.lumenboard-focus-mode .services,body.lumenboard-focus-mode .featured-posts{display:none!important}
+        body.lumenboard-focus-mode .lumenboard-page-section:not(.lumenboard-diagram-section){display:none!important}
+        body.lumenboard-focus-mode #main{margin:0!important;padding:0!important;width:100vw!important;height:100vh!important;max-width:100vw!important;overflow:hidden!important}
+        body.lumenboard-focus-mode #main>.inner{margin:0!important;padding:0!important;width:100vw!important;height:100vh!important;max-width:100vw!important}
+        body.lumenboard-focus-mode .lumenboard-page-section,body.lumenboard-focus-mode .lumenboard-diagram-section{margin:0!important;padding:0!important;width:100vw!important;height:100vh!important;border:0!important}
+        body.lumenboard-focus-mode .lumenboard-diagram-section .container-fluid,body.lumenboard-focus-mode .lumenboard-diagram-section .row,body.lumenboard-focus-mode .lumenboard-diagram-section [class*="col-"]{margin:0!important;padding:0!important;width:100%!important;height:100%!important;max-width:100%!important}
+        body.lumenboard-focus-mode .lumenboard-lesson-controls{position:fixed!important;left:0!important;right:0!important;top:0!important;height:48px!important;min-height:48px!important;padding:0 16px!important;margin:0!important;display:flex!important;flex-direction:row!important;align-items:center!important;gap:10px!important;background:rgba(36,37,45,.98)!important;border-bottom:1px solid rgba(255,255,255,.12)!important;box-shadow:0 2px 10px rgba(0,0,0,.25)!important;z-index:10030!important}
+        body.lumenboard-focus-mode .lumenboard-lesson-controls button,body.lumenboard-focus-mode .lumenboard-lesson-controls .lumenboard-previous-page,body.lumenboard-focus-mode .lumenboard-lesson-controls .lumenboard-next-page{color:#fff!important;background:#535ba0!important;border-color:#535ba0!important;font-size:13px!important;padding:6px 14px!important;border-radius:6px!important;box-shadow:0 1px 4px rgba(0,0,0,.2)!important}
+        body.lumenboard-focus-mode .lumenboard-lesson-controls button:hover,body.lumenboard-focus-mode .lumenboard-lesson-controls .lumenboard-previous-page:hover,body.lumenboard-focus-mode .lumenboard-lesson-controls .lumenboard-next-page:hover{background:#414888!important;border-color:#414888!important}
+        body.lumenboard-focus-mode .lumenboard-exit-button{background:#e74c3c!important;border-color:#c0392b!important;color:#fff!important}
+        body.lumenboard-focus-mode .lumenboard-exit-button:hover{background:#c0392b!important;border-color:#962d22!important}
+        body.lumenboard-focus-mode .lumenboard-diagram-scroll{position:fixed!important;left:0!important;top:48px!important;right:0!important;bottom:0!important;width:100vw!important;height:calc(100vh - 48px)!important;max-height:calc(100vh - 48px)!important;margin:0!important;padding:24px!important;box-sizing:border-box!important;overflow:auto!important;background:#f9f7f2!important;overscroll-behavior:contain!important;touch-action:pan-x pan-y pinch-zoom!important;-webkit-overflow-scrolling:touch!important;z-index:10010!important}
+
+        /* Zoom controls for mobile and desktop */
+        .lumenboard-floating-zoom{position:fixed;right:18px;bottom:24px;z-index:10035;display:none;flex-direction:column;gap:8px}
+        .lumenboard-floating-zoom-btn{width:46px;height:46px;padding:0;border-radius:50%;background:#535ba0;color:#fff;border:2px solid #fff;box-shadow:0 3px 12px rgba(0,0,0,0.32);font-size:24px;font-weight:700;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;user-select:none;transition:transform .12s,background .12s}
+        .lumenboard-floating-zoom-btn:hover{background:#414888}
+        .lumenboard-floating-zoom-btn:active{transform:scale(0.92);background:#32386b}
+
+        /* Text actions: listen, copy, and the reading voice picker */
+        .lumenboard-copy-layer{position:absolute;z-index:10;inset:0;pointer-events:none}
+        .lumenboard-copy-wrapper{position:absolute;pointer-events:none}
+        .lumenboard-text-actions{position:absolute;top:auto;right:3px;bottom:calc(100% + 4px);display:flex;flex-direction:row-reverse;gap:4px;z-index:12;pointer-events:auto}
+        .lumenboard-copy-btn,.lumenboard-listen-btn{width:24px;height:24px;padding:0;display:inline-flex;align-items:center;justify-content:center;background:rgba(255,255,255,.94);border:1px solid rgba(83,91,160,.4);border-radius:4px;color:#535ba0;cursor:pointer;pointer-events:auto;box-shadow:0 1px 3px rgba(0,0,0,.15);transition:all .15s ease;touch-action:manipulation}
+        .lumenboard-copy-btn *,.lumenboard-listen-btn *{pointer-events:none!important}
+        .lumenboard-copy-btn:hover,.lumenboard-listen-btn:hover,.lumenboard-listen-btn.reading{background:#535ba0;color:#fff;border-color:#535ba0;transform:scale(1.08)}
+        .lumenboard-copy-btn.copied{background:#e8f8f0;color:#27ae60;border-color:#27ae60}
+        .lumenboard-voice-picker{position:absolute;top:auto;right:0;bottom:calc(100% + 31px);z-index:25;min-width:160px;max-width:240px;padding:6px 10px;background:#ffffff;border:1px solid rgba(83,91,160,.45);border-radius:6px;color:#252239;box-shadow:0 4px 14px rgba(0,0,0,.18);font:600 11px/1.4 Arial,sans-serif;pointer-events:auto}
+        .lumenboard-voice-picker label{display:flex;align-items:center;gap:6px;margin:0;cursor:pointer}
+        .lumenboard-voice-select{flex:1;min-width:110px;max-width:160px;padding:3px 6px;background:#f9f9fb;border:1px solid #c8c3bb;border-radius:4px;color:#252239;font:11px Arial,sans-serif;cursor:pointer;outline:none}
+        .lumenboard-voice-select:focus{border-color:#535ba0;box-shadow:0 0 0 2px rgba(83,91,160,.2)}
+
+        /* Diagram scroll container and pan controls */
+        .lumenboard-diagram-scroll{width:100%;height:auto;max-height:calc(100vh - 160px);overflow:auto;background:#f9f7f2;overscroll-behavior:contain;touch-action:pan-x pan-y pinch-zoom;-webkit-overflow-scrolling:touch;cursor:grab;box-sizing:border-box}
+        .lumenboard-diagram-scroll.panning{cursor:grabbing!important;user-select:none!important}
+        .lumenboard-diagram-scroll.panning *{user-select:none!important;-webkit-user-select:none!important}
+        .lumenboard-diagram-scroll::-webkit-scrollbar{width:12px;height:12px}
+        .lumenboard-diagram-scroll::-webkit-scrollbar-track{background:#ece7de;border-radius:6px}
+        .lumenboard-diagram-scroll::-webkit-scrollbar-thumb{background:#aaa499;border-radius:6px;border:2px solid #ece7de}
+        .lumenboard-diagram-scroll::-webkit-scrollbar-thumb:hover{background:#7d776d}
+        .lumenboard-diagram-scroll{scrollbar-width:thin;scrollbar-color:#aaa499 #ece7de}
+        /* The stage keeps the scaled diagram in the scrollable layout.  CSS
+           zoom is not supported by iOS Safari, and transform alone does not
+           enlarge the scroll area, so mobile users could not pan to a zoomed
+           portion of a diagram. */
+        .lumenboard-zoom-stage{position:relative;flex:0 0 auto;overflow:visible}
+        .lumenboard-diagram{position:relative;isolation:isolate;background:#f9f7f2;max-width:none}
+        .lumenboard-diagram svg{position:relative;z-index:2;display:block;width:100%;height:100%;max-width:none;pointer-events:none}
+        .lumenboard-diagram foreignObject{overflow:visible!important}
+        .lumenboard-diagram foreignObject,
+        .lumenboard-diagram foreignObject *{box-sizing:border-box}
+        .lumenboard-diagram foreignObject p{margin-top:0!important;margin-bottom:6px!important}
+        .lumenboard-diagram foreignObject font[size="7"]{font-size:48px!important;line-height:1.25!important}
+        .lumenboard-diagram foreignObject font[size="6"]{font-size:32px!important;line-height:1.25!important}
+        .lumenboard-diagram foreignObject font[size="5"]{font-size:24px!important;line-height:1.3!important}
+        .lumenboard-diagram foreignObject font[size="4"]{font-size:18px!important;line-height:1.35!important}
+        .lumenboard-diagram foreignObject font[size="3"]{font-size:16px!important;line-height:1.4!important}
+        .lumenboard-diagram foreignObject font[size="2"]{font-size:13px!important;line-height:1.4!important}
+        .lumenboard-diagram foreignObject font[size="1"]{font-size:10px!important;line-height:1.4!important}
+        .lumenboard-media-layer{position:absolute;z-index:1;inset:0;pointer-events:none}
+        .lumenboard-media-layer>a{pointer-events:auto;display:block}
+        .lumenboard-media-layer img,.lumenboard-media-layer video{display:block;width:100%!important;height:100%!important;object-fit:fill!important;max-width:none;box-sizing:border-box!important}
+
+        @media screen and (min-width:981px){
+          :root{--lesson-sidebar-width:clamp(220px,22vw,280px);--lesson-main-margin:var(--lesson-sidebar-width)}
+          #sidebar{position:fixed!important;left:0;top:0;bottom:0;height:100vh;width:var(--lesson-sidebar-width)!important;min-width:220px;max-width:55vw;margin-left:0!important;overflow-y:auto!important;overflow-x:hidden!important;z-index:10000}
+          #sidebar>.inner{width:100%!important;max-width:100%!important;min-height:100%;padding:20px 20px!important}
+          #sidebar .toggle{display:block!important;position:fixed!important;left:calc(var(--lesson-sidebar-width) - 48px)!important;top:18px!important;width:42px!important;height:42px!important;line-height:42px!important;text-indent:0!important;text-align:center!important;font-size:0!important;z-index:10001!important;background:rgba(83,91,160,.95);border-radius:6px;color:#fff}
+          #sidebar .toggle:after{display:none!important}
+          #sidebar .toggle:before{position:absolute!important;left:0!important;top:0!important;width:42px!important;height:42px!important;line-height:42px!important;margin:0!important;color:#fff!important;background:transparent!important}
+          #sidebar.inactive{margin-left:calc(-1 * var(--lesson-sidebar-width))!important}
+          #sidebar.inactive .toggle{left:8px!important}
+          #wrapper{display:block!important;box-sizing:border-box;padding-left:var(--lesson-main-margin);min-width:0;overflow-x:hidden}
+          #main{margin-left:0!important;min-width:0;width:100%!important;max-width:100%;box-sizing:border-box!important;overflow-wrap:anywhere;word-break:break-word}
+          #main>.inner{min-width:0;max-width:100%;margin:0!important;padding:24px 36px!important;box-sizing:border-box!important;overflow-wrap:anywhere;word-break:break-word}
+        }
+        @media screen and (max-width:980px){
+          :root{--lesson-main-margin:0px}
+          #main{margin-left:0;min-width:0}
+          #main>.inner{margin:0!important;padding:16px 16px!important;padding-top:76px!important;box-sizing:border-box!important}
+          body.lumenboard-focus-mode .lumenboard-lesson-controls{overflow-x:auto!important;overflow-y:hidden!important;padding:0 8px!important;gap:6px!important;white-space:nowrap!important;-webkit-overflow-scrolling:touch!important}
+          body.lumenboard-focus-mode .lumenboard-lesson-controls button,body.lumenboard-focus-mode .lumenboard-lesson-controls a,body.lumenboard-focus-mode .lumenboard-lesson-controls span{padding:6px 10px!important;font-size:12px!important;gap:4px!important;min-width:auto!important}
+          .lumenboard-lesson-controls{position:fixed;left:auto;right:10px;top:10px;z-index:10020;display:flex;flex-direction:column;align-items:stretch;gap:6px;overflow:visible;padding:0;background:transparent;border:0;box-shadow:none}
+          .lumenboard-lesson-controls button,.lumenboard-previous-page,.lumenboard-next-page{justify-content:center;min-width:66px;padding:4px 6px;font-size:7px;gap:3px;white-space:nowrap;color:#fff;background:#f28c28;border-color:#d87516;box-shadow:0 2px 8px rgba(0,0,0,.16)}
+          #sidebar{position:fixed!important;top:0;bottom:0;height:100vh;z-index:10000;overflow-y:auto}
+          #sidebar .toggle{position:fixed!important;left:10px!important;top:10px!important;width:56px!important;height:56px!important;display:block!important;line-height:56px!important;text-indent:0!important;text-align:center!important;font-size:0!important;z-index:10001!important;background:rgba(83,91,160,.95);border-radius:6px;color:#fff}
+          #sidebar .toggle:after{display:none!important}
+          #sidebar .toggle:before{position:absolute!important;left:0!important;top:0!important;width:56px!important;height:56px!important;line-height:56px!important;margin:0!important;color:#fff!important;background:transparent!important}
+        }
+      </style></head>
+
+<body class="is-preload">
+
+    <!-- Wrapper -->
+    <div id="wrapper">
+
+      <!-- Main -->
+        <div id="main">
+          <div class="inner">
+
+            <!-- Header -->
+            
+
+            <!-- Page Heading -->
+            <div class="page-heading">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-12">
+                    <h1>Instruction</h1>
+                    <p>Interactive lesson</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Simple Post -->
+            
+            
+            
+              
+              
+
+            <!-- Contact Form -->
+            
+
+          <div class="lumenboard-lesson-controls" aria-label="Lesson page controls"><button type="button" class="lumenboard-focus-button" data-lumenboard-enter-focus="" onclick="document.body.classList.add('lumenboard-focus-mode');var e=document.documentElement;var f=e.requestFullscreen||e.webkitRequestFullscreen||e.mozRequestFullScreen||e.msRequestFullscreen;if(f){try{var p=f.call(e);if(p&amp;&amp;p.catch)p.catch(function(){});}catch(_){}}">View full screen</button><button type="button" class="lumenboard-exit-button" data-lumenboard-exit-focus="" onclick="document.body.classList.remove('lumenboard-focus-mode');var f=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;if(f){try{var p=f.call(document);if(p&amp;&amp;p.catch)p.catch(function(){});}catch(_){}}" hidden="">Exit</button><a class="lumenboard-previous-page" href="index.html">← <span>Back page</span></a><a class="lumenboard-next-page" href="Week4-Nov%202026.html">Next page <span aria-hidden="true">→</span></a></div><div class="lumenboard-floating-zoom" data-lumenboard-floating-zoom="" hidden="" aria-label="Zoom controls"><button type="button" class="lumenboard-floating-zoom-btn" data-lumenboard-zoom-in="" aria-label="Zoom in" title="Zoom in">+</button><button type="button" class="lumenboard-floating-zoom-btn" data-lumenboard-zoom-out="" aria-label="Zoom out" title="Zoom out">−</button></div><section class="simple-post lumenboard-page-section lumenboard-diagram-section"><div class="container-fluid"><div class="row"><div class="col-md-12"><div class="lumenboard-diagram-scroll"><div class="lumenboard-diagram" style="width:358px;height:482.0000000000001px"><svg xmlns="http://www.w3.org/2000/svg" width="358" height="482.0000000000001" viewBox="658.8571428571429 573.4285714285714 358 482.0000000000001"><defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#686375"></path></marker></defs><rect x="658.8571428571429" y="573.4285714285714" width="358" height="482.0000000000001" fill="none"></rect><g transform="rotate(0 837.8571428571429 991.4285714285714)"><rect x="682.8571428571429" y="951.4285714285714" width="310" height="80" rx="8" fill="#ffffff" fill-opacity="0.58" stroke="none" stroke-width="0"></rect><foreignObject x="684.8571428571429" y="953.4285714285714" width="306" height="76" overflow="visible"><div xmlns="http://www.w3.org/1999/xhtml" style="box-sizing:border-box;width:100%;height:100%;overflow:visible;padding:6px;color:#252239;font-family:Arial,sans-serif;font-size:16px;line-height:1.45;overflow-wrap:anywhere;word-break:break-word;white-space:normal;">L &amp; D&nbsp; - Hiring (End to End)</div></foreignObject></g><g transform="translate(804.5714285714287 597.4285714285714) rotate(0 4.714285714285666 4)" shape-rendering="geometricPrecision"><path d="M 5.428571428571331 4 L 4 4" fill="none" stroke="#252239" stroke-width="2" stroke-opacity="0.72" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke"></path></g></svg><div class="lumenboard-media-layer"><span style="position:absolute;left:17.14285714285711px;top:134.57142857142856px;width:308px;height:230px;transform:rotate(0deg);transform-origin:center center"><img src="blob:http://localhost:3000/699c74a0-a45f-42e0-b521-220f614ff4c5" alt="Pasted image" draggable="false" style="width:100%;height:100%;object-fit:fill;pointer-events:auto;user-select:none;"></span></div><div class="lumenboard-copy-layer"><div class="lumenboard-copy-wrapper" style="position:absolute;left:24px;top:378px;width:300px;height:80px;transform:rotate(0deg);transform-origin:center center;pointer-events:none"><div class="lumenboard-text-actions"><button type="button" class="lumenboard-listen-btn" data-copy-target="copy-data-text-1795701098888" data-copy-html="L &amp;amp; D&amp;nbsp; - Hiring (End to End)" aria-label="Listen to text" title="Listen to text"><svg class="listen-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4z"></path><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg><svg class="stop-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="display:none"><rect x="6" y="6" width="12" height="12" rx="1"></rect></svg></button><button type="button" class="lumenboard-copy-btn" data-copy-target="copy-data-text-1795701098888" data-copy-html="L &amp;amp; D&amp;nbsp; - Hiring (End to End)" aria-label="Copy text" title="Copy text with formatting"><svg class="copy-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><svg class="check-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none"><polyline points="20 6 9 17 4 12"></polyline></svg></button></div><div class="lumenboard-voice-picker" hidden=""><label>Voice <select class="lumenboard-voice-select" aria-label="Choose reading voice"></select></label></div><template id="copy-data-text-1795701098888">L &amp; D&nbsp; - Hiring (End to End)</template></div></div></div></div></div></div></div></section></div>
+        </div>
+
+      <!-- Sidebar -->
+        <div id="sidebar">
+
+          <div class="inner"><header id="header">
+              <div class="logo">
+                <a>Learn with me</a>
+              </div>
+            </header>
+
+            <!-- Search Box -->
+            
+              
+            <!-- Menu -->
+            <nav id="menu">
+              <ul><li><a href="#">Go to back</a></li><li><a href="Instruction.html">Instruction</a></li><li><a href="Week4-Nov%202026.html">Week4-Nov 2026</a></li></ul>
+            </nav>
+
+            <!-- Featured Posts -->
+            
+
+            <!-- Footer -->
+            
+            
+          </div>
+        </div>
+
+    </div>
+
+  <!-- Scripts -->
+  <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <script src="assets/js/browser.min.js"></script>
+    <script src="assets/js/breakpoints.min.js"></script>
+    <script src="assets/js/transition.js"></script>
+    <script src="assets/js/owl-carousel.js"></script>
+    <script src="assets/js/custom.js"></script>
+
+
+
+  
+
+
+<script>(function(){
+          var s=document.getElementById('sidebar');
+          var r=document.documentElement;
+          var sync=function(){
+            if(document.body.classList.contains('lumenboard-focus-mode')){
+              r.style.setProperty('--lesson-main-margin','0px');
+            }else if(s){
+              r.style.setProperty('--lesson-main-margin',s.classList.contains('inactive')?'0px':'var(--lesson-sidebar-width)');
+            }
+          };
+          var setFocusQueryOnLinks=function(inFocus){
+            document.querySelectorAll('.lumenboard-previous-page, .lumenboard-next-page').forEach(function(link){
+              var href=link.getAttribute('href');
+              if(!href||href==='#'||href.indexOf('javascript:')===0)return;
+              var hashIndex=href.indexOf('#');
+              var hash=hashIndex>=0?href.slice(hashIndex):'';
+              var pathAndQuery=hashIndex>=0?href.slice(0,hashIndex):href;
+              var qIndex=pathAndQuery.indexOf('?');
+              var path=qIndex>=0?pathAndQuery.slice(0,qIndex):pathAndQuery;
+              var query=qIndex>=0?pathAndQuery.slice(qIndex+1):'';
+              var params=new URLSearchParams(query);
+              if(inFocus){
+                params.set('focus','1');
+              }else{
+                params.delete('focus');
+              }
+              var newQuery=params.toString();
+              link.setAttribute('href',path+(newQuery?'?'+newQuery:'')+hash);
+            });
+            try{
+              if(inFocus){
+                sessionStorage.setItem('lumenboard_focus','1');
+              }else{
+                sessionStorage.removeItem('lumenboard_focus');
+              }
+            }catch(e){}
+          };
+          var wasNativeFullscreen=false;
+          var getFsElement=function(){
+            return document.fullscreenElement||document.webkitFullscreenElement||document.mozFullScreenElement||document.msFullscreenElement;
+          };
+          var requestNativeFullscreen=function(){
+            var el=document.documentElement;
+            var rfs=el.requestFullscreen||el.webkitRequestFullscreen||el.mozRequestFullScreen||el.msRequestFullscreen;
+            if(rfs){
+              try{
+                var p=rfs.call(el);
+                if(p&&p.catch)p.catch(function(){});
+              }catch(e){}
+            }
+          };
+          var exitNativeFullscreen=function(){
+            var efs=document.exitFullscreen||document.webkitExitFullscreen||document.mozCancelFullScreen||document.msExitFullscreen;
+            if(efs){
+              try{
+                var p=efs.call(document);
+                if(p&&p.catch)p.catch(function(){});
+              }catch(e){}
+            }
+          };
+          var enter=function(useBrowserFullscreen){
+            document.body.classList.add('lumenboard-focus-mode');
+            setFocusQueryOnLinks(true);
+            sync();
+            if(useBrowserFullscreen){
+              requestNativeFullscreen();
+            }
+          };
+          var exit=function(useBrowserFullscreen){
+            document.body.classList.remove('lumenboard-focus-mode');
+            setFocusQueryOnLinks(false);
+            sync();
+            if(useBrowserFullscreen&&getFsElement()){
+              exitNativeFullscreen();
+            }
+          };
+          var getZoomStage=function(scroll){
+            var diagram=scroll&&scroll.querySelector('.lumenboard-diagram');
+            if(!diagram)return null;
+            var stage=diagram.parentElement;
+            if(!stage||!stage.classList.contains('lumenboard-zoom-stage')){
+              stage=document.createElement('div');
+              stage.className='lumenboard-zoom-stage';
+              diagram.parentNode.insertBefore(stage,diagram);
+              stage.appendChild(diagram);
+            }
+            if(!diagram.dataset.baseWidth){
+              var width=parseFloat(diagram.style.width)||diagram.offsetWidth||1;
+              var height=parseFloat(diagram.style.height)||diagram.offsetHeight||1;
+              diagram.dataset.baseWidth=String(width);
+              diagram.dataset.baseHeight=String(height);
+              diagram.style.transformOrigin='top left';
+            }
+            return {diagram:diagram,stage:stage};
+          };
+          var zoom=function(scroll,delta){
+            var pair=getZoomStage(scroll);
+            if(!pair)return;
+            var diagram=pair.diagram;
+            var current=Number(diagram.dataset.zoom||'1');
+            var next=Math.round(Math.max(.3,Math.min(3.5,current+delta))*100)/100;
+            var baseWidth=Number(diagram.dataset.baseWidth)||1;
+            var baseHeight=Number(diagram.dataset.baseHeight)||1;
+            diagram.dataset.zoom=String(next);
+            pair.stage.style.width=(baseWidth*next)+'px';
+            pair.stage.style.height=(baseHeight*next)+'px';
+            diagram.style.transform='scale('+next+')';
+          };
+          document.addEventListener('click',function(e){
+            var enterBtn=e.target.closest('[data-lumenboard-enter-focus]');
+            if(enterBtn){
+              e.preventDefault();
+              e.stopPropagation();
+              enter(true);
+              return;
+            }
+            var exitBtn=e.target.closest('[data-lumenboard-exit-focus]');
+            if(exitBtn){
+              e.preventDefault();
+              e.stopPropagation();
+              exit(true);
+              return;
+            }
+            var zoomInBtn=e.target.closest('[data-lumenboard-zoom-in]');
+            if(zoomInBtn){
+              e.preventDefault();
+              e.stopPropagation();
+              var scroll=document.querySelector('.lumenboard-diagram-scroll');
+              if(scroll)zoom(scroll,0.2);
+              return;
+            }
+            var zoomOutBtn=e.target.closest('[data-lumenboard-zoom-out]');
+            if(zoomOutBtn){
+              e.preventDefault();
+              e.stopPropagation();
+              var scroll=document.querySelector('.lumenboard-diagram-scroll');
+              if(scroll)zoom(scroll,-0.2);
+              return;
+            }
+          },true);
+          var htmlToFormattedPlainText=function(html){
+            if(!html)return '';
+            var container=document.createElement('div');
+            container.innerHTML=html;
+            var getIndentSpaces=function(element){
+              var indent=0;
+              var style=element.style||{};
+              if(style.marginLeft){
+                var m=parseFloat(style.marginLeft);
+                if(style.marginLeft.indexOf('em')>=0)indent+=Math.round(m*4);
+                else if(style.marginLeft.indexOf('px')>=0)indent+=Math.round(m/10);
+              }
+              if(style.paddingLeft){
+                var p=parseFloat(style.paddingLeft);
+                if(style.paddingLeft.indexOf('em')>=0)indent+=Math.round(p*4);
+                else if(style.paddingLeft.indexOf('px')>=0)indent+=Math.round(p/10);
+              }
+              if(style.textIndent){
+                var ti=parseFloat(style.textIndent);
+                if(style.textIndent.indexOf('em')>=0)indent+=Math.round(ti*4);
+                else if(style.textIndent.indexOf('px')>=0)indent+=Math.round(ti/10);
+              }
+              return ' '.repeat(Math.max(0,Math.min(32,indent)));
+            };
+            var walk=function(node,listDepth,listCounter){
+              if(node.nodeType===3){
+                return (node.nodeValue||'').replace(/ /g,' ');
+              }
+              if(node.nodeType!==1)return '';
+              var tag=node.tagName.toLowerCase();
+              if(tag==='br')return '
+';
+              if(tag==='script'||tag==='style')return '';
+              if(tag==='pre'||tag==='code'){
+                var text=(node.innerText||node.textContent||'').replace(/ /g,' ');
+                return text.endsWith('
+')?text:text+'
+';
+              }
+              if(tag==='tr'){
+                var cells=[];
+                for(var c=0;c<node.childNodes.length;c++){
+                  var cell=node.childNodes[c];
+                  if(cell.nodeType===1&&(cell.tagName.toLowerCase()==='td'||cell.tagName.toLowerCase()==='th')){
+                    cells.push(walk(cell,listDepth,null).trim());
+                  }
+                }
+                return cells.join('	')+'
+';
+              }
+              if(tag==='table'){
+                var outTable='';
+                for(var i=0;i<node.childNodes.length;i++){
+                  outTable+=walk(node.childNodes[i],listDepth,null);
+                }
+                return outTable.endsWith('
+')?outTable:outTable+'
+';
+              }
+              if(tag==='ul'||tag==='ol'){
+                var isOrdered=tag==='ol';
+                var outList='';
+                var count=1;
+                for(var j=0;j<node.childNodes.length;j++){
+                  var child=node.childNodes[j];
+                  if(child.nodeType===1&&child.tagName.toLowerCase()==='li'){
+                    outList+=walk(child,listDepth+1,isOrdered?count++:null);
+                  }else{
+                    outList+=walk(child,listDepth,null);
+                  }
+                }
+                return outList.endsWith('
+')?outList:outList+'
+';
+              }
+              if(tag==='li'){
+                var indent='  '.repeat(Math.max(0,listDepth-1));
+                var prefix=(listCounter!==null&&listCounter!==undefined)?(listCounter+'. '):'• ';
+                var liContent='';
+                for(var k=0;k<node.childNodes.length;k++){
+                  var sub=node.childNodes[k];
+                  if(sub.nodeType===1&&(sub.tagName.toLowerCase()==='ul'||sub.tagName.toLowerCase()==='ol')){
+                    liContent+='
+'+walk(sub,listDepth,null);
+                  }else{
+                    liContent+=walk(sub,listDepth,null);
+                  }
+                }
+                return indent+prefix+liContent.trim()+'
+';
+              }
+              var isBlock=/^(p|div|h[1-6]|blockquote|section)$/.test(tag);
+              var blockIndent=isBlock?getIndentSpaces(node):'';
+              var result='';
+              for(var m=0;m<node.childNodes.length;m++){
+                result+=walk(node.childNodes[m],listDepth,null);
+              }
+              if(isBlock){
+                if(blockIndent&&result){
+                  var lines=result.split('
+');
+                  result=lines.map(function(line){return line?blockIndent+line:line;}).join('
+');
+                }
+                return result.endsWith('
+')?result:result+'
+';
+              }
+              return result;
+            };
+            var formatted=walk(container,0,null);
+            return formatted.replace(/^
++|
++$/g,'').replace(/
+{3,}/g,'
+
+');
+          };
+          var getButtonHtml=function(btn){
+            var rawHtml=btn.getAttribute('data-copy-html')||'';
+            if(rawHtml)return rawHtml;
+            var targetId=btn.getAttribute('data-copy-target');
+            var tpl=targetId?document.getElementById(targetId):null;
+            if(!tpl){
+              var wrapper=btn.closest('.lumenboard-copy-wrapper');
+              if(wrapper)tpl=wrapper.querySelector('template');
+            }
+            if(!tpl)return '';
+            if(tpl.innerHTML&&tpl.innerHTML.trim())return tpl.innerHTML;
+            if(tpl.content){
+              var tmp=document.createElement('div');
+              tmp.appendChild(tpl.content.cloneNode(true));
+              return tmp.innerHTML;
+            }
+            return tpl.textContent||'';
+          };
+          var lumenboardSpeech=(function(){
+            var synth=window.speechSynthesis;
+            var SpeechUtterance=window.SpeechSynthesisUtterance||window.webkitSpeechSynthesisUtterance||(typeof SpeechSynthesisUtterance!=='undefined'?SpeechSynthesisUtterance:null);
+            var currentToken=0;
+            var currentBtn=null;
+            var currentPicker=null;
+            var currentVoiceName='';
+            var wakeInterval=null;
+            window._lumenboardUtterances=window._lumenboardUtterances||[];
+
+            function getVoices(){
+              if(!synth||!synth.getVoices)return [];
+              try{
+                var list=synth.getVoices()||[];
+                return Array.prototype.slice.call(list);
+              }catch(e){return [];}
+            }
+
+            function pickBestVoice(voices,preferredName){
+              if(!voices||!voices.length)return null;
+              if(preferredName){
+                for(var i=0;i<voices.length;i++){
+                  if(voices[i].name===preferredName)return voices[i];
+                }
+              }
+              // Hindi is the default reading language for exported websites.
+              var locale='hi-in';
+              var langPref='hi';
+              var browserLocale=(navigator.language||'en').toLowerCase();
+              var browserLang=browserLocale.slice(0,2);
+              var best=null;
+              var bestScore=-Infinity;
+              for(var a=0;a<voices.length;a++){
+                var voice=voices[a];
+                var voiceLocale=(voice.lang||'').toLowerCase();
+                var voiceLang=voiceLocale.slice(0,2);
+                var name=(voice.name||'').toLowerCase();
+                var score=0;
+                if(voiceLocale===locale)score+=350;
+                else if(voiceLang===langPref)score+=300;
+                else if(voiceLocale===browserLocale)score+=45;
+                else if(voiceLang===browserLang)score+=30;
+                else if(voiceLang)score-=60;
+                if(/natural|neural|enhanced|premium|wavenet/.test(name))score+=160;
+                else if(/online|cloud/.test(name))score+=100;
+                if(/aria|jenny|guy|ryan|sara|sonia|libby|ava|andrew|samantha|daniel|moira|tessa|joanna|zira/.test(name))score+=20;
+                if(voice.default)score+=4;
+                if(voice.localService)score+=3;
+                if(score>bestScore){bestScore=score;best=voice;}
+              }
+              return best||voices[0]||null;
+            }
+
+            function setListenButtonState(btn,isReading){
+              if(!btn)return;
+              btn.classList.toggle('reading',isReading);
+              var listenIcon=btn.querySelector('.listen-icon');
+              var stopIcon=btn.querySelector('.stop-icon');
+              if(listenIcon)listenIcon.style.display=isReading?'none':'block';
+              if(stopIcon)stopIcon.style.display=isReading?'block':'none';
+              btn.setAttribute('aria-label',isReading?'Stop reading':'Listen to text');
+              btn.setAttribute('title',isReading?'Stop reading':'Listen to text');
+            }
+
+            function populateVoicePicker(btn,selectedVoiceName){
+              var wrapper=btn&&btn.closest('.lumenboard-copy-wrapper');
+              var picker=wrapper&&wrapper.querySelector('.lumenboard-voice-picker');
+              var select=picker&&picker.querySelector('.lumenboard-voice-select');
+              if(!picker||!select)return;
+
+              var voices=getVoices();
+              var currentVal=selectedVoiceName!==undefined?selectedVoiceName:(select.value||currentVoiceName||'');
+
+              select.innerHTML='';
+              var defaultOpt=document.createElement('option');
+              defaultOpt.value='';
+              defaultOpt.textContent='Hindi (best available voice)';
+              select.appendChild(defaultOpt);
+
+              var bestVoice=pickBestVoice(voices,currentVal);
+              var foundSelected=false;
+
+              voices.forEach(function(voice){
+                var opt=document.createElement('option');
+                opt.value=voice.name;
+                var cleanName=voice.name
+                  .replace(/^Microsofts+/i,'')
+                  .replace(/^Googles+/i,'')
+                  .replace(/s+Onlines+(Natural)/i,' (Natural)')
+                  .replace(/s+Desktop/i,'');
+                var langTag=voice.lang?' ['+voice.lang.split('-')[0].toUpperCase()+']':'';
+                opt.textContent=cleanName+langTag;
+                if(voice.name===currentVal||(!currentVal&&bestVoice&&voice.name===bestVoice.name)){
+                  opt.selected=true;
+                  foundSelected=true;
+                }
+                select.appendChild(opt);
+              });
+
+              if(!foundSelected&&defaultOpt)defaultOpt.selected=true;
+              picker.hidden=false;
+              currentPicker=picker;
+            }
+
+            function splitIntoSentences(text){
+              if(!text)return [];
+              var clean=text.replace(/
+/g,'
+').replace(/
+/g,'
+');
+              var chunks=[];
+              var current='';
+              for(var i=0;i<clean.length;i++){
+                var ch=clean[i];
+                current+=ch;
+                if(ch==='.'||ch==='!'||ch==='?'||ch==='
+'||ch===':'){
+                  var trimmed=current.trim();
+                  if(trimmed.length>0)chunks.push(trimmed);
+                  current='';
+                }else if(current.length>140&&(ch===','||ch===';')){
+                  var tPart=current.trim();
+                  if(tPart.length>0)chunks.push(tPart);
+                  current='';
+                }
+              }
+              var remainder=current.trim();
+              if(remainder.length>0)chunks.push(remainder);
+              // Longer passages preserve natural intonation better than restarting the
+              // browser voice after every sentence, while still avoiding long-TTS bugs.
+              var groups=[];
+              var group='';
+              for(var n=0;n<chunks.length;n++){
+                var chunk=chunks[n].trim();
+                if(!chunk)continue;
+                if(group&&group.length+chunk.length+1>320){
+                  groups.push(group);
+                  group=chunk;
+                }else{
+                  group=group?group+' '+chunk:chunk;
+                }
+              }
+              if(group)groups.push(group);
+              return groups.length?groups:[clean.trim()];
+            }
+
+            function stop(){
+              currentToken+=1;
+              if(wakeInterval){clearInterval(wakeInterval);wakeInterval=null;}
+              if(synth){try{synth.cancel();}catch(e){}}
+              window._lumenboardUtterances=[];
+              if(currentBtn)setListenButtonState(currentBtn,false);
+              if(currentPicker)currentPicker.hidden=true;
+              currentBtn=null;
+              currentPicker=null;
+            }
+
+            function play(btn,chosenVoiceName){
+              if(!synth||!SpeechUtterance){
+                btn.setAttribute('title','Text-to-speech is not available in this browser');
+                btn.setAttribute('aria-label','Text-to-speech is not available in this browser');
+                setTimeout(function(){setListenButtonState(btn,false);},2200);
+                return;
+              }
+
+              var html=getButtonHtml(btn);
+              var plainText='';
+              try{
+                plainText=htmlToFormattedPlainText(html);
+              }catch(e){}
+              if(!plainText||!plainText.trim()){
+                try{
+                  var d=document.createElement('div');
+                  d.innerHTML=html;
+                  plainText=d.innerText||d.textContent||'';
+                }catch(e2){}
+              }
+              plainText=(plainText||'').replace(/
+/g,'').trim();
+              if(!plainText)return;
+
+              var sentences=splitIntoSentences(plainText);
+              if(!sentences.length)return;
+
+              var token=++currentToken;
+
+              try{
+                if(synth.speaking||synth.pending){
+                  synth.cancel();
+                }
+              }catch(e){}
+
+              if(currentBtn&&currentBtn!==btn){
+                setListenButtonState(currentBtn,false);
+                if(currentPicker)currentPicker.hidden=true;
+              }
+
+              currentBtn=btn;
+              currentVoiceName=chosenVoiceName||currentVoiceName||'';
+              setListenButtonState(btn,true);
+              populateVoicePicker(btn,chosenVoiceName);
+
+              if(wakeInterval)clearInterval(wakeInterval);
+              wakeInterval=setInterval(function(){
+                if(token!==currentToken){clearInterval(wakeInterval);return;}
+                try{if(synth&&synth.paused)synth.resume();}catch(e){}
+              },4000);
+
+              var voices=getVoices();
+              var voiceToUse=pickBestVoice(voices,chosenVoiceName);
+              var sentenceIndex=0;
+
+              function speakNext(){
+                if(token!==currentToken)return;
+                if(sentenceIndex>=sentences.length){
+                  stop();
+                  return;
+                }
+
+                var textChunk=sentences[sentenceIndex++];
+                var utterance=new SpeechUtterance(textChunk);
+                utterance.rate=0.91;
+                utterance.pitch=1.02;
+                utterance.volume=1;
+                if(voiceToUse){
+                  utterance.voice=voiceToUse;
+                }
+
+                window._lumenboardUtterances.push(utterance);
+
+                utterance.onstart=function(){
+                  if(token!==currentToken)return;
+                  setListenButtonState(btn,true);
+                  try{if(synth&&synth.paused)synth.resume();}catch(e){}
+                };
+
+                utterance.onend=function(){
+                  var idx=window._lumenboardUtterances.indexOf(utterance);
+                  if(idx>=0)window._lumenboardUtterances.splice(idx,1);
+                  if(token!==currentToken)return;
+                  setTimeout(function(){
+                    if(token===currentToken)speakNext();
+                  },180);
+                };
+
+                utterance.onerror=function(ev){
+                  var idx=window._lumenboardUtterances.indexOf(utterance);
+                  if(idx>=0)window._lumenboardUtterances.splice(idx,1);
+
+                  if(ev&&(ev.error==='interrupted'||ev.error==='canceled')){
+                    return;
+                  }
+
+                  if(ev&&(ev.error==='network'||ev.error==='synthesis-failed')&&utterance.voice){
+                    utterance.voice=null;
+                    try{synth.speak(utterance);return;}catch(e){}
+                  }
+
+                  if(token!==currentToken)return;
+
+                  if(sentenceIndex<sentences.length){
+                    speakNext();
+                  }else{
+                    stop();
+                  }
+                };
+
+                try{
+                  if(synth&&synth.paused)synth.resume();
+                  synth.speak(utterance);
+                  setTimeout(function(){
+                    if(token===currentToken){
+                      try{if(synth&&synth.paused)synth.resume();}catch(e){}
+                    }
+                  },200);
+                }catch(e){
+                  utterance.onerror({error:'speak_exception'});
+                }
+              }
+
+              setTimeout(function(){
+                if(token===currentToken){
+                  try{if(synth&&synth.paused)synth.resume();}catch(e){}
+                  speakNext();
+                }
+              },40);
+            }
+
+            return {
+              play:play,
+              stop:stop,
+              isPlaying:function(btn){
+                return currentBtn===btn&&Boolean(btn&&btn.classList.contains('reading'));
+              },
+              populateVoicePicker:populateVoicePicker,
+              getVoices:getVoices
+            };
+          })();
+          document.addEventListener('click',function(e){
+            var btn=e.target.closest('.lumenboard-listen-btn');
+            if(!btn)return;
+            e.preventDefault();
+            e.stopPropagation();
+            if(lumenboardSpeech.isPlaying(btn)){
+              lumenboardSpeech.stop();
+            }else{
+              lumenboardSpeech.play(btn);
+            }
+          },true);
+          document.addEventListener('change',function(e){
+            var select=e.target.closest('.lumenboard-voice-select');
+            if(!select)return;
+            var wrapper=select.closest('.lumenboard-copy-wrapper');
+            var btn=wrapper&&wrapper.querySelector('.lumenboard-listen-btn');
+            if(btn)lumenboardSpeech.play(btn,select.value);
+          },true);
+          if(window.speechSynthesis){
+            try{window.speechSynthesis.getVoices();}catch(e){}
+            var handleVoicesChanged=function(){
+              var readingBtn=document.querySelector('.lumenboard-listen-btn.reading');
+              if(readingBtn)lumenboardSpeech.populateVoicePicker(readingBtn);
+            };
+            if(window.speechSynthesis.addEventListener){
+              window.speechSynthesis.addEventListener('voiceschanged',handleVoicesChanged);
+            }else{
+              window.speechSynthesis.onvoiceschanged=handleVoicesChanged;
+            }
+          }
+          var copyFormattedText=function(htmlContent,buttonEl){
+            var plainText=htmlToFormattedPlainText(htmlContent);
+            var success=false;
+            var selection=window.getSelection?window.getSelection():null;
+            var previousRange=selection&&selection.rangeCount?selection.getRangeAt(0).cloneRange():null;
+            var copySource=document.createElement('div');
+            copySource.contentEditable='true';
+            copySource.setAttribute('aria-hidden','true');
+            copySource.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none';
+            copySource.innerHTML=htmlContent;
+            var onCopy=function(e){
+              e.preventDefault();
+              if(e.clipboardData){
+                e.clipboardData.clearData();
+                e.clipboardData.setData('text/html',htmlContent);
+                e.clipboardData.setData('text/plain',plainText);
+                success=true;
+              }else if(window.clipboardData){
+                window.clipboardData.setData('Text',plainText);
+                success=true;
+              }
+            };
+            try{
+              // Keep a real selection during execCommand. This is necessary
+              // for copy support in static/file:// exports on mobile browsers.
+              document.body.appendChild(copySource);
+              if(selection){
+                var range=document.createRange();
+                range.selectNodeContents(copySource);
+                selection.removeAllRanges();
+                selection.addRange(range);
+              }
+              document.addEventListener('copy',onCopy,true);
+              var execResult=document.execCommand('copy');
+              if(execResult)success=true;
+            }catch(e){
+            }finally{
+              document.removeEventListener('copy',onCopy,true);
+              if(copySource.parentNode)copySource.parentNode.removeChild(copySource);
+              if(selection){
+                selection.removeAllRanges();
+                if(previousRange)selection.addRange(previousRange);
+              }
+            }
+            if(!success){
+              try{
+                var ta=document.createElement('textarea');
+                ta.value=plainText;
+                ta.style.position='fixed';
+                ta.style.left='0';
+                ta.style.top='0';
+                ta.style.width='2em';
+                ta.style.height='2em';
+                ta.style.padding='0';
+                ta.style.border='none';
+                ta.style.outline='none';
+                ta.style.boxShadow='none';
+                ta.style.background='transparent';
+                ta.style.opacity='0.01';
+                ta.setAttribute('readonly','');
+                document.body.appendChild(ta);
+                ta.focus();
+                ta.select();
+                ta.setSelectionRange(0,ta.value.length);
+                success=document.execCommand('copy')||success;
+                document.body.removeChild(ta);
+              }catch(e){}
+            }
+            var showCopyState=function(copied){
+              if(!buttonEl)return;
+              if(!copied){
+                buttonEl.setAttribute('title','Copy was blocked by this browser');
+                buttonEl.setAttribute('aria-label','Copy was blocked by this browser');
+                setTimeout(function(){buttonEl.setAttribute('title','Copy text with formatting');buttonEl.setAttribute('aria-label','Copy text with formatting');},2200);
+                return;
+              }
+              buttonEl.classList.add('copied');
+              var copySvg=buttonEl.querySelector('.copy-icon');
+              var checkSvg=buttonEl.querySelector('.check-icon');
+              if(copySvg)copySvg.style.display='none';
+              if(checkSvg)checkSvg.style.display='block';
+              buttonEl.setAttribute('title','Copied text with formatting!');
+              buttonEl.setAttribute('aria-label','Copied text with formatting!');
+              setTimeout(function(){
+                buttonEl.classList.remove('copied');
+                if(copySvg)copySvg.style.display='block';
+                if(checkSvg)checkSvg.style.display='none';
+                buttonEl.setAttribute('title','Copy text with formatting');
+                buttonEl.setAttribute('aria-label','Copy text with formatting');
+              },1500);
+            };
+            var asyncWriteStarted=false;
+            if(window.isSecureContext&&navigator.clipboard&&navigator.clipboard.write&&typeof ClipboardItem!=='undefined'){
+              try{
+                asyncWriteStarted=true;
+                var blobHtml=new Blob([htmlContent],{type:'text/html'});
+                var blobText=new Blob([plainText],{type:'text/plain'});
+                navigator.clipboard.write([new ClipboardItem({'text/html':blobHtml,'text/plain':blobText})]).then(function(){
+                  success=true;
+                  showCopyState(true);
+                }).catch(function(){if(!success)showCopyState(false);});
+              }catch(e){asyncWriteStarted=false;}
+            }
+            if(success)showCopyState(true);
+            else if(!asyncWriteStarted)showCopyState(false);
+            return success;
+          };
+          document.addEventListener('click',function(e){
+            var btn=e.target.closest('.lumenboard-copy-btn');
+            if(!btn)return;
+            e.preventDefault();
+            e.stopPropagation();
+            var rawHtml=btn.getAttribute('data-copy-html')||'';
+            if(!rawHtml){
+              var targetId=btn.getAttribute('data-copy-target');
+              var tpl=targetId?document.getElementById(targetId):null;
+              if(!tpl){
+                var wrapper=btn.closest('.lumenboard-copy-wrapper');
+                if(wrapper)tpl=wrapper.querySelector('template');
+              }
+              if(tpl){
+                if(tpl.innerHTML&&tpl.innerHTML.trim()){
+                  rawHtml=tpl.innerHTML;
+                }else if(tpl.content){
+                  var tmp=document.createElement('div');
+                  tmp.appendChild(tpl.content.cloneNode(true));
+                  rawHtml=tmp.innerHTML;
+                }else{
+                  rawHtml=tpl.textContent||'';
+                }
+              }
+            }
+            if(rawHtml){copyFormattedText(rawHtml,btn);}
+          },true);
+          document.querySelectorAll('.lumenboard-previous-page, .lumenboard-next-page').forEach(function(link){
+            link.addEventListener('click',function(){
+              if(document.body.classList.contains('lumenboard-focus-mode')){
+                setFocusQueryOnLinks(true);
+              }
+            });
+          });
+          document.querySelectorAll('.lumenboard-diagram-scroll').forEach(function(scroll){
+            var isDown=false,startX=0,startY=0,scrollLeft=0,scrollTop=0,hasMoved=false;
+            scroll.addEventListener('mousedown',function(e){
+              if(e.target.closest('a,button,input,textarea,select'))return;
+              if(e.button!==0&&e.button!==1)return;
+              isDown=true;
+              hasMoved=false;
+              scroll.classList.add('panning');
+              startX=e.clientX;
+              startY=e.clientY;
+              scrollLeft=scroll.scrollLeft;
+              scrollTop=scroll.scrollTop;
+            });
+            window.addEventListener('mousemove',function(e){
+              if(!isDown)return;
+              var dx=e.clientX-startX;
+              var dy=e.clientY-startY;
+              if(Math.abs(dx)>3||Math.abs(dy)>3)hasMoved=true;
+              scroll.scrollLeft=scrollLeft-dx;
+              scroll.scrollTop=scrollTop-dy;
+            });
+            window.addEventListener('mouseup',function(){
+              if(isDown){isDown=false;scroll.classList.remove('panning');}
+            });
+            scroll.addEventListener('dragstart',function(e){e.preventDefault()});
+            scroll.addEventListener('click',function(e){
+              if(hasMoved){e.preventDefault();e.stopPropagation();hasMoved=false;}
+            },true);
+            scroll.addEventListener('wheel',function(event){
+              if(!event.ctrlKey&&!event.metaKey)return;
+              event.preventDefault();
+              zoom(scroll,event.deltaY<0?.1:-.1);
+            },{passive:false});
+          });
+          window.addEventListener('keydown',function(e){
+            var activeScroll=document.querySelector('.lumenboard-diagram-scroll');
+            if(!activeScroll)return;
+            var step=80;
+            if(e.key==='ArrowLeft'){activeScroll.scrollLeft-=step;}
+            else if(e.key==='ArrowRight'){activeScroll.scrollLeft+=step;}
+            else if(e.key==='ArrowUp'){activeScroll.scrollTop-=step;}
+            else if(e.key==='ArrowDown'){activeScroll.scrollTop+=step;}
+            else if(e.key==='Escape'){
+              if(document.body.classList.contains('lumenboard-focus-mode'))exit(true);
+            }
+          });
+          ['fullscreenchange','webkitfullscreenchange','mozfullscreenchange','MSFullscreenChange'].forEach(function(ev){
+            document.addEventListener(ev,function(){
+              var cur=getFsElement();
+              if(cur){
+                wasNativeFullscreen=true;
+              }else if(wasNativeFullscreen){
+                wasNativeFullscreen=false;
+                if(document.body.classList.contains('lumenboard-focus-mode'))exit(false);
+              }
+            });
+          });
+          var t=s&&s.querySelector('.toggle');
+          if(t){
+            t.textContent='';
+            t.setAttribute('aria-label','Open navigation');
+            t.setAttribute('title','Open navigation');
+            t.addEventListener('click',function(){window.setTimeout(sync,0)});
+          }
+          sync();
+          document.addEventListener('click',function(e){
+            var a=e.target.closest('a');
+            if(!a)return;
+            var href=a.getAttribute('href');
+            if(!href)return;
+            if(a.hasAttribute('data-download-bypass')||href.indexOf('blob:')===0)return;
+            var clean=href.split('?')[0].split('#')[0];
+            if(/.json$/i.test(clean)||a.hasAttribute('data-download-json')){
+              e.preventDefault();
+              e.stopPropagation();
+              var fn=a.getAttribute('download')||decodeURIComponent(clean.split('/').pop()||'data.json');
+              fetch(href).then(function(r){
+                if(!r.ok)throw new Error('status '+r.status);
+                return r.blob();
+              }).then(function(b){
+                var u=URL.createObjectURL(b);
+                var dl=document.createElement('a');
+                dl.setAttribute('data-download-bypass','true');
+                dl.href=u;
+                dl.download=fn;
+                document.body.appendChild(dl);
+                dl.click();
+                document.body.removeChild(dl);
+                setTimeout(function(){URL.revokeObjectURL(u);},1500);
+              }).catch(function(){
+                var dl=document.createElement('a');
+                dl.setAttribute('data-download-bypass','true');
+                dl.href=href;
+                dl.download=fn;
+                dl.target='_blank';
+                document.body.appendChild(dl);
+                dl.click();
+                document.body.removeChild(dl);
+              });
+            }
+          },true);
+          var focusNeeded=false;
+          try{
+            focusNeeded=new URLSearchParams(window.location.search).get('focus')==='1'||sessionStorage.getItem('lumenboard_focus')==='1';
+          }catch(e){
+            focusNeeded=new URLSearchParams(window.location.search).get('focus')==='1';
+          }
+          if(focusNeeded)enter(false);
+        })();</script><script src="assets/js/lumenboard-export.js"></script></body></html>
